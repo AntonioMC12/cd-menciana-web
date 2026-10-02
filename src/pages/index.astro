@@ -8,7 +8,7 @@ import MatchCard from '../components/MatchCard.astro';
 import ResultCard from '../components/ResultCard.astro';
 import NewsCard from '../components/NewsCard.astro';
 import SponsorCard from '../components/SponsorCard.astro';
-import { articles, recentResults, upcomingMatches, site, sponsors } from '../data/site';
+import { articles, institutionalPartners, otherSponsors, principalSponsors, recentResults, upcomingMatches, site } from '../data/site';
 ---
 <BaseLayout>
   <section class="hero">
@@ -32,5 +32,12 @@ import { articles, recentResults, upcomingMatches, site, sponsors } from '../dat
 
   <section class="club-banner"><div class="container club-banner__inner"><div><p class="eyebrow eyebrow--gold">NUESTRA IDENTIDAD</p><h2>Un club. Una ciudad.<br /><em>Una forma de sentirlo.</em></h2><p>El fútbol sala nos reúne en Doña Mencía. Descubre la identidad y el espíritu que recoge nuestro manual de marca.</p><a class="button button--outline-light" href={sitePath('/club/')}>Descubre el club <ArrowIcon /></a></div><Crest class="club-banner__graphic" /></div></section>
 
-  <section class="section sponsor-section"><div class="container"><SectionHeading eyebrow="04 / COLABORACIÓN" title="Juntos hacemos club" intro="Gracias a las entidades públicas que colaboran con el CD Menciana." href={sitePath('/patrocinadores/')} linkLabel="Ver colaboradores" /><div class="sponsor-grid">{sponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div></div></section>
+  <section class="section sponsor-section">
+    <div class="container">
+      <SectionHeading eyebrow="04 / PATROCINIO" title="Impulsan al Menciana" intro="Nuestros patrocinadores principales hacen posible seguir creciendo juntos." href={sitePath('/patrocinadores/')} linkLabel="Todos los colaboradores" />
+      <div class="sponsor-grid sponsor-grid--featured">{principalSponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div>
+      {otherSponsors.length > 0 && <div class="sponsor-group"><h3>Otros patrocinadores</h3><div class="sponsor-grid">{otherSponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div></div>}
+      <div class="sponsor-group"><h3>Colaboración institucional</h3><p>Entidades públicas que acompañan al CD Menciana.</p><div class="sponsor-grid">{institutionalPartners.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div></div>
+    </div>
+  </section>
 </BaseLayout>

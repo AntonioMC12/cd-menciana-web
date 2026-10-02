@@ -3,7 +3,17 @@ import { sitePath } from '../lib/paths';
 import type { Sponsor } from '../data/types';
 interface Props { sponsor: Sponsor }
 const { sponsor } = Astro.props;
+const Tag = sponsor.website ? 'a' : 'div';
+const label = sponsor.tier === 'principal'
+  ? 'Patrocinador principal'
+  : sponsor.kind === 'institutional' ? 'Entidad colaboradora' : 'Patrocinador';
 ---
-<div class="sponsor-card">
-  {sponsor.website ? <a href={sponsor.website} rel="noopener noreferrer" target="_blank" aria-label={`Visitar web de ${sponsor.name} (abre en nueva pestaña)`}><span class:list={['sponsor-card__logo', sponsor.logoBackground === 'dark' && 'sponsor-card__logo--dark']}>{sponsor.logo ? <img src={sitePath(sponsor.logo)} alt={`Logotipo de ${sponsor.name}`} loading="lazy" /> : sponsor.name}</span><span class="sponsor-card__name">{sponsor.name}</span><span class="sponsor-card__tier">{sponsor.tier === 'principal' ? 'Patrocinador principal' : 'Entidad colaboradora'}</span></a> : <><span class:list={['sponsor-card__logo', sponsor.logoBackground === 'dark' && 'sponsor-card__logo--dark']}>{sponsor.logo ? <img src={sitePath(sponsor.logo)} alt={`Logotipo de ${sponsor.name}`} loading="lazy" /> : sponsor.name}</span><span class="sponsor-card__name">{sponsor.name}</span><span class="sponsor-card__tier">{sponsor.tier === 'principal' ? 'Patrocinador principal' : 'Entidad colaboradora'}</span></>}
-</div>
+<article class:list={['sponsor-card', sponsor.tier === 'principal' && 'sponsor-card--featured']}>
+  <Tag class="sponsor-card__content" href={sponsor.website} rel={sponsor.website ? 'noopener noreferrer' : undefined} target={sponsor.website ? '_blank' : undefined} aria-label={sponsor.website ? `Visitar web de ${sponsor.name} (abre en nueva pestaña)` : undefined}>
+    <span class:list={['sponsor-card__logo', sponsor.logoBackground === 'dark' && 'sponsor-card__logo--dark']}>
+      {sponsor.logo ? <img src={sitePath(sponsor.logo)} alt={`Logotipo de ${sponsor.name}`} loading="lazy" /> : sponsor.name}
+    </span>
+    <span class="sponsor-card__name">{sponsor.name}</span>
+    <span class="sponsor-card__tier">{label}</span>
+  </Tag>
+</article>

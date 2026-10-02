@@ -50,6 +50,7 @@ export interface Sponsor {
   logo?: string;
   logoBackground?: 'dark';
   website?: string;
+  kind: 'sponsor' | 'institutional';
   tier: 'principal' | 'colaborador';
   status: PublicationStatus;
 }

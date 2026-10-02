@@ -28,11 +28,16 @@ export const teams: Team[] = [
 export const players: Player[] = [];
 export const matches: Match[] = [];
 export const sponsors: Sponsor[] = [
-  { id: 'junta-de-andalucia', name: 'Junta de Andalucía', logo: '/images/patrocinadores/junta-de-andalucia.png', tier: 'colaborador', status: 'confirmed' },
-  { id: 'ayuntamiento-dona-mencia', name: 'Ayuntamiento de Doña Mencía', logo: '/images/patrocinadores/ayuntamiento-dona-mencia.png', tier: 'colaborador', status: 'confirmed' },
-  { id: 'diputacion-de-cordoba', name: 'Diputación de Córdoba', logo: '/images/patrocinadores/diputacion-de-cordoba.png', tier: 'colaborador', status: 'confirmed' },
-  { id: 'deportes-dona-mencia', name: 'Deportes Doña Mencía', logo: '/images/patrocinadores/deportes-dona-mencia.png', logoBackground: 'dark', tier: 'colaborador', status: 'confirmed' },
+  { id: 'capricho-andaluz', name: 'Capricho Andaluz', logo: '/images/patrocinadores/capricho-andaluz.png', kind: 'sponsor', tier: 'principal', status: 'confirmed' },
+  { id: 'ravi', name: 'RAVI', logo: '/images/patrocinadores/ravi.png', kind: 'sponsor', tier: 'principal', status: 'confirmed' },
+  { id: 'junta-de-andalucia', name: 'Junta de Andalucía', logo: '/images/patrocinadores/junta-de-andalucia.png', kind: 'institutional', tier: 'colaborador', status: 'confirmed' },
+  { id: 'ayuntamiento-dona-mencia', name: 'Ayuntamiento de Doña Mencía', logo: '/images/patrocinadores/ayuntamiento-dona-mencia.png', kind: 'institutional', tier: 'colaborador', status: 'confirmed' },
+  { id: 'diputacion-de-cordoba', name: 'Diputación de Córdoba', logo: '/images/patrocinadores/diputacion-de-cordoba.png', kind: 'institutional', tier: 'colaborador', status: 'confirmed' },
+  { id: 'deportes-dona-mencia', name: 'Deportes Doña Mencía', logo: '/images/patrocinadores/deportes-dona-mencia.png', logoBackground: 'dark', kind: 'institutional', tier: 'colaborador', status: 'confirmed' },
 ];
+export const principalSponsors = sponsors.filter((sponsor) => sponsor.kind === 'sponsor' && sponsor.tier === 'principal');
+export const otherSponsors = sponsors.filter((sponsor) => sponsor.kind === 'sponsor' && sponsor.tier === 'colaborador');
+export const institutionalPartners = sponsors.filter((sponsor) => sponsor.kind === 'institutional');
 
 // Editorial examples demonstrate the news workflow. They are visibly labelled on every page.
 export const articles: Article[] = [

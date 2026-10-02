@@ -201,13 +201,22 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .article-aside__crest { width: 155px; height: 155px; }
 .article-aside p { color: var(--ui-navy); font-size: .72rem; font-weight: 800; text-transform: uppercase; }
 .sponsor-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.sponsor-grid--featured { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sponsor-group { margin-top: 55px; padding-top: 38px; border-top: 1px solid var(--line); }
+.sponsor-group h3 { margin: 0 0 8px; color: var(--ui-navy); font-size: clamp(1.25rem, 2.2vw, 1.75rem); }
+.sponsor-group > p { margin: 0 0 24px; color: var(--muted); font-size: .88rem; }
 .sponsor-card { display: grid; justify-items: center; align-content: center; min-height: 205px; padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: white; text-align: center; }
-.sponsor-card a { display: grid; justify-items: center; width: 100%; }
+.sponsor-card__content { display: grid; justify-items: center; width: 100%; }
+.sponsor-card--featured { min-height: 295px; padding: 28px; border-top: 4px solid var(--ui-gold); box-shadow: 0 12px 35px rgb(13 46 91 / 7%); }
 .sponsor-card__logo { display: grid; place-items: center; width: 100%; height: 100px; color: var(--ui-navy); font-size: 1.3rem; font-weight: 800; }
 .sponsor-card__logo--dark { border-radius: 6px; background: #061e3e; }
 .sponsor-card__logo img { max-width: 100%; max-height: 85px; object-fit: contain; }
+.sponsor-card--featured .sponsor-card__logo { height: 170px; }
+.sponsor-card--featured .sponsor-card__logo img { max-height: 155px; }
 .sponsor-card__name { margin-top: 13px; color: var(--ui-navy); font-size: .78rem; font-weight: 800; }
+.sponsor-card--featured .sponsor-card__name { margin-top: 15px; font-size: 1rem; }
 .sponsor-card__tier { color: var(--muted); font-size: .67rem; font-weight: 700; text-transform: uppercase; }
+.sponsor-card--featured .sponsor-card__tier { margin-top: 5px; color: var(--ui-blue); letter-spacing: .06em; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8%; align-items: start; }
 .contact-grid > div:first-child p:last-child { max-width: 540px; color: var(--muted); }
 .contact-card { padding: 35px; border-top: 4px solid var(--ui-blue); border-radius: 8px; background: var(--ui-bg); }
