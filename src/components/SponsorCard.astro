@@ -8,7 +8,7 @@ const label = sponsor.tier === 'principal'
   ? 'Patrocinador principal'
   : sponsor.kind === 'institutional' ? 'Entidad colaboradora' : 'Patrocinador';
 ---
-<article class:list={['sponsor-card', sponsor.tier === 'principal' && 'sponsor-card--featured']}>
+<article class:list={['sponsor-card', sponsor.tier === 'principal' && 'sponsor-card--featured', sponsor.kind === 'sponsor' && sponsor.tier === 'colaborador' && 'sponsor-card--secondary']}>
   <Tag class="sponsor-card__content" href={sponsor.website} rel={sponsor.website ? 'noopener noreferrer' : undefined} target={sponsor.website ? '_blank' : undefined} aria-label={sponsor.website ? `Visitar web de ${sponsor.name} (abre en nueva pestaña)` : undefined}>
     <span class:list={['sponsor-card__logo', sponsor.logoBackground === 'dark' && 'sponsor-card__logo--dark']}>
       {sponsor.logo ? <img src={sitePath(sponsor.logo)} alt={`Logotipo de ${sponsor.name}`} loading="lazy" /> : sponsor.name}

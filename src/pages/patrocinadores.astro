@@ -12,7 +12,7 @@ import { institutionalPartners, otherSponsors, principalSponsors } from '../data
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">PATROCINADORES PRINCIPALES</p><h2>Un apoyo fundamental</h2><p class="section-heading__intro">Capricho Andaluz y RAVI ocupan un lugar destacado en el club.</p></div></div>
       <div class="sponsor-grid sponsor-grid--featured">{principalSponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div>
-      {otherSponsors.length > 0 && <div class="sponsor-group"><h3>Otros patrocinadores</h3><div class="sponsor-grid">{otherSponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div></div>}
+      <div class="sponsor-group"><h3>Más patrocinadores</h3><p>Negocios y marcas que también apoyan al club.</p><div class="sponsor-grid sponsor-grid--secondary">{otherSponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div></div>
       <div class="sponsor-group"><h3>Colaboración institucional</h3><p>Entidades públicas que acompañan al CD Menciana.</p><div class="sponsor-grid">{institutionalPartners.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div></div>
     </div>
   </section>

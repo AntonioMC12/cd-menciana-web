@@ -8,7 +8,7 @@ import MatchCard from '../components/MatchCard.astro';
 import ResultCard from '../components/ResultCard.astro';
 import NewsCard from '../components/NewsCard.astro';
 import SponsorCard from '../components/SponsorCard.astro';
-import { articles, institutionalPartners, otherSponsors, principalSponsors, recentResults, upcomingMatches, site } from '../data/site';
+import { articles, institutionalPartners, principalSponsors, recentResults, upcomingMatches, site } from '../data/site';
 ---
 <BaseLayout>
   <section class="hero">
@@ -36,7 +36,6 @@ import { articles, institutionalPartners, otherSponsors, principalSponsors, rece
     <div class="container">
       <SectionHeading eyebrow="04 / PATROCINIO" title="Impulsan al Menciana" intro="Nuestros patrocinadores principales hacen posible seguir creciendo juntos." href={sitePath('/patrocinadores/')} linkLabel="Todos los colaboradores" />
       <div class="sponsor-grid sponsor-grid--featured">{principalSponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div>
-      {otherSponsors.length > 0 && <div class="sponsor-group"><h3>Otros patrocinadores</h3><div class="sponsor-grid">{otherSponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div></div>}
       <div class="sponsor-group"><h3>Colaboración institucional</h3><p>Entidades públicas que acompañan al CD Menciana.</p><div class="sponsor-grid">{institutionalPartners.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div></div>
     </div>
   </section>
