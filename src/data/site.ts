@@ -24,10 +24,15 @@ export const teams: Team[] = [
   },
 ];
 
-// Keep these lists empty until the club provides verified records.
+// Keep sports records empty until the club provides verified information.
 export const players: Player[] = [];
 export const matches: Match[] = [];
-export const sponsors: Sponsor[] = [];
+export const sponsors: Sponsor[] = [
+  { id: 'junta-de-andalucia', name: 'Junta de Andalucía', logo: '/images/patrocinadores/junta-de-andalucia.png', tier: 'colaborador', status: 'confirmed' },
+  { id: 'ayuntamiento-dona-mencia', name: 'Ayuntamiento de Doña Mencía', logo: '/images/patrocinadores/ayuntamiento-dona-mencia.png', tier: 'colaborador', status: 'confirmed' },
+  { id: 'diputacion-de-cordoba', name: 'Diputación de Córdoba', logo: '/images/patrocinadores/diputacion-de-cordoba.png', tier: 'colaborador', status: 'confirmed' },
+  { id: 'deportes-dona-mencia', name: 'Deportes Doña Mencía', logo: '/images/patrocinadores/deportes-dona-mencia.png', logoBackground: 'dark', tier: 'colaborador', status: 'confirmed' },
+];
 
 // Editorial examples demonstrate the news workflow. They are visibly labelled on every page.
 export const articles: Article[] = [

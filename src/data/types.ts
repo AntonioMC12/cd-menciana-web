@@ -48,6 +48,7 @@ export interface Sponsor {
   id: string;
   name: string;
   logo?: string;
+  logoBackground?: 'dark';
   website?: string;
   tier: 'principal' | 'colaborador';
   status: PublicationStatus;

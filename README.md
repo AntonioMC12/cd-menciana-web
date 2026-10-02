@@ -39,7 +39,7 @@ Edita `src/data/site.ts`. Los tipos están en `src/data/types.ts`:
 - `articles`: noticias; cada `slug` genera una página automáticamente.
 - `sponsors`: entidad, logotipo, URL y nivel de colaboración.
 
-Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los artículos iniciales tienen estado `provisional` y se etiquetan como muestras; las páginas de detalle están excluidas de indexación. Las listas de jugadores, partidos y patrocinadores permanecen vacías deliberadamente.
+Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los artículos iniciales tienen estado `provisional` y se etiquetan como muestras; las páginas de detalle están excluidas de indexación. Las listas de jugadores y partidos permanecen vacías hasta recibir datos confirmados. La lista de colaboradores incluye los cuatro logos institucionales facilitados por el club.
 
 El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro` lo usa en la cabecera, el pie, la portada, la página del club, las tarjetas y los elementos decorativos; el favicon apunta al mismo archivo. La portada usa la foto de la plantilla a la derecha, como en la maqueta del manual de marca, con versiones WebP para móvil y escritorio y un JPEG de respaldo. Coloca otras fotografías y logotipos autorizados en `public/images/equipo/`, `public/images/jugadores/` y `public/images/patrocinadores/`.
 
@@ -63,7 +63,7 @@ La paleta web difiere ligeramente de la paleta general. Las variables `--ui-*` s
 
 - Fotografías individuales de jugadores y material adicional, con autorización de uso.
 - Equipos y plantilla confirmados; calendario, sedes, resultados y noticias reales.
-- Patrocinadores y logotipos autorizados.
+- Otros patrocinadores y logotipos autorizados, si los hubiera.
 - Correo, dirección y redes sociales institucionales verificadas.
 - Dominio personalizado, si el club decide usar uno.
 
