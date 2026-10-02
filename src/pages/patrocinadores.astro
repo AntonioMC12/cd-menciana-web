@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '../components/ArrowIcon.astro';
 import { sitePath } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Crest from '../components/Crest.astro';
@@ -8,5 +9,5 @@ import { sponsors } from '../data/site';
 <BaseLayout title="Patrocinadores" description="Entidades colaboradoras del CD Menciana.">
   <section class="page-hero"><div class="container"><p class="eyebrow">COLABORACIÓN / COMUNIDAD</p><h1>Crecer<br /><em>juntos.</em></h1><p>El apoyo a nuestro club merece un espacio claro y visible.</p></div></section>
   <section class="section"><div class="container"><div class="section-heading"><div><p class="eyebrow">PATROCINADORES</p><h2>Quienes nos acompañan</h2><p class="section-heading__intro">El directorio se publicará cuando el club confirme sus acuerdos y facilite los logotipos autorizados.</p></div></div>{sponsors.length ? <div class="sponsor-grid">{sponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div> : <div class="empty-panel"><div class="empty-panel__icon" aria-hidden="true">+</div><h3>Relación pendiente de confirmar</h3><p>Aquí aparecerán los patrocinadores oficiales, ordenados por su nivel de colaboración.</p></div>}</div></section>
-  <section class="club-banner"><div class="container club-banner__inner"><div><p class="eyebrow eyebrow--gold">COLABORAR</p><h2>Hagamos<br /><em>equipo.</em></h2><p>El canal institucional de contacto se añadirá en cuanto el club lo confirme.</p><a class="button button--outline-light" href={sitePath('/contacto/')}>Ir a contacto <span aria-hidden="true">↗</span></a></div><Crest class="club-banner__graphic" /></div></section>
+  <section class="club-banner"><div class="container club-banner__inner"><div><p class="eyebrow eyebrow--gold">COLABORAR</p><h2>Hagamos<br /><em>equipo.</em></h2><p>El canal institucional de contacto se añadirá en cuanto el club lo confirme.</p><a class="button button--outline-light" href={sitePath('/contacto/')}>Ir a contacto <ArrowIcon /></a></div><Crest class="club-banner__graphic" /></div></section>
 </BaseLayout>

@@ -1,8 +1,9 @@
 ---
+import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 ---
 <BaseLayout title="Contacto" description="Información de contacto del CD Menciana.">
   <section class="page-hero"><div class="container"><p class="eyebrow">HABLEMOS / CD MENCIANA</p><h1>Estamos<br /><em>cerca.</em></h1><p>Este será el punto de encuentro para consultas sobre el club, competición y colaboraciones.</p></div></section>
-  <section class="section"><div class="container contact-grid"><div><p class="eyebrow">CONTACTO</p><h2>Conectados con<br />Doña Mencía.</h2><p>Publicaremos aquí los canales oficiales cuando el club facilite y autorice sus datos. Para evitar mensajes perdidos, todavía no mostramos un formulario ni una dirección sin verificar.</p></div><div class="contact-card"><span class="contact-card__symbol" aria-hidden="true">↗</span><h3>Canales oficiales</h3><dl><div><dt>Localidad</dt><dd>{site.location}, Córdoba</dd></div><div><dt>Correo electrónico</dt><dd>{site.email ? <a href={`mailto:${site.email}`}>{site.email}</a> : 'Pendiente de confirmación'}</dd></div><div><dt>Sede</dt><dd>{site.address || 'Pendiente de confirmación'}</dd></div></dl></div></div></section>
+  <section class="section"><div class="container contact-grid"><div><p class="eyebrow">CONTACTO</p><h2>Conectados con<br />Doña Mencía.</h2><p>Publicaremos aquí los canales oficiales cuando el club facilite y autorice sus datos. Para evitar mensajes perdidos, todavía no mostramos un formulario ni una dirección sin verificar.</p></div><div class="contact-card"><ArrowIcon class="contact-card__symbol" /><h3>Canales oficiales</h3><dl><div><dt>Localidad</dt><dd>{site.location}, Córdoba</dd></div><div><dt>Correo electrónico</dt><dd>{site.email ? <a href={`mailto:${site.email}`}>{site.email}</a> : 'Pendiente de confirmación'}</dd></div><div><dt>Sede</dt><dd>{site.address || 'Pendiente de confirmación'}</dd></div></dl></div></div></section>
 </BaseLayout>

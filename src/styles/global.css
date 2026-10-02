@@ -37,7 +37,7 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .eyebrow--gold { color: #e4c77f; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 24px; min-height: 50px; padding: 12px 21px; border: 1px solid transparent; border-radius: 5px; font-size: .77rem; font-weight: 800; text-transform: uppercase; letter-spacing: .045em; transition: background .2s, transform .2s, border-color .2s; }
 .button:hover { transform: translateY(-2px); }
-.button span, .text-link span { font-size: 1.15em; }
+.arrow-icon { display: inline-block; flex: none; width: 1.2em; height: 1.2em; vertical-align: -.15em; }
 .button--gold { color: var(--ui-navy); background: #e6bd62; }
 .button--gold:hover { background: #f2cf80; }
 .button--blue { color: white; background: var(--ui-blue-ink); }
@@ -208,7 +208,7 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8%; align-items: start; }
 .contact-grid > div:first-child p:last-child { max-width: 540px; color: var(--muted); }
 .contact-card { padding: 35px; border-top: 4px solid var(--ui-blue); border-radius: 8px; background: var(--ui-bg); }
-.contact-card__symbol { color: var(--ui-gold); font-size: 3rem; line-height: 1; }
+.contact-card__symbol { display: block; width: 3rem; height: 3rem; color: var(--ui-gold); }
 .contact-card h3 { margin: 15px 0 25px; }
 .contact-card dl { margin: 0; }
 .contact-card dl > div { padding: 13px 0; border-top: 1px solid var(--line); }
