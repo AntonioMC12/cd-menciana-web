@@ -6,17 +6,28 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
+    "build:worker": "node scripts/build-worker.mjs",
+    "dev:worker": "npm run build:worker && wrangler dev --config wrangler.jsonc",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "test": "vitest run",
+    "db:local": "wrangler d1 migrations apply cd-menciana --local --config wrangler.jsonc",
+    "db:remote": "wrangler d1 migrations apply cd-menciana --remote --config wrangler.jsonc",
+    "deploy:worker": "npm run build:worker && wrangler deploy --config wrangler.jsonc"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.0.0",
     "@fontsource/montserrat": "^5.0.0",
-    "astro": "^7.3.5"
+    "astro": "^7.3.5",
+    "jose": "^6.2.12"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
-    "typescript": "^5.0.0"
+    "@cloudflare/workers-types": "^5.20261002.1",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.0.0",
+    "vitest": "^5.0.3",
+    "wrangler": "^4.147.0"
   },
   "allowScripts": {
     "esbuild@0.28.2": true

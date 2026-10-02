@@ -59,7 +59,7 @@ export const principalSponsors = sponsors.filter((sponsor) => sponsor.kind === '
 export const otherSponsors = sponsors.filter((sponsor) => sponsor.kind === 'sponsor' && sponsor.tier === 'colaborador');
 export const institutionalPartners = sponsors.filter((sponsor) => sponsor.kind === 'institutional');
 
-// Editorial examples demonstrate the news workflow. They are visibly labelled on every page.
+// Editorial examples are visibly labelled and never imported as real D1 publications.
 export const articles: Article[] = [
   {
     slug: 'espacio-para-la-actualidad-del-club',

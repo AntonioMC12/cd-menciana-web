@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import NewsCard from '../../components/NewsCard.astro';
-import { articles } from '../../data/site';
+import { articles as exampleArticles } from '../../data/site';
 ---
 <BaseLayout title="Noticias" description="Actualidad, comunicados y noticias del CD Menciana.">
   <section class="page-hero"><div class="container"><p class="eyebrow">ACTUALIDAD / CD MENCIANA</p><h1>Lo que pasa<br /><em>dentro y fuera de pista.</em></h1><p>Un lugar para las novedades, las crónicas y las historias del club.</p></div></section>
-  <section class="section"><div class="container"><div class="notice-banner"><strong>Contenido de muestra</strong><p>Estos artículos muestran el formato de publicación. Se sustituirán por noticias verificadas antes del lanzamiento.</p></div><div class="news-grid">{articles.map((article, index) => <NewsCard article={article} index={index} />)}</div></div></section>
+  <section class="section"><div class="container"><div data-cms-root="posts"><div class="empty-panel">Cargando noticias…</div></div><section class="examples"><div class="notice-banner"><strong>Contenido de muestra</strong><p>Estos artículos solo muestran el formato editorial. No son noticias reales.</p></div><div class="news-grid">{exampleArticles.map((article, index) => <NewsCard article={article} index={index} />)}</div></section></div></section>
 </BaseLayout>
+<script>import '../../scripts/public-cms.ts';</script>

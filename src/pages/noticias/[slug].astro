@@ -1,14 +1,11 @@
 ---
-import ArrowIcon from '../../components/ArrowIcon.astro';
 import { sitePath } from '../../lib/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Crest from '../../components/Crest.astro';
 import { articles } from '../../data/site';
-import type { Article } from '../../data/types';
-export function getStaticPaths() { return articles.map((article) => ({ params: { slug: article.slug }, props: { article } })); }
-interface Props { article: Article }
-const { article } = Astro.props;
+export function getStaticPaths() { return articles.map(article => ({ params: { slug: article.slug } })); }
+const article = articles.find(x => x.slug === Astro.params.slug);
 ---
-<BaseLayout title={article.title} description={article.excerpt} noindex={article.status === 'provisional'}>
-  <article><header class="article-hero"><div class="container article-hero__inner"><a href={sitePath('/noticias/')} class="back-link">← Todas las noticias</a><p class="eyebrow eyebrow--gold">{article.category} · {article.status === 'provisional' ? 'Contenido de muestra' : article.publishedAt}</p><h1>{article.title}</h1><p>{article.excerpt}</p></div></header><div class="container article-layout"><div class="article-content">{article.status === 'provisional' && <div class="notice-banner"><strong>Artículo provisional</strong><p>Este texto ilustra la presentación de futuras noticias. No comunica un hecho deportivo.</p></div>}{article.body.map((paragraph) => <p>{paragraph}</p>)}<a class="text-link" href={sitePath('/noticias/')}>Volver a noticias <ArrowIcon /></a></div><aside class="article-aside"><Crest class="article-aside__crest" /><p>Más que fútbol sala.</p></aside></div></article>
+<BaseLayout title={article?.title || 'Noticia no encontrada'} description={article?.excerpt || 'Noticia no encontrada'} noindex={!article || article.status === 'provisional'}>
+  {article ? <article><header class="article-hero"><div class="container article-hero__inner"><a href={sitePath('/noticias/')} class="back-link">← Todas las noticias</a><p class="eyebrow eyebrow--gold">{article.category} · Contenido de muestra</p><h1>{article.title}</h1><p>{article.excerpt}</p></div></header><div class="container article-layout"><div class="article-content"><div class="notice-banner"><strong>Artículo provisional</strong><p>Este texto ilustra la presentación de futuras noticias. No comunica un hecho deportivo.</p></div>{article.body.map((paragraph) => <p>{paragraph}</p>)}<a class="text-link" href={sitePath('/noticias/')}>Volver a noticias →</a></div><aside class="article-aside"><Crest class="article-aside__crest" /><p>Más que fútbol sala.</p></aside></div></article> : <section class="section container"><h1>Noticia no encontrada</h1></section>}
 </BaseLayout>

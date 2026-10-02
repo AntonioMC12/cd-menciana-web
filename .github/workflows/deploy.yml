@@ -18,6 +18,8 @@ jobs:
         uses: actions/checkout@v5
       - name: Build and upload site
         uses: withastro/action@v5
+        env:
+          PUBLIC_CMS_API_URL: ${{ vars.PUBLIC_CMS_API_URL }}
         with:
           node-version: 24
 
