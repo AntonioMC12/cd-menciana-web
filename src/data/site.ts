@@ -37,7 +37,6 @@ export const sponsors: Sponsor[] = [
   { id: 'bar-lama', name: 'Bar Cafetería Lama', logo: '/images/patrocinadores/bar-lama.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'centro-cicloturista', name: 'Centro Cicloturista Subbética', logo: '/images/patrocinadores/centro-cicloturista.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'discopub', name: 'Café Pub Disco Francis', logo: '/images/patrocinadores/discopub.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
-  { id: 'dona-mencia-unica', name: 'Doña Mencía Única', logo: '/images/patrocinadores/dona-mencia-unica.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'esencia-de-olivar', name: 'Esencia de Olivar', logo: '/images/patrocinadores/esencia-de-olivar.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'factoria', name: 'Factoría', logo: '/images/patrocinadores/factoria.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'fernando-tienda-training', name: 'Fernando Tienda Training', logo: '/images/patrocinadores/fernando-tienda-training.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
