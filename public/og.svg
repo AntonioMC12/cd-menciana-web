@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#061e3e"/><stop offset="1" stop-color="#2f7ac6"/></linearGradient><pattern id="p" width="70" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><path d="M0 0V70" stroke="#ffffff" stroke-opacity=".08" stroke-width="8"/></pattern></defs>
+  <rect width="1200" height="630" fill="url(#g)"/><rect width="1200" height="630" fill="url(#p)"/>
+  <circle cx="948" cy="310" r="215" fill="none" stroke="#ffffff" stroke-opacity=".1" stroke-width="75"/>
+  <text x="80" y="140" fill="#e4c77f" font-family="Arial,sans-serif" font-size="27" font-weight="700" letter-spacing="6">CLUB DEPORTIVO · DOÑA MENCÍA</text>
+  <text x="70" y="320" fill="#ffffff" font-family="Arial,sans-serif" font-size="126" font-weight="900" font-style="italic" letter-spacing="-10">MENCIANA</text>
+  <text x="78" y="392" fill="#9fd6f3" font-family="Arial,sans-serif" font-size="47" font-weight="700">APAGA Y VÁMONOS F.S.</text>
+  <rect x="80" y="453" width="230" height="5" fill="#c9a961"/>
+  <text x="80" y="520" fill="#ffffff" font-family="Arial,sans-serif" font-size="31">Más que fútbol sala.</text>
+</svg>

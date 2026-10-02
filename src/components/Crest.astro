@@ -1,0 +1,10 @@
+---
+import { sitePath } from '../lib/paths';
+interface Props {
+  class?: string;
+  alt?: string;
+  loading?: 'eager' | 'lazy';
+}
+const { class: className, alt = '', loading = 'lazy' } = Astro.props;
+---
+<img class={className} src={sitePath('/images/escudo-oficial.svg')} alt={alt} width="400" height="400" loading={loading} decoding="async" />

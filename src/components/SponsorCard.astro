@@ -1,0 +1,9 @@
+---
+import { sitePath } from '../lib/paths';
+import type { Sponsor } from '../data/types';
+interface Props { sponsor: Sponsor }
+const { sponsor } = Astro.props;
+---
+<div class="sponsor-card">
+  {sponsor.website ? <a href={sponsor.website} rel="noopener noreferrer" target="_blank" aria-label={`Visitar web de ${sponsor.name} (abre en nueva pestaña)`}><span class="sponsor-card__logo">{sponsor.logo ? <img src={sitePath(sponsor.logo)} alt={`Logotipo de ${sponsor.name}`} loading="lazy" /> : sponsor.name}</span><span class="sponsor-card__tier">{sponsor.tier === 'principal' ? 'Patrocinador principal' : 'Colaborador'}</span></a> : <><span class="sponsor-card__logo">{sponsor.logo ? <img src={sitePath(sponsor.logo)} alt={`Logotipo de ${sponsor.name}`} loading="lazy" /> : sponsor.name}</span><span class="sponsor-card__tier">{sponsor.tier === 'principal' ? 'Patrocinador principal' : 'Colaborador'}</span></>}
+</div>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 400 400" role="img" aria-labelledby="title desc">
+  <title id="title">Escudo del Club Deportivo Menciana</title>
+  <desc id="desc">Escudo circular azul y blanco con el nombre Club Deportivo Menciana, el lema Apaga y vámonos, un perfil interior dorado y las iniciales CDM.</desc>
+  <defs>
+    <radialGradient id="blue" cx="49%" cy="43%" r="70%">
+      <stop offset="0" stop-color="#d7eefc"/>
+      <stop offset=".7" stop-color="#addcf4"/>
+      <stop offset="1" stop-color="#90c9eb"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Outer navy rim, white channel, and blue letter band. -->
+  <circle cx="200" cy="200" r="197" fill="#fff" stroke="#092653" stroke-width="6"/>
+  <circle cx="200" cy="200" r="177" fill="url(#blue)" stroke="#092653" stroke-width="5"/>
+  <circle cx="200" cy="200" r="131" fill="#f9f9f8" stroke="#092653" stroke-width="5"/>
+
+  <!-- Gold inner outline follows the shape of the source rather than a circle. -->
+  <path d="M 199.5,76.5
+    C 246,76.5 282,111 298,151
+    C 306,171 307,190 302,211
+    C 297,228 282,246 273,264
+    C 264,282 267,301 253,312
+    C 239,323 216,329 199,329
+    C 180,329 158,321 145,311
+    C 135,303 136,284 127,266
+    C 117,247 101,228 97,207
+    C 91,184 95,160 104,141
+    C 122,102 156,76.5 199.5,76.5 Z"
+    fill="none" stroke="#f2bc4b" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- Fine grey mountain profile visible behind the initials. -->
+  <path d="M 121,124
+    C 133,126 138,140 149,151
+    C 156,157 161,150 170,136
+    C 179,122 188,109 194,113
+    C 202,117 207,141 210,148
+    C 212,153 217,133 223,121
+    C 229,108 232,111 241,118
+    C 248,123 255,117 262,121
+    C 272,127 283,138 290,148"
+    fill="none" stroke="#aaa9a8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+
+  <!-- Angular blue-and-white marks on both sides of the lower band. -->
+  <path d="M 43,215 31,234 41,252 51,236 58,247 66,233 54,214 Z" fill="#eef9ff"/>
+  <path d="m 38,235 8,-14 12,17 -7,12 -9,-14 -7,13 -4,-15 z" fill="#164677"/>
+  <path d="M 357,215 369,234 359,252 349,236 342,247 334,233 346,214 Z" fill="#eef9ff"/>
+  <path d="m 362,235 -8,-14 -12,17 7,12 9,-14 7,13 4,-15 z" fill="#164677"/>
+
+  <g fill="#0b2856" font-family="Arial Black, Arial, sans-serif" font-size="23" font-weight="900">
+    <text x="52.81" y="184.55" transform="rotate(-84.01 52.81 184.55)" text-anchor="middle">C</text>
+    <text x="56.35" y="164.38" transform="rotate(-76.07 56.35 164.38)" text-anchor="middle">L</text>
+    <text x="62.83" y="144.42" transform="rotate(-67.94 62.83 144.42)" text-anchor="middle">U</text>
+    <text x="72.83" y="124.29" transform="rotate(-59.23 72.83 124.29)" text-anchor="middle">B</text>
+    <text x="91.35" y="99.50" transform="rotate(-47.23 91.35 99.50)" text-anchor="middle">D</text>
+    <text x="106.66" y="85.15" transform="rotate(-39.10 106.66 85.15)" text-anchor="middle">E</text>
+    <text x="122.98" y="73.62" transform="rotate(-31.36 122.98 73.62)" text-anchor="middle">P</text>
+    <text x="142.09" y="63.80" transform="rotate(-23.03 142.09 63.80)" text-anchor="middle">O</text>
+    <text x="163.38" y="56.60" transform="rotate(-14.32 163.38 56.60)" text-anchor="middle">R</text>
+    <text x="184.03" y="52.86" transform="rotate(-6.19 184.03 52.86)" text-anchor="middle">T</text>
+    <text x="199.50" y="52.00" transform="rotate(-0.19 199.50 52.00)" text-anchor="middle">I</text>
+    <text x="215.97" y="52.86" transform="rotate(6.19 215.97 52.86)" text-anchor="middle">V</text>
+    <text x="238.07" y="56.98" transform="rotate(14.90 238.07 56.98)" text-anchor="middle">O</text>
+    <text x="269.19" y="69.17" transform="rotate(27.87 269.19 69.17)" text-anchor="middle">M</text>
+    <text x="288.61" y="81.46" transform="rotate(36.78 288.61 81.46)" text-anchor="middle">E</text>
+    <text x="304.84" y="95.53" transform="rotate(45.10 304.84 95.53)" text-anchor="middle">N</text>
+    <text x="319.45" y="112.61" transform="rotate(53.81 319.45 112.61)" text-anchor="middle">C</text>
+    <text x="328.43" y="126.45" transform="rotate(60.20 328.43 126.45)" text-anchor="middle">I</text>
+    <text x="335.81" y="141.19" transform="rotate(66.59 335.81 141.19)" text-anchor="middle">A</text>
+    <text x="343.15" y="162.44" transform="rotate(75.30 343.15 162.44)" text-anchor="middle">N</text>
+    <text x="347.19" y="184.55" transform="rotate(84.01 347.19 184.55)" text-anchor="middle">A</text>
+    <text x="74.65" y="304.19" transform="rotate(50.27 74.65 304.19)" text-anchor="middle">A</text>
+    <text x="89.08" y="319.44" transform="rotate(42.88 89.08 319.44)" text-anchor="middle">P</text>
+    <text x="105.34" y="332.70" transform="rotate(35.50 105.34 332.70)" text-anchor="middle">A</text>
+    <text x="124.50" y="344.46" transform="rotate(27.59 124.50 344.46)" text-anchor="middle">G</text>
+    <text x="145.10" y="353.47" transform="rotate(19.68 145.10 353.47)" text-anchor="middle">A</text>
+    <text x="175.10" y="361.09" transform="rotate(8.79 175.10 361.09)" text-anchor="middle">Y</text>
+    <text x="206.00" y="362.89" transform="rotate(-2.11 206.00 362.89)" text-anchor="middle">V</text>
+    <text x="227.86" y="360.60" transform="rotate(-9.84 227.86 360.60)" text-anchor="middle">Á</text>
+    <text x="251.12" y="354.78" transform="rotate(-18.28 251.12 354.78)" text-anchor="middle">M</text>
+    <text x="273.72" y="345.38" transform="rotate(-26.89 273.72 345.38)" text-anchor="middle">O</text>
+    <text x="293.43" y="333.56" transform="rotate(-34.98 293.43 333.56)" text-anchor="middle">N</text>
+    <text x="311.29" y="319.09" transform="rotate(-43.06 311.29 319.09)" text-anchor="middle">O</text>
+    <text x="325.99" y="303.42" transform="rotate(-50.62 325.99 303.42)" text-anchor="middle">S</text>
+  </g>
+
+  <!-- Letter outlines traced separately from the high-resolution club artwork. -->
+  <g fill="#2e2e2e" fill-rule="evenodd">
+    <path aria-label="C" d="M146.39,162.17L149.67,162.38 L152.74,163.61 L155.00,165.45 L156.84,167.91 L159.71,174.68 L161.76,185.96 L147.41,191.08 L146.59,185.14 L145.57,182.47 L143.93,180.63 L141.06,180.22 L138.19,182.06 L135.73,186.98 L134.29,195.39 L134.09,208.92 L135.32,217.94 L137.37,222.45 L139.42,224.30 L141.26,224.91 L144.13,224.30 L145.77,222.45 L146.80,220.19 L147.62,215.27 L161.56,219.78 L161.76,221.01 L159.10,231.68 L157.25,235.57 L155.20,238.44 L152.74,240.70 L150.08,242.13 L147.82,242.75 L144.13,242.75 L139.83,241.52 L134.91,238.65 L129.98,233.93 L126.50,229.01 L123.22,222.25 L121.17,215.27 L120.35,209.74 L120.14,202.36 L120.76,195.39 L122.40,188.01 L125.27,180.42 L128.14,175.29 L132.24,169.96 L136.14,166.48 L141.06,163.61Z"/>
+    <path aria-label="D" d="M186.78,153.77L191.29,153.77 L197.03,155.20 L201.74,158.07 L206.05,162.79 L208.92,167.71 L211.79,175.50 L213.63,184.32 L214.66,195.39 L214.66,206.46 L213.43,218.35 L211.38,227.17 L208.92,233.73 L205.43,239.88 L200.31,245.41 L195.39,248.28 L189.65,249.51 L176.11,248.49 L166.07,246.85 L166.07,156.84 L176.11,155.00Z M183.50,174.88L182.27,175.09 L182.27,228.19 L186.78,228.40 L189.85,227.37 L191.90,225.73 L193.54,223.48 L195.39,219.17 L197.23,209.33 L197.44,194.77 L195.80,183.91 L194.57,180.63 L192.93,177.96 L191.49,176.52 L188.62,175.09Z"/>
+    <path aria-label="M" d="M221.83,155.20L232.91,157.05 L242.75,159.71 L248.49,194.98 L249.92,207.69 L250.33,207.69 L252.79,191.49 L258.33,165.66 L266.74,169.55 L276.58,175.70 L279.04,227.78 L278.83,230.86 L270.63,235.16 L265.91,237.01 L264.27,187.39 L264.07,186.37 L263.66,186.37 L262.43,195.59 L253.61,241.72 L246.03,243.98 L243.77,244.18 L236.60,200.72 L234.34,180.83 L233.73,180.63 L232.50,246.85 L218.96,248.69Z"/>
+  </g>
+  <text x="200" y="313" text-anchor="middle" fill="#272727" font-family="Arial Narrow, Arial, sans-serif" font-size="19" font-stretch="condensed" font-weight="900" textLength="100" lengthAdjust="spacingAndGlyphs">DOÑA MENCÍA</text>
+</svg>

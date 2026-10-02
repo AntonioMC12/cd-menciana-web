@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MatchCard from '../components/MatchCard.astro';
+import ResultCard from '../components/ResultCard.astro';
+import { upcomingMatches, recentResults } from '../data/site';
+---
+<BaseLayout title="Calendario y resultados" description="Próximos partidos y resultados oficiales del CD Menciana.">
+  <section class="page-hero"><div class="container"><p class="eyebrow">COMPETICIÓN / 2026–27</p><h1>La temporada,<br /><em>partido a partido.</em></h1><p>Fechas, rivales y marcadores en un mismo lugar.</p></div></section>
+  <section class="section"><div class="container"><div class="section-heading"><div><p class="eyebrow">PRÓXIMAS CITAS</p><h2>Próximos partidos</h2></div></div><div class="match-list">{upcomingMatches.length ? upcomingMatches.map((match) => <MatchCard match={match} />) : <MatchCard prominent />}</div></div></section>
+  <section class="section section--tint"><div class="container"><div class="section-heading"><div><p class="eyebrow">YA DISPUTADOS</p><h2>Resultados</h2></div></div>{recentResults.length ? <div class="results-list">{recentResults.map((match) => <ResultCard match={match} />)}</div> : <div class="empty-panel"><div class="empty-panel__icon" aria-hidden="true">0 : 0</div><h3>Sin resultados publicados</h3><p>Los marcadores se mostrarán cuando el club los confirme.</p></div>}</div></section>
+</BaseLayout>

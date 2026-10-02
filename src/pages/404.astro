@@ -1,0 +1,5 @@
+---
+import { sitePath } from '../lib/paths';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Página no encontrada" description="La página solicitada no existe." noindex><section class="error-page"><div class="container"><span>404</span><p class="eyebrow">FUERA DE JUEGO</p><h1>Esta página no está en la pista.</h1><p>Puede que la dirección haya cambiado o que el contenido aún no esté disponible.</p><a class="button button--blue" href={sitePath('/')}>Volver al inicio <span aria-hidden="true">↗</span></a></div></section></BaseLayout>

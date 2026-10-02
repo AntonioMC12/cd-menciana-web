@@ -1,0 +1,9 @@
+---
+import type { Match } from '../data/types';
+interface Props { match: Match }
+const { match } = Astro.props;
+---
+<article class="result-card">
+  <div><span class="result-card__label">{match.competition}</span><h3>{match.homeTeam} <span>—</span> {match.awayTeam}</h3></div>
+  <div class="result-card__score" aria-label={`Resultado ${match.homeScore} a ${match.awayScore}`}>{match.homeScore} <span>:</span> {match.awayScore}</div>
+</article>

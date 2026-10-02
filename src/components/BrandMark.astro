@@ -1,0 +1,10 @@
+---
+import { sitePath } from '../lib/paths';
+import Crest from './Crest.astro';
+interface Props { compact?: boolean; light?: boolean }
+const { compact = false, light = false } = Astro.props;
+---
+<a class:list={['brand', { 'brand--compact': compact, 'brand--light': light }]} href={sitePath('/')} aria-label="CD Menciana, ir al inicio">
+  <Crest class="brand__seal" loading="eager" />
+  <span class="brand__copy"><small>Club Deportivo</small><strong>Menciana</strong><em>Apaga y Vámonos F.S.</em></span>
+</a>

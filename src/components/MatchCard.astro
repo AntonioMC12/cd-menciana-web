@@ -1,0 +1,17 @@
+---
+import Crest from './Crest.astro';
+import type { Match } from '../data/types';
+interface Props { match?: Match; prominent?: boolean }
+const { match, prominent = false } = Astro.props;
+const date = match?.date ? new Intl.DateTimeFormat('es-ES', { dateStyle: 'full', timeStyle: 'short', timeZone: 'Europe/Madrid' }).format(new Date(match.date)) : undefined;
+---
+<article class:list={['match-card', { 'match-card--prominent': prominent }]}>
+  <div class="match-card__top"><span class="pill pill--blue">Próximo partido</span><span>{match?.round || 'Por confirmar'}</span></div>
+  <div class="match-card__teams">
+    <div><Crest class="team-crest" /><strong>{match?.homeTeam || 'CD Menciana'}</strong></div>
+    <span class="versus">VS</span>
+    <div><span class="team-initial team-initial--muted" aria-hidden="true">?</span><strong>{match?.awayTeam || 'Rival por confirmar'}</strong></div>
+  </div>
+  <div class="match-card__bottom"><span>{date || 'Fecha y hora pendientes'}</span><span>{match?.venue || 'Sede por confirmar'}</span></div>
+  {!match && <p class="data-note">Información pendiente de confirmación oficial.</p>}
+</article>
