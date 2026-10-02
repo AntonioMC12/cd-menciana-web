@@ -12,10 +12,14 @@ import { articles, recentResults, upcomingMatches, site, sponsors } from '../dat
 ---
 <BaseLayout>
   <section class="hero">
+    <picture class="hero__photo">
+      <source type="image/webp" srcset={`${sitePath('/images/plantilla-hero-900.webp')} 900w, ${sitePath('/images/plantilla-hero-1800.webp')} 1800w`} sizes="(max-width: 760px) 100vw, 64vw" />
+      <img src={sitePath('/images/plantilla-hero-1800.jpg')} alt="Plantilla del CD Menciana posando en el pabellón" width="1800" height="1200" fetchpriority="high" decoding="async" />
+    </picture>
     <div class="hero__texture" aria-hidden="true"></div>
     <div class="container hero__inner">
       <div class="hero__copy"><p class="eyebrow eyebrow--gold">Club Deportivo · Doña Mencía</p><h1>Más que<br /><em>fútbol sala.</em></h1><p>La casa digital del CD Menciana. Vive el club, sigue la competición y mantente cerca de todo lo que nos mueve.</p><div class="hero__actions"><a class="button button--gold" href={sitePath('/calendario/')}>Próximo partido <ArrowIcon /></a><a class="button button--outline-light" href={sitePath('/club/')}>Conoce el club</a></div></div>
-      <div class="hero__art"><div class="hero__halo"></div><Crest class="hero__badge" alt="Escudo del Club Deportivo Menciana" loading="eager" /></div>
+      <div class="hero__art"><Crest class="hero__badge" alt="Escudo del Club Deportivo Menciana" loading="eager" /></div>
     </div>
     <div class="hero__footer container"><span>Temporada {site.season}</span><span>Identidad · Competición · Comunidad</span></div>
   </section>

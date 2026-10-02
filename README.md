@@ -41,7 +41,7 @@ Edita `src/data/site.ts`. Los tipos están en `src/data/types.ts`:
 
 Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los artículos iniciales tienen estado `provisional` y se etiquetan como muestras; las páginas de detalle están excluidas de indexación. Las listas de jugadores, partidos y patrocinadores permanecen vacías deliberadamente.
 
-El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro` lo usa en la cabecera, el pie, la portada, la página del club, las tarjetas y los elementos decorativos; el favicon apunta al mismo archivo. Coloca las fotografías y los logotipos autorizados en `public/images/equipo/`, `public/images/jugadores/` y `public/images/patrocinadores/`.
+El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro` lo usa en la cabecera, el pie, la portada, la página del club, las tarjetas y los elementos decorativos; el favicon apunta al mismo archivo. La portada usa la foto de la plantilla a la derecha, como en la maqueta del manual de marca, con versiones WebP para móvil y escritorio y un JPEG de respaldo. Coloca otras fotografías y logotipos autorizados en `public/images/equipo/`, `public/images/jugadores/` y `public/images/patrocinadores/`.
 
 ## Estructura
 
@@ -61,7 +61,7 @@ La paleta web difiere ligeramente de la paleta general. Las variables `--ui-*` s
 
 ## Pendiente antes del lanzamiento
 
-- Fotografías oficiales, con autorización de uso.
+- Fotografías individuales de jugadores y material adicional, con autorización de uso.
 - Equipos y plantilla confirmados; calendario, sedes, resultados y noticias reales.
 - Patrocinadores y logotipos autorizados.
 - Correo, dirección y redes sociales institucionales verificadas.
