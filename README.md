@@ -1,33 +1,24 @@
 # CD Menciana — web oficial
 
-Sitio público del Club Deportivo Menciana Apaga y Vámonos F.S., construido con Astro y TypeScript. El diseño se basa en el *Manual de Marca 2026–27* facilitado por el club. El proyecto se genera como HTML estático; la navegación y el contenido principal no dependen de JavaScript del cliente.
+Sitio público y panel editorial del Club Deportivo Menciana Apaga y Vámonos F.S., construido con Astro 7, Cloudflare Workers, D1 y R2. El diseño se basa en el *Manual de Marca 2026–27* facilitado por el club. Las páginas institucionales se generan como HTML estático; portada, noticias, galerías y administración se renderizan en el Worker.
 
 ## Desarrollo
 
 ```sh
 npm install
+npm run db:local
 npm run dev
 npm run check
+npm test
 npm run build
-npm run preview
+node scripts/local-smoke.mjs
 ```
 
-El proyecto está configurado para `https://antoniomc12.github.io/cd-menciana-web/`. La URL canónica, las imágenes sociales, el sitemap y los enlaces internos incluyen la ruta del repositorio. `.env.example` muestra las variables que puedes usar si cambias de dominio o de ruta en el futuro.
+Antes de abrir `/admin/` en local, copia `.dev.vars.example` a `.dev.vars`. La guía completa de configuración, seguridad, despliegue y copias de seguridad está en [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md). `.dev.vars` y los secretos no se versionan.
 
-## Publicar en GitHub Pages
+## Publicación
 
-1. En [Settings → Pages](https://github.com/AntonioMC12/cd-menciana-web/settings/pages), selecciona **GitHub Actions** en **Build and deployment → Source**.
-2. Sube el proyecto a la rama `main`, incluido `package-lock.json` y `.github/workflows/deploy.yml`:
-
-   ```sh
-   git add .
-   git commit -m "Preparar web para GitHub Pages"
-   git push origin main
-   ```
-
-3. Comprueba que la ejecución **Deploy to GitHub Pages** termina correctamente en la pestaña **Actions**. La web quedará en [antoniomc12.github.io/cd-menciana-web](https://antoniomc12.github.io/cd-menciana-web/). Cada nuevo push a `main` volverá a publicarla.
-
-El archivo `.env` permanece fuera de Git. Para un dominio personalizado, configura también ese dominio en Pages y elimina el prefijo `/cd-menciana-web` estableciendo `PUBLIC_SITE_BASE=/` en el entorno de compilación.
+La acción de GitHub Pages se ha retirado. La acción actual solo comprueba tipos, pruebas y compilación en las PR. No hay publicación automática. El comando `npm run deploy` queda para ejecutarlo manualmente después de preparar D1, R2, Access, secretos y dominio conforme a [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md).
 
 ## Contenido
 
@@ -36,16 +27,16 @@ Edita `src/data/site.ts`. Los tipos están en `src/data/types.ts`:
 - `teams`: nombre, categoría, temporada y descripción.
 - `players`: plantilla, dorsal, posición y ruta de fotografía.
 - `matches`: partidos, fecha ISO con zona horaria, sede y marcador.
-- `articles`: noticias; cada `slug` genera una página automáticamente.
+- `articles`: tres ejemplos editoriales etiquetados como muestras. Las noticias reales y los álbumes se gestionan en `/admin/` y se almacenan en D1.
 - `sponsors`: entidad, logotipo, tipo (`sponsor` o `institutional`), nivel de colaboración y URL opcional. Los patrocinadores principales, los demás patrocinadores y las entidades públicas se muestran por separado.
 
-Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los artículos iniciales tienen estado `provisional` y se etiquetan como muestras; las páginas de detalle están excluidas de indexación. Las listas de jugadores y partidos permanecen vacías hasta recibir datos confirmados. Capricho Andaluz y RAVI son los patrocinadores principales; los otros patrocinadores se muestran solo en la página dedicada, junto con las cuatro entidades públicas. De los dos archivos del Centro Cicloturista se utiliza la versión JPEG legible.
+Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los artículos iniciales tienen estado `provisional`, se etiquetan como muestras y se excluyen de indexación; no se importan a D1 ni se convierten en noticias reales. Las listas de jugadores y partidos permanecen vacías hasta recibir datos confirmados. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
 
 El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro` lo usa en la cabecera, el pie, la portada, la página del club, las tarjetas y los elementos decorativos; el favicon apunta al mismo archivo. La portada usa la foto de la plantilla a la derecha, como en la maqueta del manual de marca, con versiones WebP para móvil y escritorio y un JPEG de respaldo. Coloca otras fotografías y logotipos autorizados en `public/images/equipo/`, `public/images/jugadores/` y `public/images/patrocinadores/`.
 
 ## Estructura
 
-`src/pages/` contiene inicio, club, equipos, calendario, noticias, patrocinadores, contacto y error 404. `src/components/` contiene cabecera, pie, tarjetas, marcador y tarjetas de jugadores/patrocinadores. `src/layouts/BaseLayout.astro` centraliza metadatos y etiquetas Open Graph. `src/styles/global.css` contiene variables de diseño y estilos adaptables. `@astrojs/sitemap` genera el sitemap durante la compilación. `scripts/generate-og.py` permite regenerar la imagen social PNG con Pillow.
+`src/pages/` contiene inicio, páginas institucionales, noticias, galerías, panel, rutas privadas y error 404. `src/lib/cms.ts` centraliza acceso a D1/R2, validación y autorización. `migrations/` define el esquema. `@astrojs/sitemap` genera el mapa de páginas estáticas y `/sitemap-content.xml` añade las publicaciones visibles. `scripts/generate-og.py` permite regenerar la imagen social PNG con Pillow.
 
 ## Decisiones del manual
 

@@ -1,0 +1,8 @@
+# Copy to .dev.vars for local development only. Never commit .dev.vars.
+LOCAL_ADMIN_BYPASS=1
+ENVIRONMENT=local
+# Production: configure these as Worker secrets, with LOCAL_ADMIN_BYPASS absent.
+# ACCESS_TEAM_DOMAIN=https://your-team.cloudflareaccess.com
+# ACCESS_AUD=your-access-application-audience
+# ADMIN_EMAIL=club@example.org
+# CSRF_SECRET=at-least-32-random-characters

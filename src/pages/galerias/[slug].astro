@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { publishedBySlug, photosForAlbum, photoUrl, type Content } from '../../lib/cms';
+export const prerender = false;
+Astro.response.headers.set('cache-control', 'no-store');
+const row = await publishedBySlug('albums', Astro.params.slug || '');
+if (!row) Astro.response.status = 404;
+const data = row ? JSON.parse(row.published_json || '{}') as Content : null;
+const photos = row ? await photosForAlbum(row.id, true) : [];
+---
+<BaseLayout title={data?.title || 'Galería no encontrada'} description={data?.description || 'Galería no encontrada'} noindex={!row}>
+  {row && data ? <><section class="page-hero"><div class="container"><a class="back-link" href="/galerias/">← Todas las galerías</a><h1>{data.title}</h1><p>{data.description}</p></div></section><section class="section"><div class="container"><div class="gallery-grid">{photos.map(photo => <a href={photoUrl(photo.id, 'web')} target="_blank" rel="noopener" aria-label={`Abrir imagen: ${photo.published_alt}`}><img src={photoUrl(photo.id)} alt={photo.published_alt || ''} width={photo.width} height={photo.height} loading="lazy" decoding="async" /></a>)}</div></div></section></> : <section class="section container"><h1>Galería no encontrada</h1></section>}
+</BaseLayout>

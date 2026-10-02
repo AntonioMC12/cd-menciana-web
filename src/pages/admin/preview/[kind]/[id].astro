@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { bindings, identity, parseBody, photosForAlbum, type Row, type Content } from '../../../../lib/cms';
+export const prerender = false;
+Astro.response.headers.set('cache-control', 'no-store');
+const email = await identity(Astro.request);
+const kind = Astro.params.kind === 'posts' || Astro.params.kind === 'albums' ? Astro.params.kind : null;
+const row = email && kind && Astro.params.id ? await bindings().DB.prepare(`SELECT * FROM ${kind} WHERE id=?`).bind(Astro.params.id).first<Row>() : null;
+if (!row) Astro.response.status = 404;
+const data = row ? JSON.parse(row.draft_json) as Content : null;
+const photos = row && kind === 'albums' ? await photosForAlbum(row.id, false) : [];
+---
+<BaseLayout title={data?.title || 'Previsualización'} noindex>
+  {row && data ? <><section class="article-hero"><div class="container article-hero__inner"><p class="eyebrow eyebrow--gold">BORRADOR / PREVISUALIZACIÓN</p><h1>{data.title}</h1><p>{data.excerpt}</p></div></section><section class="section container">{data.coverPhotoId && <img class="article-image" src={`/admin/media/${data.coverPhotoId}/web`} alt="Portada" width="1200" height="800" />}{kind === 'posts' ? <div class="article-content">{parseBody(data.body).map(x => <p>{x}</p>)}</div> : <div class="gallery-grid">{photos.map(photo => <a href={`/admin/media/${photo.id}/web`} target="_blank" rel="noopener"><img src={`/admin/media/${photo.id}/thumb`} alt={photo.draft_alt} width={photo.width} height={photo.height} /></a>)}</div>}</section></> : <section class="section container"><h1>Previsualización no disponible</h1></section>}
+</BaseLayout>
