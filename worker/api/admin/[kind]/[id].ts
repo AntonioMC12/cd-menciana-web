@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { authorize, bindings, error, failure, json, readJson, validateContent, validateSlug, type Row, type Photo } from '../../../../lib/cms';
+import { authorize, bindings, error, failure, json, readJson, validateContent, validateSlug, type Row, type Photo } from '../../../../src/lib/cms';
 export const prerender = false;
 const kindOf = (value: string | undefined): 'posts' | 'albums' | null => value === 'posts' || value === 'albums' ? value : null;
 const rowFor = (kind: 'posts' | 'albums', id: string) => bindings().DB.prepare(`SELECT * FROM ${kind} WHERE id=?`).bind(id).first<Row>();

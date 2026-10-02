@@ -11,6 +11,7 @@ export interface Bindings {
   ACCESS_AUD?: string;
   ADMIN_EMAIL?: string;
   CSRF_SECRET?: string;
+  PUBLIC_WEB_ORIGIN?: string;
 }
 export const bindings = () => env as unknown as Bindings;
 export type Content = { title: string; excerpt: string; body: string; category: string; coverPhotoId: string | null; description?: string };
@@ -46,7 +47,7 @@ export function parseBody(text: string): string[] { return text.split(/\n\s*\n/)
 export async function identity(request: Request): Promise<string | null> {
   const b = bindings();
   const host = new URL(request.url).hostname;
-  if (import.meta.env.DEV && b.ENVIRONMENT === 'local' && b.LOCAL_ADMIN_BYPASS === '1' && (host === 'localhost' || host === '127.0.0.1')) return 'local-admin';
+  if (b.ENVIRONMENT === 'local' && b.LOCAL_ADMIN_BYPASS === '1' && (host === 'localhost' || host === '127.0.0.1')) return 'local-admin';
   if (!b.ACCESS_TEAM_DOMAIN || !b.ACCESS_AUD || !b.ADMIN_EMAIL) return null;
   const token = request.headers.get('cf-access-jwt-assertion');
   if (!token) return null;

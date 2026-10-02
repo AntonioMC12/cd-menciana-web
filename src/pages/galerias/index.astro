@@ -1,17 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { galleryPage } from '../../lib/public-content';
-import { bindings, photoUrl, type Content, type Row } from '../../lib/cms';
-export const prerender = false;
-Astro.response.headers.set('cache-control', 'no-store');
-const page = Math.max(1, Number(Astro.url.searchParams.get('page')) || 1);
-const defaultPage = await galleryPage(page);
-const post = Astro.url.searchParams.get('post');
-const filtered = post ? (await bindings().DB.prepare('SELECT * FROM albums WHERE post_id=? AND published_json IS NOT NULL ORDER BY published_at DESC LIMIT 10 OFFSET ?').bind(post, (page - 1) * 9).all<Row>()).results : null;
-const galleries = filtered ? filtered.slice(0, 9) : defaultPage.items;
-const more = filtered ? filtered.length > 9 : defaultPage.more;
 ---
 <BaseLayout title="Galerías" description="Fotografías y álbumes publicados por el CD Menciana.">
   <section class="page-hero"><div class="container"><p class="eyebrow">IMÁGENES / CD MENCIANA</p><h1>Galerías<br /><em>del club.</em></h1><p>Momentos de nuestra comunidad.</p></div></section>
-  <section class="section"><div class="container">{galleries.length ? <div class="news-grid">{galleries.map(row => { const data = JSON.parse(row.published_json || '{}') as Content; return <article class="news-card"><a class="news-card__visual" href={`/galerias/${row.published_slug}/`}>{data.coverPhotoId ? <img class="news-card__image" src={photoUrl(data.coverPhotoId)} alt="" width="480" height="320" loading="lazy" /> : <span class="news-card__visual-index">CD MENCIANA</span>}</a><div class="news-card__body"><h2><a href={`/galerias/${row.published_slug}/`}>{data.title}</a></h2><p>{data.description}</p></div></article>; })}</div> : <div class="empty-panel"><h2>Aún no hay galerías publicadas</h2></div>}<nav class="pager" aria-label="Páginas de galerías">{page > 1 && <a href={`/galerias/?page=${page - 1}`}>← Anteriores</a>}{more && <a href={`/galerias/?page=${page + 1}`}>Siguientes →</a>}</nav></div></section>
+  <section class="section"><div class="container"><div data-cms-root="albums"><div class="empty-panel">Cargando galerías…</div></div></div></section>
 </BaseLayout>
+<script>import '../../scripts/public-cms.ts';</script>

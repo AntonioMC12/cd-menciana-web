@@ -1,6 +1,7 @@
 # Copy to .dev.vars for local development only. Never commit .dev.vars.
 LOCAL_ADMIN_BYPASS=1
 ENVIRONMENT=local
+PUBLIC_WEB_ORIGIN=http://127.0.0.1:4321
 # Production: configure these as Worker secrets, with LOCAL_ADMIN_BYPASS absent.
 # ACCESS_TEAM_DOMAIN=https://your-team.cloudflareaccess.com
 # ACCESS_AUD=your-access-application-audience

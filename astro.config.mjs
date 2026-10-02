@@ -1,12 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL || 'http://localhost:4321',
-  output: 'static',
-  session: false,
+  site: process.env.PUBLIC_SITE_URL || 'https://antoniomc12.github.io',
+  base: process.env.PUBLIC_SITE_BASE || '/cd-menciana-web',
   devToolbar: { enabled: false },
-  adapter: cloudflare({ imageService: 'passthrough' }),
   integrations: [sitemap()],
 });

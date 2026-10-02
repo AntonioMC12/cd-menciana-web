@@ -1,0 +1,15 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="theme-color" content="#0d2e5b"><title>Administración | CD Menciana</title><link rel="stylesheet" href="/admin/style.css"></head><body><main class="admin-shell" data-admin data-csrf="__CSRF__">
+<header class="admin-head"><div><p class="eyebrow">CD MENCIANA / ADMINISTRACIÓN</p><h1>Publicaciones y galerías</h1><p>Sesión: __EMAIL__</p></div><a href="__PUBLIC_SITE__" class="button button--blue">Ver web</a></header>
+<p id="admin-message" class="admin-message" role="status" aria-live="polite">Cargando contenido…</p>
+<div class="admin-tabs"><button type="button" data-tab="posts" aria-pressed="true">Noticias</button><button type="button" data-tab="albums" aria-pressed="false">Álbumes</button></div>
+<div class="admin-layout"><section><div class="admin-list-head"><h2 id="list-title">Noticias</h2><button type="button" id="new-item" class="button button--blue">Crear nueva</button></div><div id="item-list" class="admin-list"></div></section>
+<section class="admin-editor" id="editor" hidden><h2 id="editor-title">Nueva publicación</h2><form id="content-form">
+<label>Título <input name="title" maxlength="150" required></label>
+<label>Slug <input name="slug" maxlength="100" pattern="[a-z0-9]+(-[a-z0-9]+)*" required></label>
+<label id="excerpt-label">Extracto <textarea name="excerpt" maxlength="320" rows="3" required></textarea></label>
+<label id="category-label">Categoría <input name="category" maxlength="50" required></label>
+<label id="body-label">Cuerpo (texto, párrafos separados por línea en blanco) <textarea name="body" maxlength="20000" rows="12" required></textarea></label>
+<label id="post-link-label" hidden>Publicación asociada <select name="postId"><option value="">Álbum independiente</option></select></label>
+<label>Portada <select name="coverPhotoId"><option value="">Sin portada</option></select></label>
+<div class="admin-actions"><button class="button button--blue" type="submit">Guardar borrador</button><button class="button button--gold" type="button" id="publish">Publicar</button><button type="button" id="unpublish">Retirar</button><button type="button" id="delete-item">Eliminar</button></div>
+</form><div id="photo-panel" hidden><h3>Fotografías</h3><p>Hasta 20 imágenes WebP optimizadas por álbum. Se procesan en este dispositivo antes de enviarse.</p><label>Subir fotos <input id="photo-files" type="file" accept="image/jpeg,image/png,image/webp" multiple></label><div id="upload-list" aria-live="polite"></div><div id="photo-list"></div></div><a id="preview-link" href="#" target="_blank" rel="noopener">Previsualizar borrador ↗</a></section></div></main><script src="/admin/client.js" defer></script></body></html>

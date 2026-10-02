@@ -1,10 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "cd-menciana-web",
-  "main": "@astrojs/cloudflare/entrypoints/server",
+  "name": "cd-menciana-cms",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat"],
-  "assets": { "directory": "./dist", "binding": "ASSETS" },
+  "rules": [{ "type": "Text", "globs": ["**/*.txt"], "fallthrough": false }],
+  "vars": { "PUBLIC_WEB_ORIGIN": "https://antoniomc12.github.io", "PUBLIC_WEB_BASE": "/cd-menciana-web" },
   "d1_databases": [{
     "binding": "DB", "database_name": "cd-menciana",
     "database_id": "00000000-0000-0000-0000-000000000000",

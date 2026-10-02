@@ -1,18 +1,11 @@
 ---
-import ArrowIcon from '../../components/ArrowIcon.astro';
 import { sitePath } from '../../lib/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Crest from '../../components/Crest.astro';
 import { articles } from '../../data/site';
-import { publishedBySlug, photoUrl, parseBody, type Content } from '../../lib/cms';
-import type { Article } from '../../data/types';
-export const prerender = false;
-Astro.response.headers.set('cache-control', 'no-store');
-const row = await publishedBySlug('posts', Astro.params.slug || '');
-const data = row ? JSON.parse(row.published_json || '{}') as Content : null;
-const article: Article | undefined = row && data ? { slug: row.published_slug || row.slug, title: data.title, excerpt: data.excerpt, body: parseBody(data.body), category: data.category, image: data.coverPhotoId ? photoUrl(data.coverPhotoId, 'web') : undefined, publishedAt: row.published_at?.slice(0, 10), status: 'confirmed' } : articles.find(x => x.slug === Astro.params.slug);
-if (!article) Astro.response.status = 404;
+export function getStaticPaths() { return articles.map(article => ({ params: { slug: article.slug } })); }
+const article = articles.find(x => x.slug === Astro.params.slug);
 ---
 <BaseLayout title={article?.title || 'Noticia no encontrada'} description={article?.excerpt || 'Noticia no encontrada'} noindex={!article || article.status === 'provisional'}>
-  {article ? <article><header class="article-hero"><div class="container article-hero__inner"><a href={sitePath('/noticias/')} class="back-link">← Todas las noticias</a><p class="eyebrow eyebrow--gold">{article.category} · {article.status === 'provisional' ? 'Contenido de muestra' : article.publishedAt}</p><h1>{article.title}</h1><p>{article.excerpt}</p></div></header><div class="container article-layout"><div class="article-content">{article.image && <img class="article-image" src={article.image} alt="Portada de la noticia" width="1200" height="800" />}{article.status === 'provisional' && <div class="notice-banner"><strong>Artículo provisional</strong><p>Este texto ilustra la presentación de futuras noticias. No comunica un hecho deportivo.</p></div>}{article.body.map((paragraph) => <p>{paragraph}</p>)}{row && <a class="text-link" href={`/galerias/?post=${row.id}`}>Ver galerías de la noticia <ArrowIcon /></a>}<a class="text-link" href={sitePath('/noticias/')}>Volver a noticias <ArrowIcon /></a></div><aside class="article-aside"><Crest class="article-aside__crest" /><p>Más que fútbol sala.</p></aside></div></article> : <section class="section container"><h1>Noticia no encontrada</h1></section>}
+  {article ? <article><header class="article-hero"><div class="container article-hero__inner"><a href={sitePath('/noticias/')} class="back-link">← Todas las noticias</a><p class="eyebrow eyebrow--gold">{article.category} · Contenido de muestra</p><h1>{article.title}</h1><p>{article.excerpt}</p></div></header><div class="container article-layout"><div class="article-content"><div class="notice-banner"><strong>Artículo provisional</strong><p>Este texto ilustra la presentación de futuras noticias. No comunica un hecho deportivo.</p></div>{article.body.map((paragraph) => <p>{paragraph}</p>)}<a class="text-link" href={sitePath('/noticias/')}>Volver a noticias →</a></div><aside class="article-aside"><Crest class="article-aside__crest" /><p>Más que fútbol sala.</p></aside></div></article> : <section class="section container"><h1>Noticia no encontrada</h1></section>}
 </BaseLayout>

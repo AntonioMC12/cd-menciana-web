@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { authorize, bindings, error, failure, json, readJson, type Photo } from '../../../../lib/cms';
+import { authorize, bindings, error, failure, json, readJson, type Photo } from '../../../../src/lib/cms';
 export const prerender = false;
 export const PUT: APIRoute = async ({ request, params }) => {
   const deny = await authorize(request, true); if (deny) return deny;

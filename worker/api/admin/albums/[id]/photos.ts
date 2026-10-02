@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { authorize, bindings, error, failure, json, readLimitedForm, webpDimensions } from '../../../../../lib/cms';
-import { persistObjects } from '../../../../../lib/photo-storage';
+import { authorize, bindings, error, failure, json, readLimitedForm, webpDimensions } from '../../../../../src/lib/cms';
+import { persistObjects } from '../../../../../src/lib/photo-storage';
 export const prerender = false;
 export const POST: APIRoute = async ({ request, params }) => {
   const deny = await authorize(request, true); if (deny) return deny;

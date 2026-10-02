@@ -1,91 +1,67 @@
-# Activación de la web en Cloudflare
+# Web en GitHub Pages y servicios en Cloudflare
 
-**Estado:** implementación y pruebas locales completadas. No se han creado recursos remotos, cambiado DNS ni desplegado el Worker. No fusionar la PR hasta preparar lo siguiente y validar el entorno remoto. La acción de GitHub solo comprueba el código.
+**Estado:** el código está preparado y probado localmente. No se han creado D1 ni R2 remotos, no se ha desplegado el Worker ni se ha cambiado el alojamiento público. La web sigue en GitHub Pages.
 
-## 1. Cuenta y dominio del club
+## Arquitectura
 
-Crear o seleccionar una cuenta Cloudflare controlada por el club. Añadir el dominio del club como zona y verificar DNS. Elegir el dominio público definitivo antes de compilar: `PUBLIC_SITE_URL=https://dominio-del-club.example` (sin subruta). Reservar el acceso administrativo a una dirección de correo compartida y controlada por el club, protegida con MFA. Mantener el sitio anterior hasta validar el nuevo.
+| Servicio | Alojamiento | Dirección prevista |
+| --- | --- | --- |
+| Web pública Astro | GitHub Pages | `https://antoniomc12.github.io/cd-menciana-web/` |
+| Panel editorial y API | Cloudflare Worker | `https://cd-menciana-cms.<subdominio>.workers.dev/admin/` |
+| Base de datos | Cloudflare D1 | Binding privado `DB` |
+| Fotografías | Cloudflare R2 | Bucket privado `PHOTOS` |
 
-## 2. D1 y R2
+La portada, noticias y galerías consultan la API pública del Worker en el navegador. Al publicar o retirar contenido en el panel, la API y las fotos reflejan el cambio sin reconstruir GitHub Pages. Las páginas institucionales y los artículos de muestra siguen siendo HTML estático. La web pública no contiene el código del panel.
 
-Ejecutar con una sesión Wrangler de la cuenta del club:
+**Límite de GitHub Pages:** cada noticia y galería real usa una página estática compartida (`/noticias/detalle/?slug=…` o `/galerias/detalle/?slug=…`) que obtiene el contenido en el navegador. El título y la etiqueta canónica se actualizan con JavaScript, pero las vistas previas de redes sociales y los buscadores que no ejecuten JavaScript verán los metadatos genéricos. Si el club necesita SEO completo por publicación, habrá que generar HTML estático en cada publicación o mover esas páginas a un servidor dinámico.
 
-```sh
-npx wrangler login
-npx wrangler d1 create cd-menciana
-npx wrangler r2 bucket create cd-menciana-photos
-```
+## Preparar Cloudflare
 
-Copiar el `database_id` real que devuelve D1 a `wrangler.jsonc`; el UUID de ceros es deliberadamente inválido para producción. El bucket R2 debe seguir **privado**, sin dominio público ni `r2.dev`. Elegir R2 Standard. Para importación inicial de noticias no hay que hacer nada: los tres artículos anteriores permanecen como ejemplos en `src/data/site.ts`, etiquetados y fuera de D1. Esta decisión evita convertir contenido ficticio en noticias oficiales.
+1. Entrar en una cuenta Cloudflare controlada por el club y crear D1 y R2:
 
-## 3. Migraciones
+   ```sh
+   npx wrangler login
+   npx wrangler d1 create cd-menciana
+   npx wrangler r2 bucket create cd-menciana-photos
+   ```
 
-```sh
-npm run db:remote
-```
+2. Copiar el `database_id` real a `wrangler.jsonc`. El UUID de ceros es un marcador y no sirve para producción. Mantener R2 privado, sin dominio público ni `r2.dev`.
+3. Ejecutar `npm run db:remote` para aplicar `migrations/`.
+4. Crear una aplicación Cloudflare Access Self-hosted en el **dominio del Worker** para `/admin`, `/admin/*` y `/api/admin/*`. La política Allow debe incluir solo el correo autorizado, protegido con MFA. No abrir el acceso a un dominio completo de correo.
+5. Crear secretos del Worker con `npx wrangler secret put NOMBRE --config wrangler.jsonc` para `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `ADMIN_EMAIL` y `CSRF_SECRET`. `CSRF_SECRET` debe ser aleatorio y tener al menos 32 caracteres. No configurar `LOCAL_ADMIN_BYPASS` ni `ENVIRONMENT=local` en remoto.
+6. Confirmar que `PUBLIC_WEB_ORIGIN` de `wrangler.jsonc` es `https://antoniomc12.github.io`. La API pública solo permite peticiones CORS desde ese origen; la API privada permanece en el origen del Worker.
+7. Con la configuración revisada, ejecutar `npm run deploy:worker`. Este comando no despliega la web pública.
 
-`migrations/0001_content.sql` crea publicaciones, álbumes, fotos, cola de borrado y contador de solicitudes. `0002_published_slugs.sql` separa la URL pública de la del borrador. Aplicar las migraciones antes del primer despliegue. En local: `npm run db:local`.
+El Worker verifica firma, emisor, audiencia, expiración y correo exacto del JWT de Access en cada petición privada. También exige Origin del mismo Worker y token CSRF en las mutaciones. `/media/*` solo entrega fotos publicadas; `/admin/media/*` exige sesión. Si faltan credenciales de Access, el panel y la API privada deniegan el acceso.
 
-## 4. Cloudflare Access
+## Conectar GitHub Pages
 
-En Zero Trust → Access → Applications, crear **una** aplicación Self-hosted con los tres patrones del mismo dominio: `/admin`, `/admin/*` y `/api/admin/*`. Crear una política Allow que incluya **solo el correo compartido autorizado**. No usar una regla de dominio de correo completo. Copiar el Audience Tag de esta aplicación a `ACCESS_AUD` y el dominio del equipo (`https://equipo.cloudflareaccess.com`) a `ACCESS_TEAM_DOMAIN`.
+Después de obtener la URL real del Worker, crear en el repositorio GitHub la variable de Actions **`PUBLIC_CMS_API_URL`** con su origen, por ejemplo `https://cd-menciana-cms.mi-cuenta.workers.dev`, sin `/` final. El workflow `.github/workflows/deploy.yml` compila y publica Astro en GitHub Pages cuando se actualiza `main`. También puede ejecutarse manualmente para incorporar la variable. En Settings → Pages, seleccionar **GitHub Actions** como origen de publicación.
 
-El Worker verifica en cada petición privada el JWT `Cf-Access-Jwt-Assertion`: firma mediante JWKS, emisor, audiencia, expiración y correo exacto. `/admin/media/*` queda dentro de `/admin/*` para previsualizaciones. `/media/*` solo entrega fotos que pertenecen a contenido publicado; las claves R2 nunca se exponen. Las mutaciones exigen token CSRF derivado de HMAC y Origin del mismo sitio. Si Access o sus secretos faltan, la autorización falla cerrada. El modo `LOCAL_ADMIN_BYPASS=1` exige también compilación de desarrollo, `ENVIRONMENT=local` y hostname localhost/127.0.0.1; no sirve en producción.
+El sitio conserva `PUBLIC_SITE_URL=https://antoniomc12.github.io` y `PUBLIC_SITE_BASE=/cd-menciana-web`. Si se conecta un dominio propio en GitHub Pages, actualizar esas variables de compilación y `PUBLIC_WEB_ORIGIN` del Worker con el nuevo origen. No redirigir el dominio público al Worker.
 
-## 5. Secretos y compilación
+## Desarrollo local
 
-Establecer los secretos del Worker **sin guardarlos en Git**:
-
-```sh
-npx wrangler secret put ACCESS_TEAM_DOMAIN
-npx wrangler secret put ACCESS_AUD
-npx wrangler secret put ADMIN_EMAIL
-npx wrangler secret put CSRF_SECRET
-```
-
-Generar `CSRF_SECRET` aleatorio, de al menos 32 caracteres. No configurar `LOCAL_ADMIN_BYPASS` ni `ENVIRONMENT=local` en producción. Compilar con `PUBLIC_SITE_URL` igual al dominio real; de otro modo las etiquetas canónicas y los sitemaps apuntarán a localhost. La configuración actual no incluye KV ni Cloudflare Images; las imágenes se comprimen en el navegador y se guardan en R2.
-
-## 6. Desarrollo local
-
-```sh
+```powershell
 npm install
-cp .dev.vars.example .dev.vars
+Copy-Item .dev.vars.example .dev.vars
 npm run db:local
-npm run dev
-npm run check
-npm test
-npm run build
-node scripts/local-smoke.mjs
+npm run dev:worker
 ```
 
-En Windows, usar `Copy-Item .dev.vars.example .dev.vars`. Abrir `http://localhost:4321/admin/`. El bypass local explícito solo existe en `.dev.vars`, que está ignorado por Git. La prueba `local-smoke.mjs` usa `127.0.0.1:4321`; si se usa otro puerto, pasarlo como argumento. Crea y retira datos solo del D1/R2 local. No ejecutar contra una web remota.
+En otra terminal:
 
-## 7. Despliegue y dominio
-
-Después de revisar la configuración, migraciones, Access y secretos, y **solo con autorización del club**:
-
-```sh
-npm run build
-npm run deploy
+```powershell
+$env:PUBLIC_CMS_API_URL='http://127.0.0.1:8787'
+npm run dev -- --host 127.0.0.1
 ```
 
-Wrangler usa la configuración generada por el adaptador (`dist/server/wrangler.json`) y sube `dist/client` como assets. `wrangler deploy --dry-run` permite verificar el paquete sin publicarlo. Conectar el dominio al Worker en la cuenta Cloudflare, mantener la aplicación Access en los patrones indicados y revisar las rutas públicas. Desactivar GitHub Pages o retirar su dominio antiguo cuando la nueva web esté validada. La PR no despliega automáticamente.
+Web: `http://127.0.0.1:4321/cd-menciana-web/`. Panel: `http://127.0.0.1:8787/admin/`. `.dev.vars` debe contener `PUBLIC_WEB_ORIGIN=http://127.0.0.1:4321`; está ignorado por Git. El bypass local requiere simultáneamente `ENVIRONMENT=local`, `LOCAL_ADMIN_BYPASS=1` y hostname `localhost` o `127.0.0.1`. Ejecutar `node scripts/local-smoke.mjs` solo contra el Worker local; crea y borra contenido de prueba en D1/R2 locales.
 
-## 8. Copias y restauración
+## Copias y operación
 
-Exportar D1 antes de cambios de esquema y periódicamente:
+Antes de cambiar el esquema y de forma periódica, exportar D1 con `npx wrangler d1 export cd-menciana --remote --output=backup-cd-menciana.sql --config wrangler.jsonc`. Guardar ese SQL y una copia cifrada del bucket R2 fuera de Cloudflare. Para R2 puede utilizarse `rclone` con un token limitado al bucket; comprobar el número de objetos tras copiar. Probar la restauración en recursos nuevos antes de depender de las copias.
 
-```sh
-npx wrangler d1 export cd-menciana --remote --output=backup-cd-menciana.sql
-```
+Las imágenes se comprimen en el navegador. La API admite hasta 20 fotos por álbum, valida WebP, limita el tamaño y solo publica objetos presentes en R2. Las mutaciones se limitan a 60 peticiones por minuto e identidad. Si una eliminación de R2 falla, la tarea queda en cola y puede reintentarse desde `POST /api/admin/cleanup` con sesión y CSRF. La API pública y las imágenes usan `Cache-Control: no-store` para reflejar retiradas sin purga de caché.
 
-Guardar el SQL y una copia del bucket R2 en un lugar seguro y cifrado fuera de la cuenta. Para R2, configurar `rclone` con el endpoint S3 de la cuenta y un token limitado al bucket; luego usar `rclone copy r2:cd-menciana-photos ./backup-r2` y verificar el número de objetos. **No usar `sync` sin revisar antes su efecto de borrado.** Restaurar en recursos nuevos de prueba: `npx wrangler d1 execute NOMBRE_NUEVO --remote --file=backup-cd-menciana.sql` y `rclone copy ./backup-r2 r2:NUEVO_BUCKET`. Validar noticias, fotos y permisos antes de cambiar bindings. Proteger los archivos de copia y las claves R2.
-
-## Límites, limpieza y caché
-
-- Entrada: JPG, PNG o WebP de hasta 20 MB y 12.000 px por lado; no SVG. El navegador genera WebP de hasta 2.000 px y miniatura de hasta 480 px, sin ampliar. La API verifica la firma WebP y dimensiones, limita la foto web a 2,5 MB, la miniatura a 400 kB, 20 fotos por álbum y el formulario a 4 MB. Las subidas van secuencialmente y ofrecen reintento.
-- Mutaciones: máximo de 60 solicitudes por minuto e identidad. La cola de objetos pendientes se puede procesar con `POST /api/admin/cleanup` desde una sesión Access autenticada y con el token CSRF del panel. Ejecutarla tras retiradas o periódicamente; si R2 falla, conserva la tarea para reintentar. Las fotos de borradores abandonados requieren que el administrador elimine el álbum.
-- El Worker comprueba que existen los dos objetos R2 antes de publicar un álbum o una portada. Si D1 falla al guardar la subida, elimina los dos objetos nuevos. D1 y R2 no ofrecen transacción conjunta; una eliminación fallida puede dejar objetos privados pendientes en la cola. Las imágenes públicas y páginas dinámicas usan `Cache-Control: no-store`, así que al retirar contenido el Worker deja de servirlo sin purga. Los assets de compilación sí pueden tener caché.
-- Medir en la cuenta real peticiones, CPU, lecturas/escrituras D1 y operaciones/almacenamiento R2 durante una prueba de carga representativa antes de concluir que Workers Free basta. Si el tráfico supera sus límites, reducir consultas, ajustar la carga o evaluar Workers Paid con aprobación del club. No se usa servicio de transformación de imágenes.
-
-Referencias: [Astro Cloudflare](https://docs.astro.build/en/guides/integrations-guide/cloudflare/), [validación de JWT de Access](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), [comandos D1](https://developers.cloudflare.com/d1/wrangler-commands/), [rclone para R2](https://developers.cloudflare.com/r2/examples/rclone/), [límites Workers](https://developers.cloudflare.com/workers/platform/limits/).
+Referencias: [GitHub Pages con Astro](https://docs.astro.build/en/guides/deploy/github/), [Workers y CORS](https://developers.cloudflare.com/workers/examples/cors-header-proxy/), [validación JWT de Access](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), [D1 con Wrangler](https://developers.cloudflare.com/d1/wrangler-commands/), [R2 con rclone](https://developers.cloudflare.com/r2/examples/rclone/).

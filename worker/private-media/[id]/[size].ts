@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { bindings, identity, type Photo } from '../../../../lib/cms';
+import { bindings, identity, type Photo } from '../../../src/lib/cms';
 export const prerender = false;
 const missing = () => new Response(null, { status: 404, headers: { 'cache-control': 'no-store' } });
 export const GET: APIRoute = async ({ request, params }) => {

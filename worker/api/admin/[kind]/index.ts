@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { authorize, bindings, error, failure, json, readJson, validateContent, validateSlug, type Row } from '../../../../lib/cms';
+import { authorize, bindings, error, failure, json, readJson, validateContent, validateSlug, type Row } from '../../../../src/lib/cms';
 export const prerender = false;
 const kindOf = (value: string | undefined): 'posts' | 'albums' | null => value === 'posts' || value === 'albums' ? value : null;
 export const GET: APIRoute = async ({ request, params }) => {

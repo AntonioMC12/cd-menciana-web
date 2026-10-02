@@ -1,6 +1,6 @@
 # CD Menciana — web oficial
 
-Sitio público y panel editorial del Club Deportivo Menciana Apaga y Vámonos F.S., construido con Astro 7, Cloudflare Workers, D1 y R2. El diseño se basa en el *Manual de Marca 2026–27* facilitado por el club. Las páginas institucionales se generan como HTML estático; portada, noticias, galerías y administración se renderizan en el Worker.
+Sitio público y panel editorial del Club Deportivo Menciana Apaga y Vámonos F.S. La web Astro se publica como sitio estático en GitHub Pages. Cloudflare Worker aloja el panel y la API; D1 guarda publicaciones y R2 las fotografías. El diseño se basa en el *Manual de Marca 2026–27* facilitado por el club.
 
 ## Desarrollo
 
@@ -8,17 +8,19 @@ Sitio público y panel editorial del Club Deportivo Menciana Apaga y Vámonos F.
 npm install
 npm run db:local
 npm run dev
+npm run dev:worker
 npm run check
 npm test
 npm run build
+npm run build:worker
 node scripts/local-smoke.mjs
 ```
 
-Antes de abrir `/admin/` en local, copia `.dev.vars.example` a `.dev.vars`. La guía completa de configuración, seguridad, despliegue y copias de seguridad está en [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md). `.dev.vars` y los secretos no se versionan.
+Ejecuta `dev` y `dev:worker` en terminales distintas. Antes de abrir el panel local, copia `.dev.vars.example` a `.dev.vars` y configura `PUBLIC_CMS_API_URL=http://127.0.0.1:8787` para Astro. La guía de configuración, seguridad, despliegue y copias de seguridad está en [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md). `.dev.vars` y los secretos no se versionan.
 
 ## Publicación
 
-La acción de GitHub Pages se ha retirado. La acción actual solo comprueba tipos, pruebas y compilación en las PR. No hay publicación automática. El comando `npm run deploy` queda para ejecutarlo manualmente después de preparar D1, R2, Access, secretos y dominio conforme a [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md).
+La acción de GitHub Pages publica la web pública desde `main`. El Worker se despliega por separado con `npm run deploy:worker` después de preparar D1, R2, Access y secretos. La variable de GitHub Actions `PUBLIC_CMS_API_URL` debe apuntar al Worker publicado para mostrar noticias y galerías reales. Las PR solo ejecutan comprobaciones; esta rama no despliega automáticamente ningún servicio.
 
 ## Contenido
 
@@ -36,7 +38,7 @@ El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro`
 
 ## Estructura
 
-`src/pages/` contiene inicio, páginas institucionales, noticias, galerías, panel, rutas privadas y error 404. `src/lib/cms.ts` centraliza acceso a D1/R2, validación y autorización. `migrations/` define el esquema. `@astrojs/sitemap` genera el mapa de páginas estáticas y `/sitemap-content.xml` añade las publicaciones visibles. `scripts/generate-og.py` permite regenerar la imagen social PNG con Pillow.
+`src/pages/` contiene la web pública. `worker/` contiene el panel y las rutas API. `src/lib/cms.ts` centraliza acceso a D1/R2, validación y autorización. `migrations/` define el esquema. `@astrojs/sitemap` genera el mapa de páginas estáticas. `scripts/generate-og.py` permite regenerar la imagen social PNG con Pillow. Las publicaciones reales cargan en el navegador y usan las rutas de detalle con `?slug=`; sus metadatos iniciales son genéricos por la naturaleza estática de GitHub Pages.
 
 ## Decisiones del manual
 
