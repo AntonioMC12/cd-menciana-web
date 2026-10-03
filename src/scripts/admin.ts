@@ -1,4 +1,5 @@
 type Kind = 'posts' | 'albums';
+type Tab = Kind | 'manual';
 type Content = { title: string; excerpt: string; body: string; category: string; coverPhotoId: string | null; description?: string };
 type Photo = { id: string; draft_alt: string; draft_position: number; draft_deleted: number; published_position: number | null };
 type Item = { id: string; slug: string; version: number; published_version: number | null; draft: Content; published: Content | null; post_id?: string | null; photos?: Photo[] };
@@ -104,8 +105,13 @@ document.querySelector('#delete-item')!.addEventListener('click', async () => {
 });
 document.querySelector('#new-item')!.addEventListener('click', () => open().catch(e => show(e.message, true)));
 document.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach(tab => tab.addEventListener('click', () => {
-  kind = tab.dataset.tab as Kind; current = null; document.querySelector<HTMLElement>('#editor')!.hidden = true;
+  const selected = tab.dataset.tab as Tab;
   document.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach(x => x.setAttribute('aria-pressed', String(x === tab)));
+  document.querySelector<HTMLElement>('#manual')!.hidden = selected !== 'manual';
+  document.querySelector<HTMLElement>('#content-layout')!.hidden = selected === 'manual';
+  message.hidden = selected === 'manual';
+  if (selected === 'manual') return;
+  kind = selected; current = null; document.querySelector<HTMLElement>('#editor')!.hidden = true;
   load();
 }));
 function renderPhotos() {

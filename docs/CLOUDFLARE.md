@@ -1,13 +1,15 @@
 # Web en GitHub Pages y servicios en Cloudflare
 
-**Estado:** el código está preparado y probado localmente. No se han creado D1 ni R2 remotos, no se ha desplegado el Worker ni se ha cambiado el alojamiento público. La web sigue en GitHub Pages.
+**Estado:** D1 y el bucket R2 ya están creados. La zona DNS de `cdmenciana.es` sigue pendiente de activación y el Worker aún no está desplegado. La web pública permanece en GitHub Pages.
+
+Para comprar un dominio propio y conectar GitHub Pages con Cloudflare desde cero, sigue la [guía paso a paso de dominio y servicios](DOMINIO-Y-CLOUDFLARE.md). Las opciones elegidas son `cdmenciana.es` y, como alternativa, `cdmenciana.com`.
 
 ## Arquitectura
 
 | Servicio | Alojamiento | Dirección prevista |
 | --- | --- | --- |
-| Web pública Astro | GitHub Pages | `https://antoniomc12.github.io/cd-menciana-web/` |
-| Panel editorial y API | Cloudflare Worker | `https://cd-menciana-cms.<subdominio>.workers.dev/admin/` |
+| Web pública Astro | GitHub Pages | `https://cdmenciana.es/` |
+| Panel editorial y API | Cloudflare Worker | `https://cms.cdmenciana.es/admin/` |
 | Base de datos | Cloudflare D1 | Binding privado `DB` |
 | Fotografías | Cloudflare R2 | Bucket privado `PHOTOS` |
 
@@ -17,28 +19,26 @@ La portada, noticias y galerías consultan la API pública del Worker en el nave
 
 ## Preparar Cloudflare
 
-1. Entrar en una cuenta Cloudflare controlada por el club y crear D1 y R2:
+1. La cuenta de Cloudflare ya tiene D1 y R2. Para comprobarlo:
 
    ```sh
    npx wrangler login
-   npx wrangler d1 create cd-menciana
-   npx wrangler r2 bucket create cd-menciana-photos
+   npx wrangler d1 list
+   npx wrangler r2 bucket list
    ```
 
-2. Copiar el `database_id` real a `wrangler.jsonc`. El UUID de ceros es un marcador y no sirve para producción. Mantener R2 privado, sin dominio público ni `r2.dev`.
-3. Ejecutar `npm run db:remote` para aplicar `migrations/`.
+2. El `database_id` real ya figura en `wrangler.jsonc`. Mantener R2 privado, sin dominio público ni `r2.dev`.
+3. Las migraciones actuales ya están aplicadas. Ejecutar `npm run db:remote` para aplicar futuras migraciones.
 4. Crear una aplicación Cloudflare Access Self-hosted en el **dominio del Worker** para `/admin`, `/admin/*` y `/api/admin/*`. La política Allow debe incluir solo el correo autorizado, protegido con MFA. No abrir el acceso a un dominio completo de correo.
 5. Crear secretos del Worker con `npx wrangler secret put NOMBRE --config wrangler.jsonc` para `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `ADMIN_EMAIL` y `CSRF_SECRET`. `CSRF_SECRET` debe ser aleatorio y tener al menos 32 caracteres. No configurar `LOCAL_ADMIN_BYPASS` ni `ENVIRONMENT=local` en remoto.
-6. Confirmar que `PUBLIC_WEB_ORIGIN` de `wrangler.jsonc` es `https://antoniomc12.github.io`. La API pública solo permite peticiones CORS desde ese origen; la API privada permanece en el origen del Worker.
+6. Confirmar que `PUBLIC_WEB_ORIGIN` de `wrangler.jsonc` es `https://cdmenciana.es`. La API pública solo permite peticiones CORS desde ese origen; la API privada permanece en el origen del Worker.
 7. Con la configuración revisada, ejecutar `npm run deploy:worker`. Este comando no despliega la web pública.
 
 El Worker verifica firma, emisor, audiencia, expiración y correo exacto del JWT de Access en cada petición privada. También exige Origin del mismo Worker y token CSRF en las mutaciones. `/media/*` solo entrega fotos publicadas; `/admin/media/*` exige sesión. Si faltan credenciales de Access, el panel y la API privada deniegan el acceso.
 
 ## Conectar GitHub Pages
 
-Después de obtener la URL real del Worker, crear en el repositorio GitHub la variable de Actions **`PUBLIC_CMS_API_URL`** con su origen, por ejemplo `https://cd-menciana-cms.mi-cuenta.workers.dev`, sin `/` final. El workflow `.github/workflows/deploy.yml` compila y publica Astro en GitHub Pages cuando se actualiza `main`. También puede ejecutarse manualmente para incorporar la variable. En Settings → Pages, seleccionar **GitHub Actions** como origen de publicación.
-
-El sitio conserva `PUBLIC_SITE_URL=https://antoniomc12.github.io` y `PUBLIC_SITE_BASE=/cd-menciana-web`. Si se conecta un dominio propio en GitHub Pages, actualizar esas variables de compilación y `PUBLIC_WEB_ORIGIN` del Worker con el nuevo origen. No redirigir el dominio público al Worker.
+El workflow `.github/workflows/deploy.yml` ya compila Astro para `https://cdmenciana.es/` con la API en `https://cms.cdmenciana.es`. Publica GitHub Pages al actualizar `main`; también puede ejecutarse manualmente. En Settings → Pages, seleccionar **GitHub Actions** como origen de publicación. No redirigir el dominio público al Worker.
 
 ## Desarrollo local
 
@@ -56,7 +56,7 @@ $env:PUBLIC_CMS_API_URL='http://127.0.0.1:8787'
 npm run dev -- --host 127.0.0.1
 ```
 
-Web: `http://127.0.0.1:4321/cd-menciana-web/`. Panel: `http://127.0.0.1:8787/admin/`. `.dev.vars` debe contener `PUBLIC_WEB_ORIGIN=http://127.0.0.1:4321`; está ignorado por Git. El bypass local requiere simultáneamente `ENVIRONMENT=local`, `LOCAL_ADMIN_BYPASS=1` y hostname `localhost` o `127.0.0.1`. Ejecutar `node scripts/local-smoke.mjs` solo contra el Worker local; crea y borra contenido de prueba en D1/R2 locales.
+Web: `http://127.0.0.1:4321/`. Panel: `http://127.0.0.1:8787/admin/`. `.dev.vars` debe contener `PUBLIC_WEB_ORIGIN=http://127.0.0.1:4321`; está ignorado por Git. El bypass local requiere simultáneamente `ENVIRONMENT=local`, `LOCAL_ADMIN_BYPASS=1` y hostname `localhost` o `127.0.0.1`. Ejecutar `node scripts/local-smoke.mjs` solo contra el Worker local; crea y borra contenido de prueba en D1/R2 locales.
 
 ## Copias y operación
 

@@ -19,7 +19,9 @@ jobs:
       - name: Build and upload site
         uses: withastro/action@v5
         env:
-          PUBLIC_CMS_API_URL: ${{ vars.PUBLIC_CMS_API_URL }}
+          PUBLIC_CMS_API_URL: https://cms.cdmenciana.es
+          PUBLIC_SITE_URL: https://cdmenciana.es
+          PUBLIC_SITE_BASE: /
         with:
           node-version: 24
 

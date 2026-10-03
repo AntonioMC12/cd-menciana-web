@@ -40,7 +40,12 @@ const responseFor = async (module: Record<string, unknown>, method: string, requ
   const handler = module[method];
   return typeof handler === 'function' ? (handler as (context: unknown) => Promise<Response>)({ request, params }) : error('Método no permitido.', 405);
 };
-const publicSite = () => `${bindings().PUBLIC_WEB_ORIGIN || 'https://antoniomc12.github.io'}${(bindings() as { PUBLIC_WEB_BASE?: string }).PUBLIC_WEB_BASE || '/cd-menciana-web'}/`;
+const publicSite = () => {
+  const origin = (bindings().PUBLIC_WEB_ORIGIN || 'https://cdmenciana.es').replace(/\/$/, '');
+  const base = (bindings() as { PUBLIC_WEB_BASE?: string }).PUBLIC_WEB_BASE ?? '/';
+  const path = base === '/' ? '' : `/${base.replace(/^\/+|\/+$/g, '')}`;
+  return `${origin}${path}/`;
+};
 
 export default {
   async fetch(request: Request): Promise<Response> {

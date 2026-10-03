@@ -20,7 +20,7 @@ Ejecuta `dev` y `dev:worker` en terminales distintas. Antes de abrir el panel lo
 
 ## Publicación
 
-La acción de GitHub Pages publica la web pública desde `main`. El Worker se despliega por separado con `npm run deploy:worker` después de preparar D1, R2, Access y secretos. La variable de GitHub Actions `PUBLIC_CMS_API_URL` debe apuntar al Worker publicado para mostrar noticias y galerías reales. Las PR solo ejecutan comprobaciones; esta rama no despliega automáticamente ningún servicio.
+La acción de GitHub Pages publica la web pública desde `main` en `https://cdmenciana.es/` y la conecta con `https://cms.cdmenciana.es`. El Worker se despliega por separado con `npm run deploy:worker` después de preparar D1, R2, Access y secretos. Las PR solo ejecutan comprobaciones; esta rama no despliega automáticamente ningún servicio.
 
 ## Contenido
 
