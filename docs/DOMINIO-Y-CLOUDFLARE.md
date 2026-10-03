@@ -9,7 +9,7 @@ Esta guía parte de la arquitectura actual del proyecto: la web pública sigue e
 | `https://cms.DOMINIO/admin/` | Panel privado en Cloudflare Worker |
 | `https://cms.DOMINIO/api/...` y `/media/...` | API y fotografías públicas del mismo Worker |
 
-**Estado actual:** el dominio está comprado en DonDominio y existe una cuenta de Cloudflare. No se contrató Alojamiento Mini. Cloudflare tiene los cinco registros correctos, pero la zona aún está pendiente de activación pública. GitHub Pages ya tiene `cdmenciana.es` como dominio personalizado. La base D1 `cd-menciana` tiene las migraciones aplicadas y el bucket R2 `cd-menciana-photos` está creado. El Worker aún no está desplegado.
+**Estado actual:** el dominio está comprado en DonDominio y existe una cuenta de Cloudflare. No se contrató Alojamiento Mini. Cloudflare tiene los cinco registros correctos, pero la zona aún está pendiente de activación pública. GitHub Pages ya tiene `cdmenciana.es` como dominio personalizado y el despliegue de Actions terminó correctamente. La base D1 `cd-menciana` tiene las migraciones aplicadas, el bucket R2 `cd-menciana-photos` está creado y el Worker está desplegado en `cms.cdmenciana.es` con Access configurado.
 
 ## 1. Elegir y comprar el dominio
 
@@ -71,13 +71,13 @@ Cloudflare creará el DNS y el certificado de `cms.DOMINIO` al asociar el domini
 
 ## 5. Proteger el panel con Cloudflare Access
 
-La API de noticias y las fotos deben ser públicas; **solo el panel y `/api/admin`** deben pedir identificación.
+La API de noticias y las fotos deben ser públicas; **solo el panel y `/api/admin`** deben pedir identificación. La aplicación Access ya protege directamente el Worker y exceptúa las rutas públicas.
 
-1. En Cloudflare, entra en **Zero Trust** y completa la configuración inicial del equipo. Apunta el **Team domain**, con formato `https://NOMBRE.cloudflareaccess.com`.
-2. En **Zero Trust → Access controls → Applications**, crea una aplicación **Self-hosted and private** para el hostname `cms.DOMINIO`. Añade los caminos `/admin`, `/admin/*`, `/api/admin` y `/api/admin/*` como destinos protegidos. Comprueba en la interfaz que los cuatro están cubiertos.
-3. Crea una política **Allow** limitada al correo concreto del administrador del club. Usa el inicio de sesión de Cloudflare restringido a miembros de la cuenta o un proveedor de identidad con MFA. Evita permitir un dominio de correo entero.
-4. Copia el **Application AUD** de esa aplicación. El código del Worker valida la firma del token de Access, el Team domain, el AUD y el correo autorizado.
-5. Crea los cuatro secretos del Worker, uno por comando. Wrangler solicitará cada valor sin guardarlo en Git:
+1. En **Zero Trust**, comprueba que la organización **CD Menciana** usa el Team domain `https://cdmenciana.cloudflareaccess.com`.
+2. En **Zero Trust → Access controls → Applications**, comprueba que **CD Menciana CMS** tiene como destino el Worker y excepciones públicas para `/`, `/api/posts`, `/api/posts/*`, `/api/albums`, `/api/albums/*` y `/media/*`.
+3. Comprueba que la política **Allow** está limitada al correo concreto del administrador del club y que el proveedor de identidad es el código de un solo uso por correo. Evita permitir un dominio de correo entero.
+4. El **Application AUD** ya está guardado como secreto. El código del Worker valida la firma del token de Access, el Team domain, el AUD y el correo autorizado.
+5. Los cuatro secretos del Worker ya están configurados; para rotarlos, Wrangler solicitará cada valor sin guardarlo en Git:
 
    ```powershell
    npx wrangler secret put ACCESS_TEAM_DOMAIN --config wrangler.jsonc
@@ -90,9 +90,9 @@ La API de noticias y las fotos deben ser públicas; **solo el panel y `/api/admi
 
 ## 6. Desplegar y conectar los dos servicios
 
-1. Ejecuta `npm run check`, `npm test` y `npm run build`.
-2. Ejecuta `npm run deploy:worker`. Comprueba `https://cms.DOMINIO/api/posts`: debe responder sin pedir inicio de sesión. Comprueba `https://cms.DOMINIO/admin/`: debe pedir inicio de sesión y permitir solo el correo autorizado.
-3. Publica el commit con los cambios de configuración y lanza **Actions → Deploy to GitHub Pages → Run workflow** en GitHub. La web debe abrir en `https://DOMINIO/`, sin la ruta antigua `/cd-menciana-web/`.
+1. La compilación de Astro y del Worker, y los tests, ya se han ejecutado correctamente.
+2. El Worker ya está desplegado. Cuando el DNS esté activo, comprueba `https://cms.DOMINIO/api/posts`: debe responder sin pedir inicio de sesión. Comprueba `https://cms.DOMINIO/admin/`: debe pedir inicio de sesión y permitir solo el correo autorizado.
+3. El commit está publicado en `main` y la acción de GitHub Pages terminó correctamente. Cuando el DNS esté activo, la web debe abrir en `https://DOMINIO/`, sin la ruta antigua `/cd-menciana-web/`.
 4. En el panel, crea una noticia y un álbum de prueba, asócialos, sube una foto y publícalos. Comprueba la portada, los enlaces y la galería desde el dominio público.
 5. Comprueba la redirección `www.DOMINIO → DOMINIO`, el certificado HTTPS y que el panel no sea accesible sin autorización. Prueba también la web desde un móvil o una ventana privada.
 

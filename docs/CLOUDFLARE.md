@@ -1,6 +1,6 @@
 # Web en GitHub Pages y servicios en Cloudflare
 
-**Estado:** D1 y el bucket R2 ya están creados. La zona DNS de `cdmenciana.es` sigue pendiente de activación y el Worker aún no está desplegado. La web pública permanece en GitHub Pages.
+**Estado:** D1 y el bucket R2 ya están creados, el Worker está desplegado en `cms.cdmenciana.es` y Access protege sus rutas privadas. La zona DNS de `cdmenciana.es` sigue pendiente de activación. La web pública se despliega con GitHub Pages.
 
 Para comprar un dominio propio y conectar GitHub Pages con Cloudflare desde cero, sigue la [guía paso a paso de dominio y servicios](DOMINIO-Y-CLOUDFLARE.md). Las opciones elegidas son `cdmenciana.es` y, como alternativa, `cdmenciana.com`.
 
@@ -29,8 +29,8 @@ La portada, noticias y galerías consultan la API pública del Worker en el nave
 
 2. El `database_id` real ya figura en `wrangler.jsonc`. Mantener R2 privado, sin dominio público ni `r2.dev`.
 3. Las migraciones actuales ya están aplicadas. Ejecutar `npm run db:remote` para aplicar futuras migraciones.
-4. Crear una aplicación Cloudflare Access Self-hosted en el **dominio del Worker** para `/admin`, `/admin/*` y `/api/admin/*`. La política Allow debe incluir solo el correo autorizado, protegido con MFA. No abrir el acceso a un dominio completo de correo.
-5. Crear secretos del Worker con `npx wrangler secret put NOMBRE --config wrangler.jsonc` para `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `ADMIN_EMAIL` y `CSRF_SECRET`. `CSRF_SECRET` debe ser aleatorio y tener al menos 32 caracteres. No configurar `LOCAL_ADMIN_BYPASS` ni `ENVIRONMENT=local` en remoto.
+4. La aplicación Cloudflare Access Self-hosted **CD Menciana CMS** protege directamente al Worker. Solo `/`, `/api/posts`, `/api/posts/*`, `/api/albums`, `/api/albums/*` y `/media/*` tienen excepción pública. La política Allow incluye un único correo administrador y usa el proveedor de código de un solo uso por correo. No abrir el acceso a un dominio completo de correo.
+5. Los secretos `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `ADMIN_EMAIL` y `CSRF_SECRET` ya están configurados en el Worker. `CSRF_SECRET` es aleatorio y no se guarda en Git. No configurar `LOCAL_ADMIN_BYPASS` ni `ENVIRONMENT=local` en remoto.
 6. Confirmar que `PUBLIC_WEB_ORIGIN` de `wrangler.jsonc` es `https://cdmenciana.es`. La API pública solo permite peticiones CORS desde ese origen; la API privada permanece en el origen del Worker.
 7. Con la configuración revisada, ejecutar `npm run deploy:worker`. Este comando no despliega la web pública.
 
