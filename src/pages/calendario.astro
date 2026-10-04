@@ -1,15 +1,50 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import MatchCard from '../components/MatchCard.astro';
-import ResultCard from '../components/ResultCard.astro';
-import { upcomingMatches, recentResults } from '../data/site';
-import { firstTeamSource } from '../data/first-team';
 import StandingsTable from '../components/StandingsTable.astro';
+import { firstTeamSource } from '../data/first-team';
+import { teamCompetitions, competitiveTeamIds } from '../data/team-competitions';
+import '../styles/calendar.css';
 ---
-<BaseLayout title="Calendario y resultados" description="Próximos partidos y resultados oficiales del CD Menciana.">
-  <section class="page-hero"><div class="container"><p class="eyebrow">3.ª DIVISIÓN F.S. / GRUPO 17 / 2026–27</p><h1>La temporada,<br /><em>partido a partido.</em></h1><p>Calendario, resultados y clasificación del primer equipo.</p></div></section>
-  <section class="section"><div class="container"><div class="section-heading"><div><p class="eyebrow">PRÓXIMAS CITAS</p><h2>Próximos partidos</h2><p class="section-heading__intro">La RFAF ha publicado estas jornadas. Los horarios pendientes y cualquier cambio deben comprobarse en la fuente oficial.</p></div></div><div class="match-list" data-sports-upcoming>{upcomingMatches.length ? upcomingMatches.map((match, index) => <MatchCard match={match} id={index === 0 ? 'proximo-partido' : undefined} />) : <MatchCard prominent id="proximo-partido" />}</div><p class="sports-source">Datos actualizados <span data-sports-updated>el {firstTeamSource.checkedOn}</span>. <a href={firstTeamSource.resultsUrl}>Ver calendario y resultados en la RFAF ↗</a></p></div></section>
-  <section class="section section--tint"><div class="container"><div class="section-heading"><div><p class="eyebrow">YA DISPUTADOS</p><h2>Resultados</h2></div></div><div data-sports-results>{recentResults.length ? <div class="results-list">{recentResults.map((match) => <ResultCard match={match} />)}</div> : <div class="empty-panel"><div class="empty-panel__icon" aria-hidden="true">0 : 0</div><h3>Sin resultados publicados</h3><p>Los marcadores se mostrarán cuando la RFAF los publique.</p></div>}</div></div></section>
-  <section class="section" id="clasificacion"><div class="container"><div class="section-heading"><div><p class="eyebrow">LA LIGA</p><h2>Clasificación</h2><p class="section-heading__intro">Tabla oficial del grupo 17. La posición puede cambiar tras cada jornada.</p></div></div><StandingsTable /><p class="sports-source"><a href={firstTeamSource.standingsUrl}>Ver clasificación actualizada en la RFAF ↗</a></p></div></section>
+<BaseLayout title="Calendario y resultados" description="Calendario, próximos partidos y resultados de los equipos del CD Menciana.">
+  <section class="page-hero calendar-hero"><div class="container"><p class="eyebrow">TEMPORADA 2026–27 / CD MENCIANA</p><h1>Calendario<span>.</span></h1><p>Encuentra el próximo partido de cada categoría y sigue cada jornada de un vistazo.</p></div></section>
+
+  <section class="section calendar-section" data-calendar>
+    <div class="container">
+      <div class="calendar-toolbar">
+        <div class="calendar-category">
+          <span class="calendar-toolbar__label">Categoría</span>
+          <button class="calendar-category__trigger" type="button" aria-expanded="false" aria-controls="calendar-category-menu" data-category-trigger><span data-category-label>Primer equipo</span><span aria-hidden="true">⌄</span></button>
+          <div class="calendar-category__backdrop" data-category-backdrop hidden></div>
+          <div class="calendar-category__menu" id="calendar-category-menu" aria-label="Seleccionar categoría" data-category-menu hidden>
+            <p class="calendar-category__mobile-title">Selecciona una categoría</p>
+            <button type="button" data-category-option="all">Todas las categorías</button>
+            {competitiveTeamIds.map((id) => <button type="button" data-category-option={id}>{teamCompetitions[id].label}<small>{teamCompetitions[id].category}</small></button>)}
+          </div>
+        </div>
+        <div class="calendar-month-nav" aria-label="Navegar por meses">
+          <button type="button" data-month-prev aria-label="Mes anterior">‹</button>
+          <h2 data-month-label></h2>
+          <button type="button" data-month-next aria-label="Mes siguiente">›</button>
+          <button type="button" class="calendar-today" data-month-today>Hoy</button>
+        </div>
+        <div class="calendar-view" role="group" aria-label="Vista de partidos">
+          <button type="button" data-view="grid" aria-pressed="true">Calendario</button>
+          <button type="button" data-view="list" aria-pressed="false">Lista</button>
+        </div>
+      </div>
+      <p class="calendar-notice" role="status" data-calendar-status></p>
+      <div class="calendar-next" data-calendar-next></div>
+      <div class="calendar-results-heading"><div><p class="eyebrow">CADA JORNADA CUENTA</p><h2>Los encuentros</h2></div><p data-calendar-count></p></div>
+      <div class="calendar-content" data-calendar-content aria-live="polite"></div>
+      <p class="sports-source">Datos oficiales RFAF · <span data-calendar-updated>Primera copia verificada el {firstTeamSource.checkedOn}</span>. <a href={firstTeamSource.resultsUrl} data-calendar-source target="_blank" rel="noopener noreferrer">Consultar la competición ↗</a></p>
+    </div>
+  </section>
+
+  <section class="section section--tint" id="clasificacion"><div class="container"><div class="section-heading"><div><p class="eyebrow">3.ª DIVISIÓN F.S. · GRUPO 17</p><h2>Clasificación del primer equipo</h2><p class="section-heading__intro">Tabla oficial del grupo 17. La posición puede cambiar tras cada jornada.</p></div></div><StandingsTable /><p class="sports-source"><a href={firstTeamSource.standingsUrl} target="_blank" rel="noopener noreferrer">Ver clasificación actualizada en la RFAF ↗</a></p></div></section>
+
+  <dialog class="calendar-dialog" data-match-dialog aria-labelledby="calendar-dialog-title">
+    <div class="calendar-dialog__head"><p class="eyebrow">FICHA DEL PARTIDO</p><button type="button" data-dialog-close aria-label="Cerrar detalles">×</button></div>
+    <div data-dialog-content></div>
+  </dialog>
 </BaseLayout>
-<script>import '../scripts/public-sports.ts';</script>
+<script>import '../scripts/calendar.ts'; import '../scripts/public-sports.ts';</script>
