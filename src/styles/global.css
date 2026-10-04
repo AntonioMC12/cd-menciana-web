@@ -218,6 +218,22 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .club-identity__mark { width: min(370px, 100%); height: auto; filter: drop-shadow(0 16px 25px rgb(13 46 91 / 10%)); }
 .club-identity p:not(.eyebrow) { color: var(--muted); }
 .team-section + .team-section { margin-top: 70px; }
+.team-panel + .team-panel { margin-top: 0; }
+.team-panel[hidden] { display: none; }
+.team-selector { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 48px; padding-bottom: 25px; border-bottom: 1px solid var(--line); }
+.team-selector a { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 15px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--ui-navy); font-size: .76rem; font-weight: 800; line-height: 1.3; }
+.team-selector a:hover, .team-selector a:focus-visible { border-color: var(--ui-blue); color: var(--ui-blue-ink); }
+.team-selector a[aria-current="true"] { border-color: var(--ui-navy); background: var(--ui-navy); color: white; }
+.team-competition__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.team-competition__block, .team-competition__standings { min-width: 0; }
+.team-competition__block h3, .team-competition__standings h3, .team-roster > h3 { margin-bottom: 20px; font-size: 1.45rem; }
+.team-competition__standings, .team-roster { margin-top: 55px; }
+.team-competition__grid .match-card__teams { gap: 8px; padding: 22px 16px; }
+.team-competition__grid .match-card__teams > div { flex-direction: column; justify-content: center; gap: 8px; text-align: center; }
+.team-competition__grid .match-card__teams strong { font-size: .75rem; }
+.team-competition__grid .team-crest, .team-competition__grid .team-initial { width: 48px; height: 48px; }
+.team-competition__grid .result-card { padding: 17px; }
+.team-competition__grid .result-card__teams h3 { font-size: .72rem; }
 .team-section__heading { display: flex; justify-content: space-between; gap: 24px; align-items: start; margin-bottom: 25px; }
 .team-section__heading h2 { margin-bottom: 8px; }
 .team-section__heading p:last-child { color: var(--muted); }
@@ -334,6 +350,7 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
   .club-banner__inner { grid-template-columns: 1fr; padding: 60px 0; }
   .club-banner__graphic { display: none; }
   .values-grid, .player-grid { grid-template-columns: 1fr 1fr; }
+  .team-competition__grid { grid-template-columns: 1fr; }
   .split-intro, .club-identity, .contact-grid { grid-template-columns: 1fr; gap: 35px; }
   .club-identity__mark { margin: auto; }
   .article-layout { grid-template-columns: 1fr; gap: 30px; }
@@ -346,6 +363,8 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
   .site-header__bar { letter-spacing: .12em; }
   .page-hero { padding: 68px 0; }
   .page-hero h1 { font-size: clamp(3.2rem, 13vw, 5rem); }
+  .team-selector { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .team-selector a { justify-content: center; text-align: center; }
   .hero h1 { font-size: 3.55rem; }
   .hero__actions { flex-direction: column; align-items: stretch; }
   .hero__art { height: 290px; }

@@ -23,11 +23,11 @@ const crest = (team: string, logo?: string, result = false) => {
   }
   return result ? null : element('span', 'team-initial team-initial--muted', team.charAt(0));
 };
-const matchCard = (match?: Match, first = false) => {
+export const matchCard = (match?: Match, first = false) => {
   const card = element('article', `match-card${first ? ' match-card--prominent' : ''}`);
   if (first) card.id = 'proximo-partido';
   const top = element('div', 'match-card__top');
-  top.append(element('span', 'pill pill--blue', 'Próximo partido'), element('span', '', match?.round || 'Por confirmar'));
+  top.append(element('span', 'pill pill--blue', first ? 'Próximo partido' : 'Próxima jornada'), element('span', '', match?.round || 'Por confirmar'));
   const teams = element('div', 'match-card__teams');
   for (const [index, name, logo] of [[0, match?.homeTeam || 'CD Menciana', match?.homeLogo], [1, match?.awayTeam || 'Rival por confirmar', match?.awayLogo]] as const) {
     if (index === 1) teams.append(element('span', 'versus', 'VS'));
@@ -63,24 +63,25 @@ const resultCard = (match: Match) => {
   card.append(detail, score);
   return card;
 };
-const sorted = (matches: Match[]) => ({
+export const sorted = (matches: Match[]) => ({
   upcoming: matches.filter(match => match.status === 'scheduled').sort((a, b) => (a.date || '').localeCompare(b.date || '')),
   results: matches.filter(match => match.status === 'finished').sort((a, b) => (b.date || '').localeCompare(a.date || '')),
 });
-const renderResults = (target: Element | null, matches: Match[]) => {
+export const renderResults = (target: Element | null, matches: Match[]) => {
   if (!target) return;
   if (!matches.length) { target.replaceChildren(element('p', 'empty-panel', 'Aún no hay resultados publicados.')); return; }
   const list = element('div', 'results-list');
   list.append(...matches.map(resultCard));
   target.replaceChildren(list);
 };
-const renderStandings = (target: Element | null, rows: StandingRow[]) => {
+export const renderStandings = (target: Element | null, rows: StandingRow[]) => {
   if (!target) return;
   target.replaceChildren(...rows.map(row => {
-    const tr = element('tr', row.isFirstTeam ? 'standings-table__ours' : '');
+    const ours = row.isClub || row.isFirstTeam;
+    const tr = element('tr', ours ? 'standings-table__ours' : '');
     const position = element('th', '', String(row.position)); position.setAttribute('scope', 'row');
     const team = element('td', '', row.team);
-    if (row.isFirstTeam) team.append(element('span', 'standings-table__tag', 'Nuestro equipo'));
+    if (ours) team.append(element('span', 'standings-table__tag', 'Nuestro equipo'));
     const points = element('td'); points.append(element('strong', '', String(row.points)));
     tr.append(position, team, points, ...[row.played, row.won, row.drawn, row.lost, row.goalsFor, row.goalsAgainst].map(value => element('td', '', String(value))));
     return tr;
@@ -106,4 +107,4 @@ async function refresh() {
     if (location.hash === '#proximo-partido' && list) document.getElementById('proximo-partido')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (cause) { console.warn('Se conserva la última información deportiva publicada.', cause); }
 }
-void refresh();
+if (document.querySelector('[data-sports-home-next], [data-sports-upcoming]')) void refresh();

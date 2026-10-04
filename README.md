@@ -34,9 +34,11 @@ Edita `src/data/site.ts`. Los tipos están en `src/data/types.ts`:
 
 Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. La lista de jugadores permanece vacía hasta recibir datos confirmados. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
 
-### Calendario y clasificación del primer equipo
+### Calendario y clasificación de los equipos
 
 El Worker consulta cada hora el [visor oficial RFAF](https://stars.rfaf.es/) para el grupo 17 de 3.ª División F.S. de la temporada 2026/27 (delegación `9`, competición `48466108`, grupo `48466109`). Guarda calendario, resultados y clasificación en D1; la web los obtiene de `GET /api/sports` sin reconstruir GitHub Pages. Si el visor falla o cambia de formato, conserva la última copia válida. `src/data/first-team.ts` es la instantánea inicial que se muestra mientras carga la API o si no está disponible. La página de calendario muestra cuándo se sincronizó y enlaza a la RFAF. Para cambiar de temporada hay que actualizar los identificadores, el límite de jornadas, la clave de la instantánea y los datos iniciales.
+
+La página **Equipos** permite elegir entre los siete equipos. El primer equipo, filial, cadete e infantil muestran próximos partidos, resultados y clasificación. Las tres escuelas muestran solo su nombre. El Worker guarda una instantánea por equipo y expone `GET /api/sports?team=filial`, `?team=cadete` y `?team=infantil`, además de la ruta sin parámetro del primer equipo. Los grupos y enlaces oficiales se definen en `src/data/team-competitions.ts`. Al comenzar una temporada nueva hay que verificar allí los identificadores de competición y grupo de cada equipo.
 
 Los escudos de los rivales publicados hasta la jornada 7 están en `public/images/equipos/` y proceden de las fichas de partido de la RFAF consultadas el 4 de octubre de 2026. Las jornadas nuevas se muestran automáticamente; sus escudos requieren guardar el archivo en esa carpeta y añadir la ruta en `src/data/first-team.ts`.
 

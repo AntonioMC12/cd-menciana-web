@@ -12,7 +12,7 @@ describe('RFAF sports parser', () => {
   it('reads the published standing order and finds the first team', () => {
     const rows = parseStandings(`<table class="novanet-classification-table"><tbody>${fixtureRows}</tbody></table>`);
     expect(rows).toHaveLength(16);
-    expect(rows[6]).toMatchObject({ position: 7, team: 'CD Menciana', points: 7, played: 4, isFirstTeam: true });
+    expect(rows[6]).toMatchObject({ position: 7, team: 'RAVI Obras & Servicios Apaga y Vámonos', points: 7, played: 4, isFirstTeam: true });
   });
 
   it('reads one official match without treating a pending kickoff as a played result', () => {
@@ -31,6 +31,15 @@ describe('RFAF sports parser', () => {
     for (let round = 1; round <= 7; round++) {
       const page = readFileSync(fileURLToPath(new URL(`../tmp/rfaf-j${round}.html`, import.meta.url)), 'utf8');
       expect(parseTeamMatch(page, round)?.id).toBe(`2026-27-j${round}`);
+    }
+  });
+
+  it.skipIf(!existsSync(fileURLToPath(new URL('../tmp/rfaf-cadete-classification.html', import.meta.url))))('reads the three youth and reserve team groups', () => {
+    for (const [teamId, round] of [['filial', 1], ['cadete', 2], ['infantil', 2]] as const) {
+      const standingsPage = readFileSync(fileURLToPath(new URL(`../tmp/rfaf-${teamId}-classification.html`, import.meta.url)), 'utf8');
+      const resultsPage = readFileSync(fileURLToPath(new URL(`../tmp/rfaf-${teamId}-results.html`, import.meta.url)), 'utf8');
+      expect(parseStandings(standingsPage, teamId).filter(row => row.isClub)).toHaveLength(1);
+      expect(parseTeamMatch(resultsPage, round, teamId)).toMatchObject({ id: `2026-27-${teamId}-j${round}`, status: 'finished' });
     }
   });
 });

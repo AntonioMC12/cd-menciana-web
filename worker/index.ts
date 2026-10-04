@@ -13,6 +13,7 @@ import adminHtml from './admin.html.txt';
 import adminCss from './admin.css.txt';
 import adminJs from './admin-client.txt';
 import { getSportsSnapshot, syncSports } from './sports';
+import { competitiveTeamIds, teamCompetitions, type CompetitiveTeamId } from '../src/data/team-competitions';
 
 const html = (value: string, status = 200) => new Response(value, { status, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'content-security-policy': "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'" } });
 const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
@@ -115,7 +116,9 @@ export default {
         }
       }
       if (path === '/api/sports' && method === 'GET') {
-        const snapshot = await getSportsSnapshot() || await syncSports();
+        const teamId = url.searchParams.get('team') || 'primer-equipo';
+        if (!Object.hasOwn(teamCompetitions, teamId)) return cors(error('Equipo no encontrado.', 404), request);
+        const snapshot = await getSportsSnapshot(teamId as CompetitiveTeamId) || await syncSports(teamId as CompetitiveTeamId);
         return cors(json(snapshot), request);
       }
       if (parts[0] === 'api' && method === 'OPTIONS' && (parts[1] === 'posts' || parts[1] === 'albums' || parts[1] === 'sports')) return cors(new Response(null, { status: 204 }), request);
@@ -126,7 +129,9 @@ export default {
     }
   },
   async scheduled(): Promise<void> {
-    try { await syncSports(); }
-    catch (cause) { console.error('No se pudo actualizar la competición RFAF; se conserva la última copia.', cause); }
+    for (const teamId of competitiveTeamIds) {
+      try { await syncSports(teamId); }
+      catch (cause) { console.error(`No se pudo actualizar la competición RFAF de ${teamId}; se conserva la última copia.`, cause); }
+    }
   },
 };

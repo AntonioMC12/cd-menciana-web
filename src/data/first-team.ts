@@ -33,6 +33,7 @@ export interface StandingRow {
   goalsFor: number;
   goalsAgainst: number;
   isFirstTeam?: boolean;
+  isClub?: boolean;
 }
 
 // Preserve RFAF's published order, including any disciplinary adjustments.

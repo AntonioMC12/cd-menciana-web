@@ -17,12 +17,18 @@ export const site = {
 export const teams: Team[] = [
   {
     id: 'primer-equipo',
-    name: 'RAVI Obras & Servicios Apaga y Vámonos',
+    name: 'Primer Equipo RAVI Obras & Servicios',
     category: '3.ª División F.S. · Grupo 17',
     season: site.season,
-    description: 'Nuestro primer equipo compite en el grupo 17 de Tercera División de fútbol sala.',
+    description: 'Apaga y Vámonos compite en el grupo 17 de Tercera División de fútbol sala.',
     status: 'confirmed',
   },
+  { id: 'filial', name: 'Filial', category: '2.ª Andaluza Sénior F.S. · Grupo A', season: site.season, description: 'El filial compite en la liga sénior de Córdoba.', status: 'confirmed' },
+  { id: 'cadete', name: 'Cadete', category: '2.ª Andaluza Cadete F.S. · Grupo A', season: site.season, description: 'El equipo cadete compite en la liga provincial de Córdoba.', status: 'confirmed' },
+  { id: 'infantil', name: 'Infantil Centro Cicloturista Subbética', category: '2.ª Andaluza Infantil F.S. · Grupo B', season: site.season, description: 'El equipo infantil compite en la liga provincial de Córdoba.', status: 'confirmed' },
+  { id: 'escuela-alevin-infantil', name: 'Escuela Alevín/Infantil', category: 'Escuela', season: site.season, description: '', status: 'confirmed' },
+  { id: 'escuela-alevin', name: 'Escuela Alevín', category: 'Escuela', season: site.season, description: '', status: 'confirmed' },
+  { id: 'escuela-chupete', name: 'Escuela Chupete', category: 'Escuela', season: site.season, description: '', status: 'confirmed' },
 ];
 
 // Player records stay empty until the club provides verified information.

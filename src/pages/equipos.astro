@@ -1,16 +1,49 @@
 ---
 import ArrowIcon from '../components/ArrowIcon.astro';
-import { sitePath } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MatchCard from '../components/MatchCard.astro';
 import PlayerCard from '../components/PlayerCard.astro';
-import { players, teams } from '../data/site';
+import ResultCard from '../components/ResultCard.astro';
+import StandingsTable from '../components/StandingsTable.astro';
+import { firstTeamSource } from '../data/first-team';
+import { getTeamCompetition, rfafWidgetUrl } from '../data/team-competitions';
+import { players, recentResults, teams, upcomingMatches } from '../data/site';
+import { sitePath } from '../lib/paths';
+
 const provisionalPhotos = Array.from({ length: 15 }, (_, index) => ({
   number: String(index + 1).padStart(2, '0'),
   photo: sitePath(`/images/jugadores/plantilla-${String(index + 1).padStart(2, '0')}.webp`),
 }));
 ---
-<BaseLayout title="Equipos y plantilla" description="Primer equipo y fotografías de la plantilla del CD Menciana para la temporada 2026/27.">
-  <section class="page-hero"><div class="container"><p class="eyebrow">EL CLUB / EQUIPOS</p><h1>El equipo<br /><em>hace el club.</em></h1><p>Conoce nuestras categorías y a quienes defienden el azul en la pista.</p></div></section>
-  <section class="section"><div class="container">{teams.map((team) => <section class="team-section"><div class="team-section__heading"><div><p class="eyebrow">TEMPORADA {team.season}</p><h2>{team.name}</h2><p>{team.description}</p></div><span class="pill">{team.category}</span></div>{players.filter((player) => player.teamId === team.id).length ? <div class="player-grid">{players.filter((player) => player.teamId === team.id).map((player) => <PlayerCard player={player} />)}</div> : <><p class="section-heading__intro">Fotografías facilitadas por el club. Los nombres, dorsales y posiciones se incorporarán cuando estén identificados.</p><div class="player-grid">{provisionalPhotos.map((item) => <article class="player-card"><div class="player-card__portrait"><img src={item.photo} alt={`Retrato de la plantilla, foto ${item.number}`} loading="lazy" decoding="async" /></div><div class="player-card__details"><span>Foto {item.number}</span><h3>Nombre pendiente</h3></div></article>)}</div></>}</section>)}</div></section>
-  <section class="section section--tint"><div class="container feature-strip"><div><p class="eyebrow">SIGUE LA TEMPORADA</p><h2>Cada jornada cuenta.</h2><p>Consulta los partidos y la clasificación del primer equipo en 3.ª División F.S., grupo 17.</p></div><a class="button button--blue" href={sitePath('/calendario/#clasificacion')}>Ver clasificación <ArrowIcon /></a></div></section>
+
+<BaseLayout title="Equipos y plantilla" description="Los equipos del CD Menciana, sus partidos, resultados y clasificaciones de la temporada 2026/27.">
+  <section class="page-hero"><div class="container"><p class="eyebrow">EL CLUB / EQUIPOS</p><h1>El equipo<br /><em>hace el club.</em></h1><p>Elige una categoría para conocerla y seguir su temporada.</p></div></section>
+
+  <section class="section"><div class="container">
+    <nav class="team-selector" aria-label="Seleccionar equipo">
+      {teams.map((team) => <a href={`#${team.id}`} data-team-link={team.id}>{team.name}</a>)}
+    </nav>
+
+    {teams.map((team) => {
+      const competition = getTeamCompetition(team.id);
+      const teamPlayers = players.filter((player) => player.teamId === team.id);
+      return <section class="team-section team-panel" id={team.id} data-team-panel={team.id}>
+        <div class="team-section__heading"><div><p class="eyebrow">TEMPORADA {team.season}</p><h2>{team.name}</h2>{team.description && <p>{team.description}</p>}</div>{competition && <span class="pill">{team.category}</span>}</div>
+
+        {competition && <div data-team-sports={team.id}>
+          <div class="team-competition__grid">
+            <div class="team-competition__block"><h3>Próximos partidos</h3><div class="match-list" data-team-upcoming>{team.id === 'primer-equipo' ? upcomingMatches.map((match) => <MatchCard match={match} />) : <p class="empty-panel">Cargando partidos…</p>}</div></div>
+            <div class="team-competition__block"><h3>Resultados</h3><div data-team-results>{team.id === 'primer-equipo' ? <div class="results-list">{recentResults.map((match) => <ResultCard match={match} />)}</div> : <p class="empty-panel">Cargando resultados…</p>}</div></div>
+          </div>
+          <div class="team-competition__standings"><h3>Clasificación</h3>{team.id === 'primer-equipo' ? <StandingsTable /> : <div class="standings-scroll" role="region" aria-label={`Clasificación de ${team.name}`} tabindex="0"><table class="standings-table"><caption>{team.category} · Temporada 2026/27</caption><thead><tr><th scope="col">#</th><th scope="col">Equipo</th><th scope="col">Pts</th><th scope="col">PJ</th><th scope="col">G</th><th scope="col">E</th><th scope="col">P</th><th scope="col">GF</th><th scope="col">GC</th></tr></thead><tbody data-team-standings><tr><td colspan="9">Cargando clasificación…</td></tr></tbody></table></div>}</div>
+          <p class="sports-source">Datos de la RFAF · <span data-team-updated>{team.id === 'primer-equipo' ? `copia del ${firstTeamSource.checkedOn}` : 'cargando…'}</span>. <a href={rfafWidgetUrl(competition, 'results')}>Resultados oficiales ↗</a> · <a href={rfafWidgetUrl(competition, 'classification')}>Clasificación oficial ↗</a></p>
+        </div>}
+
+        {team.id === 'primer-equipo' && <div class="team-roster"><h3>Plantilla</h3>{teamPlayers.length ? <div class="player-grid">{teamPlayers.map((player) => <PlayerCard player={player} />)}</div> : <><p class="section-heading__intro">Fotografías facilitadas por el club. Los nombres, dorsales y posiciones se incorporarán cuando estén identificados.</p><div class="player-grid">{provisionalPhotos.map((item) => <article class="player-card"><div class="player-card__portrait"><img src={item.photo} alt={`Retrato de la plantilla, foto ${item.number}`} loading="lazy" decoding="async" /></div><div class="player-card__details"><span>Foto {item.number}</span><h3>Nombre pendiente</h3></div></article>)}</div></>}</div>}
+      </section>;
+    })}
+  </div></section>
+
+  <section class="section section--tint"><div class="container feature-strip"><div><p class="eyebrow">SIGUE LA TEMPORADA</p><h2>Cada jornada cuenta.</h2><p>Consulta el calendario completo y la clasificación del primer equipo en 3.ª División F.S., grupo 17.</p></div><a class="button button--blue" href={sitePath('/calendario/#clasificacion')}>Ver calendario <ArrowIcon /></a></div></section>
 </BaseLayout>
+<script>import '../scripts/team-selector.ts'; import '../scripts/team-sports.ts';</script>
