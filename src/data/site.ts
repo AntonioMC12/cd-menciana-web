@@ -41,6 +41,7 @@ export const players: Player[] = [
   { id: 'cala', teamId: 'primer-equipo', name: 'Cala', number: 5, photo: '/images/jugadores/cala.webp', status: 'confirmed' },
   { id: 'mara', teamId: 'primer-equipo', name: 'Mara', number: 7, photo: '/images/jugadores/mara.webp', status: 'confirmed' },
   { id: 'cabezas', teamId: 'primer-equipo', name: 'Cabezas', number: 8, photo: '/images/jugadores/cabezas.webp', status: 'confirmed' },
+  { id: 'tamajon', teamId: 'primer-equipo', name: 'Tamajón', number: 9, photo: '/images/jugadores/tamajon.webp', status: 'confirmed' },
   { id: 'david', teamId: 'primer-equipo', name: 'David', number: 10, photo: '/images/jugadores/david.webp', status: 'confirmed' },
   { id: 'jesus', teamId: 'primer-equipo', name: 'Jesús C.', number: 11, photo: '/images/jugadores/jesus.webp', status: 'confirmed' },
   { id: 'keko', teamId: 'primer-equipo', name: 'Keko', number: 13, photo: '/images/jugadores/keko.webp', status: 'confirmed' },
