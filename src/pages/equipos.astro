@@ -22,7 +22,9 @@ import { sitePath } from '../lib/paths';
 
     {teams.map((team) => {
       const competition = getTeamCompetition(team.id);
-      const teamPlayers = players.filter((player) => player.teamId === team.id);
+      const teamPlayers = players
+        .filter((player) => player.teamId === team.id)
+        .sort((a, b) => Number(b.position === 'Portero') - Number(a.position === 'Portero') || (a.number ?? Infinity) - (b.number ?? Infinity));
       return <section class="team-section team-panel" id={team.id} data-team-panel={team.id}>
         <div class="team-section__heading"><div><p class="eyebrow">TEMPORADA {team.season}</p><h2>{team.name}</h2>{team.description && <p>{team.description}</p>}</div>{competition && <span class="pill">{team.category}</span>}</div>
 

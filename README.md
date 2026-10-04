@@ -32,7 +32,7 @@ Edita `src/data/site.ts`. Los tipos están en `src/data/types.ts`:
 - Las noticias reales y los álbumes se gestionan en `/admin/` y se almacenan en D1.
 - `sponsors`: entidad, logotipo, tipo (`sponsor` o `institutional`), nivel de colaboración y URL opcional. Los patrocinadores principales, los demás patrocinadores y las entidades públicas se muestran por separado.
 
-Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los nombres o apodos de la plantilla proceden de los archivos facilitados por el club; los dorsales y posiciones siguen pendientes. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
+Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los nombres o apodos de la plantilla proceden de los archivos facilitados por el club. Los dorsales y la posición de los porteros se actualizaron con la lista del club; Adri Luna sigue sin dorsal y Tamajón todavía no se incorpora. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
 
 ### Calendario y clasificación de los equipos
 
@@ -64,7 +64,7 @@ La paleta web difiere ligeramente de la paleta general. Las variables `--ui-*` s
 
 ## Pendiente antes del lanzamiento
 
-- Confirmación de dorsales y posiciones de los jugadores.
+- Confirmación del dorsal de Adri Luna y de las posiciones de los jugadores de campo.
 - Plantilla confirmada y noticias reales; actualización periódica de calendario, sedes, resultados y clasificación.
 - Correo, dirección y redes sociales institucionales verificadas.
 - Dominio personalizado, si el club decide usar uno.

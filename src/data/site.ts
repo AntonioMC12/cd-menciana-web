@@ -31,24 +31,24 @@ export const teams: Team[] = [
   { id: 'escuela-chupete', name: 'Escuela Chupete', category: 'Escuela', season: site.season, description: '', status: 'confirmed' },
 ];
 
-// Names are the player names/nicknames supplied with the club photos.
-// Numbers and positions remain unset until the club provides them.
+// Numbers, names and goalkeeper positions supplied by the club.
+// Field-player positions remain unset until the club confirms them.
 export const players: Player[] = [
+  { id: 'raton', teamId: 'primer-equipo', name: 'Ratón', number: 1, position: 'Portero', photo: '/images/jugadores/raton.webp', status: 'confirmed' },
+  { id: 'alex', teamId: 'primer-equipo', name: 'Álex', number: 3, position: 'Portero', photo: '/images/jugadores/alex.webp', status: 'confirmed' },
+  { id: 'melli', teamId: 'primer-equipo', name: 'Melli', number: 15, position: 'Portero', photo: '/images/jugadores/melli.webp', status: 'confirmed' },
+  { id: 'campitos', teamId: 'primer-equipo', name: 'Campitos', number: 4, photo: '/images/jugadores/campitos.webp', status: 'confirmed' },
+  { id: 'cala', teamId: 'primer-equipo', name: 'Cala', number: 5, photo: '/images/jugadores/cala.webp', status: 'confirmed' },
+  { id: 'mara', teamId: 'primer-equipo', name: 'Mara', number: 7, photo: '/images/jugadores/mara.webp', status: 'confirmed' },
+  { id: 'cabezas', teamId: 'primer-equipo', name: 'Cabezas', number: 8, photo: '/images/jugadores/cabezas.webp', status: 'confirmed' },
+  { id: 'david', teamId: 'primer-equipo', name: 'David', number: 10, photo: '/images/jugadores/david.webp', status: 'confirmed' },
+  { id: 'jesus', teamId: 'primer-equipo', name: 'Jesús C.', number: 11, photo: '/images/jugadores/jesus.webp', status: 'confirmed' },
+  { id: 'keko', teamId: 'primer-equipo', name: 'Keko', number: 13, photo: '/images/jugadores/keko.webp', status: 'confirmed' },
+  { id: 'juanbo', teamId: 'primer-equipo', name: 'Juan Bonilla', number: 20, photo: '/images/jugadores/juanbo.webp', status: 'confirmed' },
+  { id: 'borrallo', teamId: 'primer-equipo', name: 'Borrallo', number: 22, photo: '/images/jugadores/borrallo.webp', status: 'confirmed' },
+  { id: 'isaac', teamId: 'primer-equipo', name: 'Isaac', number: 23, photo: '/images/jugadores/isaac.webp', status: 'confirmed' },
+  { id: 'tetur', teamId: 'primer-equipo', name: 'Tetur', number: 27, photo: '/images/jugadores/tetur.webp', status: 'confirmed' },
   { id: 'adri-luna', teamId: 'primer-equipo', name: 'Adri Luna', photo: '/images/jugadores/adri-luna.webp', status: 'confirmed' },
-  { id: 'alex', teamId: 'primer-equipo', name: 'Álex', photo: '/images/jugadores/alex.webp', status: 'confirmed' },
-  { id: 'borrallo', teamId: 'primer-equipo', name: 'Borrallo', photo: '/images/jugadores/borrallo.webp', status: 'confirmed' },
-  { id: 'cabezas', teamId: 'primer-equipo', name: 'Cabezas', photo: '/images/jugadores/cabezas.webp', status: 'confirmed' },
-  { id: 'cala', teamId: 'primer-equipo', name: 'Cala', photo: '/images/jugadores/cala.webp', status: 'confirmed' },
-  { id: 'campitos', teamId: 'primer-equipo', name: 'Campitos', photo: '/images/jugadores/campitos.webp', status: 'confirmed' },
-  { id: 'david', teamId: 'primer-equipo', name: 'David', photo: '/images/jugadores/david.webp', status: 'confirmed' },
-  { id: 'isaac', teamId: 'primer-equipo', name: 'Isaac', photo: '/images/jugadores/isaac.webp', status: 'confirmed' },
-  { id: 'jesus', teamId: 'primer-equipo', name: 'Jesús', photo: '/images/jugadores/jesus.webp', status: 'confirmed' },
-  { id: 'juanbo', teamId: 'primer-equipo', name: 'Juanbo', photo: '/images/jugadores/juanbo.webp', status: 'confirmed' },
-  { id: 'keko', teamId: 'primer-equipo', name: 'Keko', photo: '/images/jugadores/keko.webp', status: 'confirmed' },
-  { id: 'mara', teamId: 'primer-equipo', name: 'Mara', photo: '/images/jugadores/mara.webp', status: 'confirmed' },
-  { id: 'melli', teamId: 'primer-equipo', name: 'Melli', photo: '/images/jugadores/melli.webp', status: 'confirmed' },
-  { id: 'raton', teamId: 'primer-equipo', name: 'Ratón', photo: '/images/jugadores/raton.webp', status: 'confirmed' },
-  { id: 'tetur', teamId: 'primer-equipo', name: 'Tetur', photo: '/images/jugadores/tetur.webp', status: 'confirmed' },
 ];
 export const matches: Match[] = firstTeamMatches;
 export const sponsors: Sponsor[] = [
