@@ -11,7 +11,11 @@ export const site = {
   // Replace with verified institutional details before launch.
   email: undefined as string | undefined,
   address: undefined as string | undefined,
-  socials: [] as { label: string; url: string }[],
+  socials: [
+    { label: 'Instagram', url: 'https://www.instagram.com/cdmencianaapagayvamonosfs/' },
+    { label: 'X', url: 'https://x.com/ApagayVamonosFS' },
+    { label: 'Facebook', url: 'https://www.facebook.com/CDMencianaApagayVamonosFS/' },
+  ] as { label: string; url: string }[],
 };
 
 export const teams: Team[] = [
@@ -53,8 +57,8 @@ export const players: Player[] = [
 ];
 export const matches: Match[] = firstTeamMatches;
 export const sponsors: Sponsor[] = [
-  { id: 'capricho-andaluz', name: 'Capricho Andaluz', logo: '/images/patrocinadores/capricho-andaluz.png', kind: 'sponsor', tier: 'principal', status: 'confirmed' },
-  { id: 'ravi', name: 'RAVI', logo: '/images/patrocinadores/ravi.png', kind: 'sponsor', tier: 'principal', status: 'confirmed' },
+  { id: 'capricho-andaluz', name: 'Capricho Andaluz', logo: '/images/patrocinadores/capricho-andaluz.png', website: 'https://caprichoandaluz.com/', kind: 'sponsor', tier: 'principal', status: 'confirmed' },
+  { id: 'ravi', name: 'RAVI', logo: '/images/patrocinadores/ravi.png', website: 'https://ravi.es/', kind: 'sponsor', tier: 'principal', status: 'confirmed' },
   { id: 'wedding', name: 'Wedding Festival', logo: '/images/patrocinadores/wedding.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'tercera-division-futsal', name: '3ª División Futsal', logo: '/images/patrocinadores/tercera-division-futsal.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'area-pub', name: 'Área Pub', logo: '/images/patrocinadores/area-pub.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },

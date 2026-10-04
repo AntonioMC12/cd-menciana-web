@@ -15,5 +15,6 @@ const label = sponsor.tier === 'principal'
     </span>
     <span class="sponsor-card__name">{sponsor.name}</span>
     <span class="sponsor-card__tier">{label}</span>
+    {sponsor.website && <span class="sponsor-card__visit">Visitar web <span aria-hidden="true">↗</span></span>}
   </Tag>
 </article>
