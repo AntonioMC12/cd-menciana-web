@@ -223,8 +223,8 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .team-section__heading p:last-child { color: var(--muted); }
 .player-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
 .player-card { overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: white; }
-.player-card__portrait { display: grid; place-items: center; height: 235px; background: linear-gradient(135deg, #dbeefa, #87c3eb); }
-.player-card__portrait img { width: 100%; height: 100%; object-fit: cover; }
+.player-card__portrait { display: grid; place-items: center; aspect-ratio: 4 / 5; background: linear-gradient(135deg, #dbeefa, #87c3eb); }
+.player-card__portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
 .player-card__portrait span { color: #fff; font-size: 6rem; font-weight: 800; }
 .player-card__details { position: relative; padding: 17px; }
 .player-card__details span { color: var(--ui-blue-ink); font-size: .65rem; font-weight: 800; text-transform: uppercase; }

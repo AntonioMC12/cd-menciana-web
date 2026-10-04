@@ -5,6 +5,6 @@ interface Props { player: Player }
 const { player } = Astro.props;
 ---
 <article class="player-card">
-  <div class="player-card__portrait">{player.photo ? <img src={sitePath(player.photo)} alt={`Retrato de ${player.name}`} loading="lazy" /> : <span aria-hidden="true">{player.number ?? '—'}</span>}</div>
-  <div class="player-card__details"><span>{player.position || 'Posición por confirmar'}</span><h3>{player.name}</h3>{player.number !== undefined && <strong>#{player.number}</strong>}</div>
+  <div class="player-card__portrait">{player.photo ? <img src={sitePath(player.photo)} alt={`Retrato de ${player.name}`} loading="lazy" decoding="async" /> : <span aria-hidden="true">{player.number ?? '—'}</span>}</div>
+  <div class="player-card__details">{player.position && <span>{player.position}</span>}<h3>{player.name}</h3>{player.number !== undefined && <strong>#{player.number}</strong>}</div>
 </article>

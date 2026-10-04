@@ -4,9 +4,13 @@ import { sitePath } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PlayerCard from '../components/PlayerCard.astro';
 import { players, teams } from '../data/site';
+const provisionalPhotos = Array.from({ length: 15 }, (_, index) => ({
+  number: String(index + 1).padStart(2, '0'),
+  photo: sitePath(`/images/jugadores/plantilla-${String(index + 1).padStart(2, '0')}.webp`),
+}));
 ---
-<BaseLayout title="Equipos y plantilla" description="Equipos y plantilla del CD Menciana. Datos oficiales en preparación.">
+<BaseLayout title="Equipos y plantilla" description="Primer equipo y fotografías de la plantilla del CD Menciana para la temporada 2026/27.">
   <section class="page-hero"><div class="container"><p class="eyebrow">EL CLUB / EQUIPOS</p><h1>El equipo<br /><em>hace el club.</em></h1><p>Conoce nuestras categorías y a quienes defienden el azul en la pista.</p></div></section>
-  <section class="section"><div class="container">{teams.map((team) => <section class="team-section"><div class="team-section__heading"><div><p class="eyebrow">TEMPORADA {team.season}</p><h2>{team.name}</h2><p>{team.description}</p></div><span class="pill">{team.category}</span></div>{players.filter((player) => player.teamId === team.id).length ? <div class="player-grid">{players.filter((player) => player.teamId === team.id).map((player) => <PlayerCard player={player} />)}</div> : <div class="empty-panel"><div class="empty-panel__icon" aria-hidden="true">#</div><h3>Plantilla pendiente de confirmar</h3><p>Los nombres, dorsales, posiciones y fotografías se publicarán con información facilitada por el club.</p></div>}</section>)}</div></section>
+  <section class="section"><div class="container">{teams.map((team) => <section class="team-section"><div class="team-section__heading"><div><p class="eyebrow">TEMPORADA {team.season}</p><h2>{team.name}</h2><p>{team.description}</p></div><span class="pill">{team.category}</span></div>{players.filter((player) => player.teamId === team.id).length ? <div class="player-grid">{players.filter((player) => player.teamId === team.id).map((player) => <PlayerCard player={player} />)}</div> : <><p class="section-heading__intro">Fotografías facilitadas por el club. Los nombres, dorsales y posiciones se incorporarán cuando estén identificados.</p><div class="player-grid">{provisionalPhotos.map((item) => <article class="player-card"><div class="player-card__portrait"><img src={item.photo} alt={`Retrato de la plantilla, foto ${item.number}`} loading="lazy" decoding="async" /></div><div class="player-card__details"><span>Foto {item.number}</span><h3>Nombre pendiente</h3></div></article>)}</div></>}</section>)}</div></section>
   <section class="section section--tint"><div class="container feature-strip"><div><p class="eyebrow">SIGUE LA TEMPORADA</p><h2>Cada jornada cuenta.</h2><p>Consulta los partidos y la clasificación del primer equipo en 3.ª División F.S., grupo 17.</p></div><a class="button button--blue" href={sitePath('/calendario/#clasificacion')}>Ver clasificación <ArrowIcon /></a></div></section>
 </BaseLayout>
