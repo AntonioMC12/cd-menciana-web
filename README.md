@@ -38,6 +38,8 @@ Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con da
 
 `src/data/first-team.ts` contiene una instantánea de los partidos publicados y la clasificación del grupo 17 de 3.ª División F.S. de la temporada 2026/27. La fuente es el [visor oficial RFAF](https://stars.rfaf.es/), con delegación `9`, competición `48466108` y grupo `48466109`. La web es estática: **estos datos no se actualizan automáticamente**. Para mantenerlos, contrasta resultados, horarios y clasificación con los enlaces oficiales de `firstTeamSource`, edita el archivo, cambia `checkedOn` y publica una nueva versión. No añadas jornadas que el visor aún no publique. La página de calendario muestra la fecha de consulta y enlaza a la versión actualizada de la RFAF.
 
+Los escudos de los rivales publicados hasta la jornada 7 están en `public/images/equipos/` y proceden de las fichas de partido de la RFAF consultadas el 4 de octubre de 2026. Al incorporar más jornadas, guarda el escudo del nuevo rival en esa carpeta y añade `homeLogo` o `awayLogo` al partido correspondiente.
+
 El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro` lo usa en la cabecera, el pie, la portada, la página del club, las tarjetas y los elementos decorativos; el favicon apunta al mismo archivo. La portada usa la foto de la plantilla a la derecha, como en la maqueta del manual de marca, con versiones WebP para móvil y escritorio y un JPEG de respaldo. Coloca otras fotografías y logotipos autorizados en `public/images/equipo/`, `public/images/jugadores/` y `public/images/patrocinadores/`.
 
 ## Estructura

@@ -111,8 +111,11 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .results-list, .match-list { display: grid; gap: 12px; }
 .result-card { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 22px 27px; border: 1px solid var(--line); border-radius: 8px; background: white; }
 .result-card__label { color: var(--ui-blue-ink); font-size: .65rem; font-weight: 800; text-transform: uppercase; }
-.result-card h3 { margin: 5px 0 0; font-size: 1rem; }
-.result-card h3 span { color: var(--ui-gold); }
+.result-card__detail { min-width: 0; flex: 1; }
+.result-card__teams { display: flex; align-items: center; gap: 12px; margin-top: 9px; }
+.result-card__teams h3 { display: flex; align-items: center; min-width: 0; flex: 1; gap: 9px; margin: 0; font-size: .88rem; line-height: 1.3; }
+.result-card__crest { flex: none; width: 38px; height: 38px; object-fit: contain; }
+.result-card__separator { color: var(--ui-gold); font-weight: 800; }
 .result-card__score { color: var(--ui-navy); font-size: 1.65rem; font-weight: 800; white-space: nowrap; }
 .result-card__score span { color: var(--ui-gold); }
 .sports-source { margin: 22px 0 0; color: var(--muted); font-size: .78rem; }
@@ -354,6 +357,11 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
   .team-initial { width: 50px; height: 50px; font-size: .75rem; }
   .team-crest { width: 50px; height: 50px; }
   .match-card__teams strong { font-size: .68rem; }
+  .result-card { align-items: flex-start; gap: 12px; padding: 16px; }
+  .result-card__teams { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .result-card__teams h3 { font-size: .76rem; }
+  .result-card__crest { width: 30px; height: 30px; }
+  .result-card__separator { display: none; }
   .versus { width: 30px; height: 30px; }
   .empty-panel--horizontal { flex-direction: column; align-items: start; text-align: left; }
   .empty-panel--horizontal .text-link { margin-left: 0; }

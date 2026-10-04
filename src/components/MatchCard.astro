@@ -1,5 +1,6 @@
 ---
 import Crest from './Crest.astro';
+import { sitePath } from '../lib/paths';
 import type { Match } from '../data/types';
 interface Props { match?: Match; prominent?: boolean }
 const { match, prominent = false } = Astro.props;
@@ -11,9 +12,9 @@ const awayIsClub = match?.awayTeam === 'CD Menciana';
 <article class:list={['match-card', { 'match-card--prominent': prominent }]}>
   <div class="match-card__top"><span class="pill pill--blue">Próximo partido</span><span>{match?.round || 'Por confirmar'}</span></div>
   <div class="match-card__teams">
-    <div>{homeIsClub ? <Crest class="team-crest" /> : <span class="team-initial team-initial--muted" aria-hidden="true">{match?.homeTeam?.charAt(0)}</span>}<strong>{match?.homeTeam || 'CD Menciana'}</strong></div>
+    <div>{homeIsClub ? <Crest class="team-crest" /> : match?.homeLogo ? <img class="team-crest" src={sitePath(match.homeLogo)} alt="" width="65" height="65" loading="lazy" decoding="async" /> : <span class="team-initial team-initial--muted" aria-hidden="true">{match?.homeTeam?.charAt(0)}</span>}<strong>{match?.homeTeam || 'CD Menciana'}</strong></div>
     <span class="versus">VS</span>
-    <div>{awayIsClub ? <Crest class="team-crest" /> : <span class="team-initial team-initial--muted" aria-hidden="true">{match?.awayTeam?.charAt(0) || '?'}</span>}<strong>{match?.awayTeam || 'Rival por confirmar'}</strong></div>
+    <div>{awayIsClub ? <Crest class="team-crest" /> : match?.awayLogo ? <img class="team-crest" src={sitePath(match.awayLogo)} alt="" width="65" height="65" loading="lazy" decoding="async" /> : <span class="team-initial team-initial--muted" aria-hidden="true">{match?.awayTeam?.charAt(0) || '?'}</span>}<strong>{match?.awayTeam || 'Rival por confirmar'}</strong></div>
   </div>
   <div class="match-card__bottom"><span>{date ? `${date}${hasTime ? '' : ' · hora pendiente'}` : 'Fecha y hora pendientes'}</span><span>{match?.venue || 'Sede por confirmar'}</span></div>
   {!match && <p class="data-note">Información pendiente de confirmación oficial.</p>}

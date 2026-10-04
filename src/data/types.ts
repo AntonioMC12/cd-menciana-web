@@ -25,6 +25,8 @@ export interface Match {
   round?: string;
   homeTeam: string;
   awayTeam: string;
+  homeLogo?: string;
+  awayLogo?: string;
   date?: string; // ISO 8601, including the timezone when known.
   venue?: string;
   homeScore?: number;
