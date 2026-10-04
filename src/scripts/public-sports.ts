@@ -14,7 +14,8 @@ const date = (value: string, style: 'full' | 'medium') => new Intl.DateTimeForma
 const crest = (team: string, logo?: string, result = false) => {
   if (team === 'CD Menciana' || logo) {
     const image = element('img', result ? 'result-card__crest' : 'team-crest') as HTMLImageElement;
-    image.src = `${base}${team === 'CD Menciana' ? '/images/escudo-oficial.svg' : logo}`;
+    const source = team === 'CD Menciana' ? '/images/escudo-oficial.svg' : logo || '';
+    image.src = source.startsWith('https://stars.rfaf.es/storage/novanet/') ? source : `${base}${source}`;
     image.alt = '';
     image.width = result ? 38 : 65;
     image.height = result ? 38 : 65;

@@ -25,6 +25,12 @@ describe('RFAF sports parser', () => {
     expect(() => parseStandings('<table class="novanet-classification-table"><tbody><tr><td>1</td></tr></tbody></table>')).toThrow();
   });
 
+  it('decodes a cadet rival name and skips a rest round', () => {
+    const html = `<article class="novanet-match-row hidden"><span class="min-w-0 truncate text-xs">C.D. MENCIANA</span><div class="novanet-score-value text-base">12-0</div><span class="font-semibold text-slate-900">Fecha:</span> 04/10/2026<div><span class="font-semibold text-slate-900">Hora:</span> 12:00</div><div><span class="font-semibold text-slate-900">Estado:</span> Jugado</div><span class="min-w-0 truncate text-xs">C.D. ARAS FUTSAL &#039;A&#039;</span></article>`;
+    expect(parseTeamMatch(html, 2, 'cadete')).toMatchObject({ awayTeam: "C.D. ARAS FUTSAL 'A'", awayLogo: '/images/equipos/rfaf-4d2e99b781c3fc053cf0e77f8a9f1e6fcf23bcce.jpg' });
+    expect(parseTeamMatch(html.replace('C.D. ARAS FUTSAL &#039;A&#039;', 'Descansa'), 4, 'cadete')).toBeNull();
+  });
+
   it.skipIf(!existsSync(fileURLToPath(new URL('../tmp/rfaf-stars-andaluza.html', import.meta.url))))('reads the captured public RFAF pages', () => {
     const classification = readFileSync(fileURLToPath(new URL('../tmp/rfaf-stars-andaluza.html', import.meta.url)), 'utf8');
     expect(parseStandings(classification)).toHaveLength(16);
@@ -39,7 +45,11 @@ describe('RFAF sports parser', () => {
       const standingsPage = readFileSync(fileURLToPath(new URL(`../tmp/rfaf-${teamId}-classification.html`, import.meta.url)), 'utf8');
       const resultsPage = readFileSync(fileURLToPath(new URL(`../tmp/rfaf-${teamId}-results.html`, import.meta.url)), 'utf8');
       expect(parseStandings(standingsPage, teamId).filter(row => row.isClub)).toHaveLength(1);
-      expect(parseTeamMatch(resultsPage, round, teamId)).toMatchObject({ id: `2026-27-${teamId}-j${round}`, status: 'finished' });
+      const match = parseTeamMatch(resultsPage, round, teamId);
+      expect(match).toMatchObject({ id: `2026-27-${teamId}-j${round}`, status: 'finished' });
+      const rivalLogo = match?.homeTeam === 'CD Menciana' ? match.awayLogo : match?.homeLogo;
+      expect(rivalLogo).toMatch(/^\/images\/equipos\/rfaf-/);
+      expect(existsSync(fileURLToPath(new URL(`../public${rivalLogo}`, import.meta.url)))).toBe(true);
     }
   });
 });
