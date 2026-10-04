@@ -115,6 +115,18 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .result-card h3 span { color: var(--ui-gold); }
 .result-card__score { color: var(--ui-navy); font-size: 1.65rem; font-weight: 800; white-space: nowrap; }
 .result-card__score span { color: var(--ui-gold); }
+.sports-source { margin: 22px 0 0; color: var(--muted); font-size: .78rem; }
+.sports-source a { color: var(--ui-blue-ink); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.standings-scroll { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+.standings-table { width: 100%; min-width: 750px; border-collapse: collapse; background: white; font-size: .78rem; }
+.standings-table caption { padding: 14px 18px; background: var(--ui-navy); color: white; font-weight: 800; text-align: left; }
+.standings-table th, .standings-table td { padding: 11px 13px; border-bottom: 1px solid var(--line); text-align: center; }
+.standings-table thead th { background: #e7f1fa; color: var(--ui-navy); font-size: .7rem; }
+.standings-table td:nth-child(2), .standings-table thead th:nth-child(2) { min-width: 240px; text-align: left; }
+.standings-table tbody tr:last-child th, .standings-table tbody tr:last-child td { border-bottom: 0; }
+.standings-table tbody tr:hover { background: #f3f8fc; }
+.standings-table__ours { background: #dcecf8; color: var(--ui-navy); font-weight: 800; }
+.standings-table__tag { display: block; color: var(--ui-blue-ink); font-size: .65rem; text-transform: uppercase; }
 .empty-panel { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 260px; padding: 32px; border: 1px dashed #a8c3da; border-radius: 10px; background: white; text-align: center; }
 .empty-panel__icon { display: grid; place-items: center; width: 76px; height: 76px; margin-bottom: 18px; border-radius: 50%; background: #e9f3fc; color: var(--brand-blue); font-size: 1.4rem; font-weight: 800; }
 .empty-panel h3 { margin-bottom: 7px; }

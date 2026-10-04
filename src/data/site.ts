@@ -1,4 +1,5 @@
 import type { Article, Match, Player, Sponsor, Team } from './types';
+import { firstTeamMatches } from './first-team';
 
 export const site = {
   name: 'CD Menciana',
@@ -16,17 +17,17 @@ export const site = {
 export const teams: Team[] = [
   {
     id: 'primer-equipo',
-    name: 'Primer equipo',
-    category: 'Fútbol sala',
+    name: 'RAVI Obras & Servicios Apaga y Vámonos',
+    category: '3.ª División F.S. · Grupo 17',
     season: site.season,
-    description: 'La información de competición y plantilla se publicará cuando el club la confirme.',
-    status: 'provisional',
+    description: 'Nuestro primer equipo compite en el grupo 17 de Tercera División de fútbol sala.',
+    status: 'confirmed',
   },
 ];
 
-// Keep sports records empty until the club provides verified information.
+// Player records stay empty until the club provides verified information.
 export const players: Player[] = [];
-export const matches: Match[] = [];
+export const matches: Match[] = firstTeamMatches;
 export const sponsors: Sponsor[] = [
   { id: 'capricho-andaluz', name: 'Capricho Andaluz', logo: '/images/patrocinadores/capricho-andaluz.png', kind: 'sponsor', tier: 'principal', status: 'confirmed' },
   { id: 'ravi', name: 'RAVI', logo: '/images/patrocinadores/ravi.png', kind: 'sponsor', tier: 'principal', status: 'confirmed' },

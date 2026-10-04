@@ -28,11 +28,15 @@ Edita `src/data/site.ts`. Los tipos están en `src/data/types.ts`:
 
 - `teams`: nombre, categoría, temporada y descripción.
 - `players`: plantilla, dorsal, posición y ruta de fotografía.
-- `matches`: partidos, fecha ISO con zona horaria, sede y marcador.
+- `matches`: partidos, fecha ISO con zona horaria cuando se conoce la hora, sede y marcador. Los del primer equipo proceden de `src/data/first-team.ts`.
 - `articles`: tres ejemplos editoriales etiquetados como muestras. Las noticias reales y los álbumes se gestionan en `/admin/` y se almacenan en D1.
 - `sponsors`: entidad, logotipo, tipo (`sponsor` o `institutional`), nivel de colaboración y URL opcional. Los patrocinadores principales, los demás patrocinadores y las entidades públicas se muestran por separado.
 
-Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los artículos iniciales tienen estado `provisional`, se etiquetan como muestras y se excluyen de indexación; no se importan a D1 ni se convierten en noticias reales. Las listas de jugadores y partidos permanecen vacías hasta recibir datos confirmados. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
+Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los artículos iniciales tienen estado `provisional`, se etiquetan como muestras y se excluyen de indexación; no se importan a D1 ni se convierten en noticias reales. La lista de jugadores permanece vacía hasta recibir datos confirmados. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
+
+### Calendario y clasificación del primer equipo
+
+`src/data/first-team.ts` contiene una instantánea de los partidos publicados y la clasificación del grupo 17 de 3.ª División F.S. de la temporada 2026/27. La fuente es el [visor oficial RFAF](https://stars.rfaf.es/), con delegación `9`, competición `48466108` y grupo `48466109`. La web es estática: **estos datos no se actualizan automáticamente**. Para mantenerlos, contrasta resultados, horarios y clasificación con los enlaces oficiales de `firstTeamSource`, edita el archivo, cambia `checkedOn` y publica una nueva versión. No añadas jornadas que el visor aún no publique. La página de calendario muestra la fecha de consulta y enlaza a la versión actualizada de la RFAF.
 
 El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro` lo usa en la cabecera, el pie, la portada, la página del club, las tarjetas y los elementos decorativos; el favicon apunta al mismo archivo. La portada usa la foto de la plantilla a la derecha, como en la maqueta del manual de marca, con versiones WebP para móvil y escritorio y un JPEG de respaldo. Coloca otras fotografías y logotipos autorizados en `public/images/equipo/`, `public/images/jugadores/` y `public/images/patrocinadores/`.
 
@@ -55,7 +59,7 @@ La paleta web difiere ligeramente de la paleta general. Las variables `--ui-*` s
 ## Pendiente antes del lanzamiento
 
 - Fotografías individuales de jugadores y material adicional, con autorización de uso.
-- Equipos y plantilla confirmados; calendario, sedes, resultados y noticias reales.
+- Plantilla confirmada y noticias reales; actualización periódica de calendario, sedes, resultados y clasificación.
 - Correo, dirección y redes sociales institucionales verificadas.
 - Dominio personalizado, si el club decide usar uno.
 
