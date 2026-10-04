@@ -17,15 +17,15 @@ import { institutionalPartners, principalSponsors, recentResults, upcomingMatche
     </picture>
     <div class="hero__texture" aria-hidden="true"></div>
     <div class="container hero__inner">
-      <div class="hero__copy"><p class="eyebrow eyebrow--gold">Club Deportivo · Doña Mencía</p><h1>Más que<br /><em>fútbol sala.</em></h1><p>La casa digital del CD Menciana. Vive el club, sigue la competición y mantente cerca de todo lo que nos mueve.</p><div class="hero__actions"><a class="button button--gold" href={sitePath('/calendario/')}>Próximo partido <ArrowIcon /></a><a class="button button--outline-light" href={sitePath('/club/')}>Conoce el club</a></div></div>
+      <div class="hero__copy"><p class="eyebrow eyebrow--gold">Club Deportivo · Doña Mencía</p><h1>Más que<br /><em>fútbol sala.</em></h1><p>La casa digital del CD Menciana. Vive el club, sigue la competición y mantente cerca de todo lo que nos mueve.</p><div class="hero__actions"><a class="button button--gold" href={`${sitePath('/calendario/')}#proximo-partido`}>Próximo partido <ArrowIcon /></a><a class="button button--outline-light" href={sitePath('/club/')}>Conoce el club</a></div></div>
       <div class="hero__art"><Crest class="hero__badge" alt="Escudo del Club Deportivo Menciana" loading="eager" /></div>
     </div>
     <div class="hero__footer container"><span>Temporada {site.season}</span><span>Identidad · Competición · Comunidad</span></div>
   </section>
 
-  <section class="section match-section"><div class="container"><SectionHeading eyebrow="01 / COMPETICIÓN" title="La próxima cita" intro="El siguiente partido publicado por la RFAF para nuestro primer equipo." href={sitePath('/calendario/')} linkLabel="Ver calendario" /><MatchCard match={upcomingMatches[0]} prominent /></div></section>
+  <section class="section match-section"><div class="container"><SectionHeading eyebrow="01 / COMPETICIÓN" title="La próxima cita" intro="El siguiente partido publicado por la RFAF para nuestro primer equipo." href={sitePath('/calendario/')} linkLabel="Ver calendario" /><div data-sports-home-next><MatchCard match={upcomingMatches[0]} prominent /></div></div></section>
 
-  <section class="section section--tint"><div class="container"><SectionHeading eyebrow="02 / MARCADORES" title="Últimos resultados" intro="Marcadores del primer equipo publicados por la RFAF." href={sitePath('/calendario/')} linkLabel="Todos los partidos" />{recentResults.length ? <div class="results-list">{recentResults.slice(0, 3).map((match) => <ResultCard match={match} />)}</div> : <div class="empty-panel empty-panel--horizontal"><div class="empty-panel__icon" aria-hidden="true">0 : 0</div><div><h3>Aún no hay resultados publicados</h3><p>Este espacio se actualizará cuando el club confirme sus marcadores.</p></div><a class="text-link" href={sitePath('/calendario/')}>Ir al calendario <ArrowIcon /></a></div>}</div></section>
+  <section class="section section--tint"><div class="container"><SectionHeading eyebrow="02 / MARCADORES" title="Últimos resultados" intro="Marcadores del primer equipo publicados por la RFAF." href={sitePath('/calendario/')} linkLabel="Todos los partidos" /><div data-sports-home-results>{recentResults.length ? <div class="results-list">{recentResults.slice(0, 3).map((match) => <ResultCard match={match} />)}</div> : <div class="empty-panel empty-panel--horizontal"><div class="empty-panel__icon" aria-hidden="true">0 : 0</div><div><h3>Aún no hay resultados publicados</h3><p>Este espacio se actualizará cuando la RFAF publique sus marcadores.</p></div><a class="text-link" href={sitePath('/calendario/')}>Ir al calendario <ArrowIcon /></a></div>}</div></div></section>
 
   <section class="section"><div class="container"><SectionHeading eyebrow="03 / ACTUALIDAD" title="Noticias del club" intro="Comunicados, jornadas e historias de nuestra comunidad." href={sitePath('/noticias/')} linkLabel="Todas las noticias" /><div data-cms-root="home"><div class="empty-panel">Cargando noticias…</div></div></div></section>
 
@@ -39,4 +39,4 @@ import { institutionalPartners, principalSponsors, recentResults, upcomingMatche
     </div>
   </section>
 </BaseLayout>
-<script>import '../scripts/public-cms.ts';</script>
+<script>import '../scripts/public-cms.ts'; import '../scripts/public-sports.ts';</script>

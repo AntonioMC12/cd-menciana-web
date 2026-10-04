@@ -1,6 +1,6 @@
 # Web en GitHub Pages y servicios en Cloudflare
 
-**Estado:** D1 y el bucket R2 ya están creados, el Worker está desplegado en `cms.cdmenciana.es` y Access protege sus rutas privadas. La zona DNS de `cdmenciana.es` sigue pendiente de activación. La web pública se despliega con GitHub Pages.
+**Estado:** D1 y el bucket R2 están creados, el Worker está desplegado en `cms.cdmenciana.es`, Access protege sus rutas privadas y la web pública se despliega con GitHub Pages.
 
 Para comprar un dominio propio y conectar GitHub Pages con Cloudflare desde cero, sigue la [guía paso a paso de dominio y servicios](DOMINIO-Y-CLOUDFLARE.md). Las opciones elegidas son `cdmenciana.es` y, como alternativa, `cdmenciana.com`.
 
@@ -13,7 +13,7 @@ Para comprar un dominio propio y conectar GitHub Pages con Cloudflare desde cero
 | Base de datos | Cloudflare D1 | Binding privado `DB` |
 | Fotografías | Cloudflare R2 | Bucket privado `PHOTOS` |
 
-La portada, noticias y galerías consultan la API pública del Worker en el navegador. Al publicar o retirar contenido en el panel, la API y las fotos reflejan el cambio sin reconstruir GitHub Pages. Las páginas institucionales y los artículos de muestra siguen siendo HTML estático. La web pública no contiene el código del panel.
+La portada, noticias, galerías y calendario consultan la API pública del Worker en el navegador. Al publicar o retirar contenido en el panel, la API y las fotos reflejan el cambio sin reconstruir GitHub Pages. El Worker sincroniza cada hora los datos deportivos publicados por la RFAF y conserva en D1 la última consulta válida. Las páginas institucionales siguen siendo HTML estático. La web pública no contiene el código del panel.
 
 **Límite de GitHub Pages:** cada noticia y galería real usa una página estática compartida (`/noticias/detalle/?slug=…` o `/galerias/detalle/?slug=…`) que obtiene el contenido en el navegador. El título y la etiqueta canónica se actualizan con JavaScript, pero las vistas previas de redes sociales y los buscadores que no ejecuten JavaScript verán los metadatos genéricos. Si el club necesita SEO completo por publicación, habrá que generar HTML estático en cada publicación o mover esas páginas a un servidor dinámico.
 
@@ -29,7 +29,7 @@ La portada, noticias y galerías consultan la API pública del Worker en el nave
 
 2. El `database_id` real ya figura en `wrangler.jsonc`. Mantener R2 privado, sin dominio público ni `r2.dev`.
 3. Las migraciones actuales ya están aplicadas. Ejecutar `npm run db:remote` para aplicar futuras migraciones.
-4. La aplicación Cloudflare Access Self-hosted **CD Menciana CMS** protege directamente al Worker. Solo `/`, `/api/posts`, `/api/posts/*`, `/api/albums`, `/api/albums/*` y `/media/*` tienen excepción pública. La política Allow incluye un único correo administrador y usa el proveedor de código de un solo uso por correo. No abrir el acceso a un dominio completo de correo.
+4. La aplicación Cloudflare Access Self-hosted **CD Menciana CMS** protege directamente al Worker. Solo `/`, `/api/posts`, `/api/posts/*`, `/api/albums`, `/api/albums/*`, `/api/sports` y `/media/*` tienen excepción pública. La política Allow incluye un único correo administrador y usa el proveedor de código de un solo uso por correo. No abrir el acceso a un dominio completo de correo.
 5. Los secretos `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `ADMIN_EMAIL` y `CSRF_SECRET` ya están configurados en el Worker. `CSRF_SECRET` es aleatorio y no se guarda en Git. No configurar `LOCAL_ADMIN_BYPASS` ni `ENVIRONMENT=local` en remoto.
 6. Confirmar que `PUBLIC_WEB_ORIGIN` de `wrangler.jsonc` es `https://cdmenciana.es`. La API pública solo permite peticiones CORS desde ese origen; la API privada permanece en el origen del Worker.
 7. Con la configuración revisada, ejecutar `npm run deploy:worker`. Este comando no despliega la web pública.
@@ -63,5 +63,7 @@ Web: `http://127.0.0.1:4321/`. Panel: `http://127.0.0.1:8787/admin/`. `.dev.vars
 Antes de cambiar el esquema y de forma periódica, exportar D1 con `npx wrangler d1 export cd-menciana --remote --output=backup-cd-menciana.sql --config wrangler.jsonc`. Guardar ese SQL y una copia cifrada del bucket R2 fuera de Cloudflare. Para R2 puede utilizarse `rclone` con un token limitado al bucket; comprobar el número de objetos tras copiar. Probar la restauración en recursos nuevos antes de depender de las copias.
 
 Las imágenes se comprimen en el navegador. La API admite hasta 20 fotos por álbum, valida WebP, limita el tamaño y solo publica objetos presentes en R2. Las mutaciones se limitan a 60 peticiones por minuto e identidad. Si una eliminación de R2 falla, la tarea queda en cola y puede reintentarse desde `POST /api/admin/cleanup` con sesión y CSRF. La API pública y las imágenes usan `Cache-Control: no-store` para reflejar retiradas sin purga de caché.
+
+La sincronización deportiva se configura en `wrangler.jsonc` con un cron horario. Solo consulta páginas públicas de la RFAF, valida que la clasificación y los partidos estén completos y sustituye la instantánea en D1 cuando toda la consulta termina bien. `GET /api/sports` sirve esa copia; en el primer acceso puede realizar la consulta inicial si todavía no existe. Si falla una sincronización, el Worker registra el error y la web conserva la última información disponible. Revisar los logs del Worker y la fecha visible en `/calendario/` si no se actualiza.
 
 Referencias: [GitHub Pages con Astro](https://docs.astro.build/en/guides/deploy/github/), [Workers y CORS](https://developers.cloudflare.com/workers/examples/cors-header-proxy/), [validación JWT de Access](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), [D1 con Wrangler](https://developers.cloudflare.com/d1/wrangler-commands/), [R2 con rclone](https://developers.cloudflare.com/r2/examples/rclone/).

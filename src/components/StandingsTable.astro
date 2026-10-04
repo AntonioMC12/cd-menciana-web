@@ -6,7 +6,7 @@ import { firstTeamStandings } from '../data/first-team';
   <table class="standings-table">
     <caption>3.ª División F.S. · Grupo 17 · Temporada 2026/27</caption>
     <thead><tr><th scope="col">#</th><th scope="col">Equipo</th><th scope="col"><abbr title="Puntos">Pts</abbr></th><th scope="col"><abbr title="Partidos jugados">PJ</abbr></th><th scope="col"><abbr title="Ganados">G</abbr></th><th scope="col"><abbr title="Empatados">E</abbr></th><th scope="col"><abbr title="Perdidos">P</abbr></th><th scope="col"><abbr title="Goles a favor">GF</abbr></th><th scope="col"><abbr title="Goles en contra">GC</abbr></th></tr></thead>
-    <tbody>
+    <tbody data-sports-standings>
       {firstTeamStandings.map((row) => <tr class:list={{ 'standings-table__ours': row.isFirstTeam }}><th scope="row">{row.position}</th><td>{row.team}{row.isFirstTeam && <span class="standings-table__tag">Nuestro equipo</span>}</td><td><strong>{row.points}</strong></td><td>{row.played}</td><td>{row.won}</td><td>{row.drawn}</td><td>{row.lost}</td><td>{row.goalsFor}</td><td>{row.goalsAgainst}</td></tr>)}
     </tbody>
   </table>

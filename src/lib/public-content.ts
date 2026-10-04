@@ -1,4 +1,3 @@
-import { articles } from '../data/site';
 import type { Article } from '../data/types';
 import { parseBody, photoUrl, publishedList, type Content, type Row } from './cms';
 export function articleFromRow(row: Row): Article {
@@ -17,4 +16,3 @@ export async function galleryPage(page: number, limit = 9): Promise<{ items: Row
   const rows = await publishedList('albums', page, limit + 1);
   return { items: rows.slice(0, limit), more: rows.length > limit };
 }
-export { articles as exampleArticles };

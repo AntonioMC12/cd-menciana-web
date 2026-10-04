@@ -12,6 +12,7 @@ import * as cleanup from './api/admin/cleanup';
 import adminHtml from './admin.html.txt';
 import adminCss from './admin.css.txt';
 import adminJs from './admin-client.txt';
+import { getSportsSnapshot, syncSports } from './sports';
 
 const html = (value: string, status = 200) => new Response(value, { status, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'content-security-policy': "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'" } });
 const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
@@ -113,11 +114,19 @@ export default {
           return cors(row ? json({ ...album(row), photos: photos.map(p => ({ id: p.id, alt: p.published_alt, width: p.width, height: p.height })) }) : error('No encontrado.', 404), request);
         }
       }
-      if (parts[0] === 'api' && method === 'OPTIONS' && (parts[1] === 'posts' || parts[1] === 'albums')) return cors(new Response(null, { status: 204 }), request);
+      if (path === '/api/sports' && method === 'GET') {
+        const snapshot = await getSportsSnapshot() || await syncSports();
+        return cors(json(snapshot), request);
+      }
+      if (parts[0] === 'api' && method === 'OPTIONS' && (parts[1] === 'posts' || parts[1] === 'albums' || parts[1] === 'sports')) return cors(new Response(null, { status: 204 }), request);
       return error('No encontrado.', 404);
     } catch (cause) {
       console.error(cause);
       return error('Error interno.', 500);
     }
+  },
+  async scheduled(): Promise<void> {
+    try { await syncSports(); }
+    catch (cause) { console.error('No se pudo actualizar la competición RFAF; se conserva la última copia.', cause); }
   },
 };

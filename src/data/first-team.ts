@@ -1,8 +1,8 @@
 import type { Match } from './types';
 
-// Snapshot checked against the RFAF Novanet widget on 2026-10-04.
-// Opponent crests in /public/images/equipos/ were downloaded from the same match cards.
-// Keep the date visible in the UI: this static site does not refresh sports data automatically.
+// Build-time fallback checked against the RFAF Novanet widget on 2026-10-04.
+// The Worker refreshes the published results and standings automatically.
+// Opponent crests in /public/images/equipos/ were downloaded from these match cards.
 export const firstTeamSource = {
   checkedOn: '4 de octubre de 2026',
   resultsUrl: 'https://stars.rfaf.es/?delegacion=9&competicion=48466108&grupo=48466109&widget_view=results',

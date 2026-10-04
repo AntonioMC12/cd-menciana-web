@@ -8,6 +8,7 @@
   "vars": { "PUBLIC_WEB_ORIGIN": "https://cdmenciana.es", "PUBLIC_WEB_BASE": "/" },
   "routes": [{ "pattern": "cms.cdmenciana.es", "custom_domain": true }],
   "workers_dev": false,
+  "triggers": { "crons": ["0 * * * *"] },
   "d1_databases": [{
     "binding": "DB", "database_name": "cd-menciana",
     "database_id": "60c706e0-bf4f-402e-86ef-0ff3c98f0f19",

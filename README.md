@@ -29,16 +29,16 @@ Edita `src/data/site.ts`. Los tipos están en `src/data/types.ts`:
 - `teams`: nombre, categoría, temporada y descripción.
 - `players`: plantilla, dorsal, posición y ruta de fotografía.
 - `matches`: partidos, fecha ISO con zona horaria cuando se conoce la hora, sede y marcador. Los del primer equipo proceden de `src/data/first-team.ts`.
-- `articles`: tres ejemplos editoriales etiquetados como muestras. Las noticias reales y los álbumes se gestionan en `/admin/` y se almacenan en D1.
+- Las noticias reales y los álbumes se gestionan en `/admin/` y se almacenan en D1.
 - `sponsors`: entidad, logotipo, tipo (`sponsor` o `institutional`), nivel de colaboración y URL opcional. Los patrocinadores principales, los demás patrocinadores y las entidades públicas se muestran por separado.
 
-Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los artículos iniciales tienen estado `provisional`, se etiquetan como muestras y se excluyen de indexación; no se importan a D1 ni se convierten en noticias reales. La lista de jugadores permanece vacía hasta recibir datos confirmados. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
+Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. La lista de jugadores permanece vacía hasta recibir datos confirmados. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
 
 ### Calendario y clasificación del primer equipo
 
-`src/data/first-team.ts` contiene una instantánea de los partidos publicados y la clasificación del grupo 17 de 3.ª División F.S. de la temporada 2026/27. La fuente es el [visor oficial RFAF](https://stars.rfaf.es/), con delegación `9`, competición `48466108` y grupo `48466109`. La web es estática: **estos datos no se actualizan automáticamente**. Para mantenerlos, contrasta resultados, horarios y clasificación con los enlaces oficiales de `firstTeamSource`, edita el archivo, cambia `checkedOn` y publica una nueva versión. No añadas jornadas que el visor aún no publique. La página de calendario muestra la fecha de consulta y enlaza a la versión actualizada de la RFAF.
+El Worker consulta cada hora el [visor oficial RFAF](https://stars.rfaf.es/) para el grupo 17 de 3.ª División F.S. de la temporada 2026/27 (delegación `9`, competición `48466108`, grupo `48466109`). Guarda calendario, resultados y clasificación en D1; la web los obtiene de `GET /api/sports` sin reconstruir GitHub Pages. Si el visor falla o cambia de formato, conserva la última copia válida. `src/data/first-team.ts` es la instantánea inicial que se muestra mientras carga la API o si no está disponible. La página de calendario muestra cuándo se sincronizó y enlaza a la RFAF. Para cambiar de temporada hay que actualizar los identificadores, el límite de jornadas, la clave de la instantánea y los datos iniciales.
 
-Los escudos de los rivales publicados hasta la jornada 7 están en `public/images/equipos/` y proceden de las fichas de partido de la RFAF consultadas el 4 de octubre de 2026. Al incorporar más jornadas, guarda el escudo del nuevo rival en esa carpeta y añade `homeLogo` o `awayLogo` al partido correspondiente.
+Los escudos de los rivales publicados hasta la jornada 7 están en `public/images/equipos/` y proceden de las fichas de partido de la RFAF consultadas el 4 de octubre de 2026. Las jornadas nuevas se muestran automáticamente; sus escudos requieren guardar el archivo en esa carpeta y añadir la ruta en `src/data/first-team.ts`.
 
 El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro` lo usa en la cabecera, el pie, la portada, la página del club, las tarjetas y los elementos decorativos; el favicon apunta al mismo archivo. La portada usa la foto de la plantilla a la derecha, como en la maqueta del manual de marca, con versiones WebP para móvil y escritorio y un JPEG de respaldo. Coloca otras fotografías y logotipos autorizados en `public/images/equipo/`, `public/images/jugadores/` y `public/images/patrocinadores/`.
 
