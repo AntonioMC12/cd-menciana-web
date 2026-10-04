@@ -27,12 +27,12 @@ La acción de GitHub Pages publica la web pública desde `main` en `https://cdme
 Edita `src/data/site.ts`. Los tipos están en `src/data/types.ts`:
 
 - `teams`: nombre, categoría, temporada y descripción.
-- `players`: plantilla, dorsal, posición y ruta de fotografía.
+- `players`: plantilla y ruta de fotografía; dorsal y posición se añaden cuando estén confirmados.
 - `matches`: partidos, fecha ISO con zona horaria cuando se conoce la hora, sede y marcador. Los del primer equipo proceden de `src/data/first-team.ts`.
 - Las noticias reales y los álbumes se gestionan en `/admin/` y se almacenan en D1.
 - `sponsors`: entidad, logotipo, tipo (`sponsor` o `institutional`), nivel de colaboración y URL opcional. Los patrocinadores principales, los demás patrocinadores y las entidades públicas se muestran por separado.
 
-Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. La lista de jugadores permanece vacía hasta recibir datos confirmados. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
+Usa `status: 'confirmed'` (o `publication: 'confirmed'` en partidos) solo con datos verificados. Los nombres o apodos de la plantilla proceden de los archivos facilitados por el club; los dorsales y posiciones siguen pendientes. Capricho Andaluz y RAVI son los patrocinadores principales; los demás y las entidades públicas se muestran por separado.
 
 ### Calendario y clasificación de los equipos
 
@@ -64,7 +64,7 @@ La paleta web difiere ligeramente de la paleta general. Las variables `--ui-*` s
 
 ## Pendiente antes del lanzamiento
 
-- Fotografías individuales de jugadores y material adicional, con autorización de uso.
+- Confirmación de dorsales y posiciones de los jugadores.
 - Plantilla confirmada y noticias reales; actualización periódica de calendario, sedes, resultados y clasificación.
 - Correo, dirección y redes sociales institucionales verificadas.
 - Dominio personalizado, si el club decide usar uno.

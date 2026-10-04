@@ -10,10 +10,6 @@ import { getTeamCompetition, rfafWidgetUrl } from '../data/team-competitions';
 import { players, recentResults, teams, upcomingMatches } from '../data/site';
 import { sitePath } from '../lib/paths';
 
-const provisionalPhotos = Array.from({ length: 15 }, (_, index) => ({
-  number: String(index + 1).padStart(2, '0'),
-  photo: sitePath(`/images/jugadores/plantilla-${String(index + 1).padStart(2, '0')}.webp`),
-}));
 ---
 
 <BaseLayout title="Equipos y plantilla" description="Los equipos del CD Menciana, sus partidos, resultados y clasificaciones de la temporada 2026/27.">
@@ -39,7 +35,7 @@ const provisionalPhotos = Array.from({ length: 15 }, (_, index) => ({
           <p class="sports-source">Datos de la RFAF · <span data-team-updated>{team.id === 'primer-equipo' ? `copia del ${firstTeamSource.checkedOn}` : 'cargando…'}</span>. <a href={rfafWidgetUrl(competition, 'results')}>Resultados oficiales ↗</a> · <a href={rfafWidgetUrl(competition, 'classification')}>Clasificación oficial ↗</a></p>
         </div>}
 
-        {team.id === 'primer-equipo' && <div class="team-roster"><h3>Plantilla</h3>{teamPlayers.length ? <div class="player-grid">{teamPlayers.map((player) => <PlayerCard player={player} />)}</div> : <><p class="section-heading__intro">Fotografías facilitadas por el club. Los nombres, dorsales y posiciones se incorporarán cuando estén identificados.</p><div class="player-grid">{provisionalPhotos.map((item) => <article class="player-card"><div class="player-card__portrait"><img src={item.photo} alt={`Retrato de la plantilla, foto ${item.number}`} loading="lazy" decoding="async" /></div><div class="player-card__details"><span>Foto {item.number}</span><h3>Nombre pendiente</h3></div></article>)}</div></>}</div>}
+        {team.id === 'primer-equipo' && <div class="team-roster"><h3>Plantilla</h3><div class="player-grid">{teamPlayers.map((player) => <PlayerCard player={player} />)}</div></div>}
       </section>;
     })}
   </div></section>
