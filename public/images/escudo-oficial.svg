@@ -40,11 +40,12 @@
     C 272,127 283,138 290,148"
     fill="none" stroke="#aaa9a8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
 
-  <!-- Angular blue-and-white marks on both sides of the lower band. -->
-  <path d="M 43,215 31,234 41,252 51,236 58,247 66,233 54,214 Z" fill="#eef9ff"/>
-  <path d="m 38,235 8,-14 12,17 -7,12 -9,-14 -7,13 -4,-15 z" fill="#164677"/>
-  <path d="M 357,215 369,234 359,252 349,236 342,247 334,233 346,214 Z" fill="#eef9ff"/>
-  <path d="m 362,235 -8,-14 -12,17 7,12 9,-14 7,13 4,-15 z" fill="#164677"/>
+  <!-- Identical separators traced from the official reference artwork. -->
+  <g id="separator-left" aria-label="Separador blanco y azul marino">
+    <path d="M 41.75,211 H 49.75 L 57.75,227.25 53.75,235.5 45.75,219.5 37.75,235.5 33.5,227.25 Z" fill="#ffffff"/>
+    <path d="M 45.75,227.5 53.75,243.75 61.75,227.5 65.75,236 57.75,252.25 H 49.75 L 41.5,236 Z" fill="#092653"/>
+  </g>
+  <use id="separator-right" xlink:href="#separator-left" transform="translate(299.5 0)"/>
 
   <g fill="#0b2856" font-family="Arial Black, Arial, sans-serif" font-size="23" font-weight="900">
     <text x="52.81" y="184.55" transform="rotate(-84.01 52.81 184.55)" text-anchor="middle">C</text>
