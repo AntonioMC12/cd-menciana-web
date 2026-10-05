@@ -35,9 +35,9 @@ const date = lead && newsDate(lead.publishedAt);
     {rest.length > 0 && <section class="news-archive" aria-labelledby="archive-title"><div class="news-section-heading"><h2 id="archive-title">{page === 1 ? 'Más actualidad' : 'Archivo de noticias'}</h2><span>Página {page} de {totalPages}</span></div><div class="news-grid news-grid--editorial">{rest.map(post => <NewsCard article={newsArticle(post)} editorial />)}</div></section>}
     {!posts.length && <section class="news-empty"><Crest class="news-empty__crest" /><h2>La próxima historia está por llegar.</h2><p>Aún no hay noticias publicadas. Aquí encontrarás las novedades del club.</p><a class="text-link" href={sitePath('/')}>Volver al inicio <ArrowIcon /></a></section>}
     {totalPages > 1 && <nav class="news-pagination" aria-label="Páginas de noticias">
-      {page > 1 ? <a href={sitePath(newsPagePath(page - 1))} rel="prev">← Más recientes</a> : <span />}
+      {page > 1 ? <a href={sitePath(newsPagePath(page - 1))} rel="prev"><ArrowIcon direction="left" /> Más recientes</a> : <span />}
       <span aria-current="page">{page} / {totalPages}</span>
-      {page < totalPages ? <a href={sitePath(newsPagePath(page + 1))} rel="next">Noticias anteriores →</a> : <a href={sitePath('/noticias/')}>Volver a la actualidad ↑</a>}
+      {page < totalPages ? <a href={sitePath(newsPagePath(page + 1))} rel="next">Noticias anteriores <ArrowIcon direction="right" /></a> : <a href={sitePath('/noticias/')}>Volver a la actualidad <ArrowIcon direction="up" /></a>}
     </nav>}
   </div>
 </BaseLayout>

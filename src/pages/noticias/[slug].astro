@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '../../components/ArrowIcon.astro';
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublicPost, getPublicPosts, publicPhoto, type PublicPost } from '../../lib/build-content';
@@ -41,14 +42,14 @@ const articleData = {
     <div class="news-story__reading">
       <div class="news-story__body">{post.body.map(paragraph => <p>{paragraph}</p>)}</div>
       <footer class="news-story__footer"><p>Comparte esta noticia</p><div class="news-share">
-        <a href={`https://wa.me/?text=${encodeURIComponent(`${post.title} ${shareUrl}`)}`} target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+        <a href={`https://wa.me/?text=${encodeURIComponent(`${post.title} ${shareUrl}`)}`} target="_blank" rel="noopener noreferrer">WhatsApp <ArrowIcon /></a>
         <a href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(shareUrl)}`}>Correo</a>
         <button type="button" data-copy-news hidden>Copiar enlace</button>
       </div><p class="news-share__status" data-share-status role="status" aria-live="polite"></p>
-      <a class="text-link" href={sitePath('/noticias/')}>← Volver a noticias</a></footer>
+      <a class="text-link" href={sitePath('/noticias/')}><ArrowIcon direction="left" /> Volver a noticias</a></footer>
     </div>
   </article>
-  {related.length > 0 && <section class="news-related"><div class="container"><div class="news-section-heading"><h2>Sigue la actualidad</h2><a class="text-link" href={sitePath('/noticias/')}>Todas las noticias →</a></div><div class="news-grid news-grid--editorial">{related.map(item => <NewsCard article={newsArticle(item)} editorial />)}</div></div></section>}
+  {related.length > 0 && <section class="news-related"><div class="container"><div class="news-section-heading"><h2>Sigue la actualidad</h2><a class="text-link" href={sitePath('/noticias/')}>Todas las noticias <ArrowIcon direction="right" /></a></div><div class="news-grid news-grid--editorial">{related.map(item => <NewsCard article={newsArticle(item)} editorial />)}</div></div></section>}
 </BaseLayout>
 <script>
   const button = document.querySelector<HTMLButtonElement>('[data-copy-news]');

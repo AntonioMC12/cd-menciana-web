@@ -1,4 +1,5 @@
 import type { Match } from '../data/types';
+import { createSvgIcon } from '../lib/icons';
 import { firstTeamMatches } from '../data/first-team';
 import { competitiveTeamIds, teamCompetitions, rfafWidgetUrl, type CompetitiveTeamId } from '../data/team-competitions';
 import { renderStandings } from './public-sports';
@@ -117,7 +118,8 @@ if (root) {
     const info = node('p', '', `${clubSide(match)} · ${match.venue || 'Pabellón por confirmar'}`);
     intro.append(info);
     card.append(intro, teams(match));
-    const detail = node('button', 'calendar-feature__detail', 'Ver detalles ↗') as HTMLButtonElement;
+    const detail = node('button', 'calendar-feature__detail', 'Ver detalles ') as HTMLButtonElement;
+    detail.append(createSvgIcon());
     detail.type = 'button'; detail.dataset.matchKey = entryKey(upcoming);
     card.append(detail); next.append(card);
   };

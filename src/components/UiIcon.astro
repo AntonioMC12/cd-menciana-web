@@ -1,0 +1,6 @@
+---
+import { iconPaths } from '../lib/icons';
+interface Props { name: keyof typeof iconPaths; class?: string }
+const { name, class: className = 'arrow-icon' } = Astro.props;
+---
+<svg class={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d={iconPaths[name]} /></svg>

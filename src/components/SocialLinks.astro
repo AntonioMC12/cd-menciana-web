@@ -1,6 +1,7 @@
 ---
+import ArrowIcon from './ArrowIcon.astro';
 import { site } from '../data/site';
 ---
 <nav class="social-links" aria-label="Redes sociales del CD Menciana">
-  {site.socials.map((social) => <a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`${social.label} del CD Menciana (abre en nueva pestaña)`}>{social.label}<span aria-hidden="true">↗</span></a>)}
+  {site.socials.map((social) => <a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`${social.label} del CD Menciana (abre en nueva pestaña)`}>{social.label}<span aria-hidden="true"><ArrowIcon /></span></a>)}
 </nav>
