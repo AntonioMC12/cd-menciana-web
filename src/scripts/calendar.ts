@@ -79,10 +79,15 @@ if (root) {
     const { match, teamId } = entry;
     const button = node('button', `calendar-match ${compact ? 'calendar-match--compact' : ''} calendar-match--${match.status}`) as HTMLButtonElement;
     button.type = 'button'; button.dataset.matchKey = entryKey(entry);
-    button.setAttribute('aria-label', `${labelFor(teamId)}: ${match.homeTeam} contra ${match.awayTeam}. ${fullDate(match.date)}. ${stateLabel(match)}. ${scoreText(match)}. Ver detalles`);
+    button.dataset.team = teamId;
+    button.dataset.location = isHome(match) ? 'home' : match.awayTeam === 'CD Menciana' ? 'away' : 'unknown';
+    button.setAttribute('aria-label', `${labelFor(teamId)}. ${clubSide(match)}: ${match.homeTeam} contra ${match.awayTeam}. ${fullDate(match.date)}. ${stateLabel(match)}. ${scoreText(match)}. Ver detalles`);
     const top = node('span', 'calendar-match__top');
-    top.append(node('span', 'calendar-match__category', labelFor(teamId)), node('span', 'calendar-match__state', stateLabel(match)));
+    const categoryBadge = node('span', 'calendar-match__category', teamId === 'infantil' ? 'Infantil' : labelFor(teamId));
+    categoryBadge.title = labelFor(teamId);
+    top.append(categoryBadge, node('span', 'calendar-location', button.dataset.location === 'home' ? 'Casa' : button.dataset.location === 'away' ? 'Fuera' : 'Sede pendiente'));
     button.append(top);
+    button.append(node('span', 'calendar-match__state', stateLabel(match)));
     if (compact) {
       button.append(node('span', 'calendar-match__mini', `${match.homeTeam} · ${match.awayTeam}`), node('strong', 'calendar-match__score', scoreText(match)));
     } else {

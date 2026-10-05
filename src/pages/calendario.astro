@@ -42,6 +42,10 @@ const formatMatchDate = (date?: string) => date ? new Intl.DateTimeFormat('es-ES
       <p class="calendar-notice" role="status" data-calendar-status></p>
       <div class="calendar-next" id="proximo-partido" data-calendar-next>{upcomingMatches[0] && <MatchCard match={upcomingMatches[0]} prominent />}</div>
       <div class="calendar-results-heading"><div><p class="eyebrow">CADA JORNADA CUENTA</p><h2>Los encuentros</h2></div><p data-calendar-count></p></div>
+      <div class="calendar-legend" aria-label="Leyenda del calendario">
+        <div class="calendar-legend__group"><span class="calendar-legend__label">Dónde jugamos</span><span class="calendar-location" data-location="home">Casa</span><span class="calendar-location" data-location="away">Fuera</span></div>
+        <div class="calendar-legend__group"><span class="calendar-legend__label">Equipos</span>{competitiveTeamIds.map(id => <span class="calendar-legend__team" data-team={id}>{id === 'infantil' ? 'Infantil' : teamCompetitions[id].label}</span>)}</div>
+      </div>
       <div class="calendar-content" data-calendar-content aria-live="polite">
         <div class="calendar-agenda" aria-label="Partidos del primer equipo publicados por la RFAF">
           {firstTeamMatches.map((match) => <article class="calendar-static-match">
