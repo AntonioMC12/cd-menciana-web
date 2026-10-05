@@ -10,6 +10,7 @@ export const organizationData = {
   alternateName: site.name,
   url: absolutePage('/'),
   logo: absolutePage('/images/escudo-oficial.svg'),
+  email: site.email,
   sameAs: site.socials.map(social => social.url),
 };
 export const breadcrumbData = (items: { name: string; path: string }[]) => ({

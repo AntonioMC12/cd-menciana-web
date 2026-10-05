@@ -329,6 +329,8 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .site-footer .social-links a:hover { border-color: #e4c77f; background: rgb(255 255 255 / 11%); }
 .site-footer .social-links a:focus-visible { outline-color: #e4c77f; }
 .site-footer__note { margin-top: 19px; color: #849fb7; font-size: .67rem; }
+.site-footer__note a { color: #bdd3e6; text-decoration: underline; }
+.site-footer__note a:hover { color: white; }
 .site-footer__bottom { display: flex; justify-content: space-between; gap: 16px; padding: 18px 0 27px; border-top: 1px solid rgb(255 255 255 / 14%); color: #8ea9c1; font-size: .65rem; }
 
 @media (max-width: 1050px) {

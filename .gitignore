@@ -7,3 +7,4 @@ dist/
 tmp/
 worker/admin-client.txt
 .wrangler-config/
+assets/

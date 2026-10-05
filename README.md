@@ -66,7 +66,6 @@ La paleta web difiere ligeramente de la paleta general. Las variables `--ui-*` s
 
 - Confirmación del dorsal de Adri Luna y de las posiciones de los jugadores de campo.
 - Plantilla confirmada y noticias reales; actualización periódica de calendario, sedes, resultados y clasificación.
-- Correo y dirección institucionales verificados.
 - Dominio personalizado, si el club decide usar uno.
 
-El contacto no muestra un formulario inerte ni inventa una dirección de correo. Al facilitar una dirección verificada, se puede activar el enlace `mailto:` ya previsto en la página.
+La página de contacto muestra el correo facilitado por el club, el Pabellón de Deportes Alcalde Julio Priego y los perfiles sociales como vías para enviar mensajes.

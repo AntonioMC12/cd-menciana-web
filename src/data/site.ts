@@ -8,9 +8,8 @@ export const site = {
   season: '2026/27',
   tagline: 'Más que fútbol sala',
   description: 'Espacio oficial del CD Menciana: club, equipos, calendario, noticias y colaboradores.',
-  // Replace with verified institutional details before launch.
-  email: undefined as string | undefined,
-  address: undefined as string | undefined,
+  email: 'apagayvamonosfs@gmail.com',
+  address: 'Pabellón de Deportes Alcalde Julio Priego, Doña Mencía (Córdoba)',
   socials: [
     { label: 'Instagram', url: 'https://www.instagram.com/cdmencianaapagayvamonosfs/' },
     { label: 'X', url: 'https://x.com/ApagayVamonosFS' },
@@ -38,7 +37,7 @@ export const teams: Team[] = [
 // Numbers, names and goalkeeper positions supplied by the club.
 // Field-player positions remain unset until the club confirms them.
 export const players: Player[] = [
-  { id: 'raton', teamId: 'primer-equipo', name: 'Ratón', number: 1, position: 'Portero', photo: '/images/jugadores/raton.webp', status: 'confirmed' },
+  { id: 'raton', teamId: 'primer-equipo', name: 'Jesús Luna', number: 1, position: 'Portero', photo: '/images/jugadores/raton.webp', status: 'confirmed' },
   { id: 'alex', teamId: 'primer-equipo', name: 'Álex', number: 3, position: 'Portero', photo: '/images/jugadores/alex.webp?v=2', status: 'confirmed' },
   { id: 'melli', teamId: 'primer-equipo', name: 'Melli', number: 15, position: 'Portero', photo: '/images/jugadores/melli.webp', status: 'confirmed' },
   { id: 'campitos', teamId: 'primer-equipo', name: 'Campitos', number: 4, photo: '/images/jugadores/campitos.webp', status: 'confirmed' },
@@ -47,7 +46,7 @@ export const players: Player[] = [
   { id: 'cabezas', teamId: 'primer-equipo', name: 'Cabezas', number: 8, photo: '/images/jugadores/cabezas.webp', status: 'confirmed' },
   { id: 'tamajon', teamId: 'primer-equipo', name: 'Tamajón', number: 9, photo: '/images/jugadores/tamajon.webp', status: 'confirmed' },
   { id: 'david', teamId: 'primer-equipo', name: 'David', number: 10, photo: '/images/jugadores/david.webp', status: 'confirmed' },
-  { id: 'jesus', teamId: 'primer-equipo', name: 'Jesús C.', number: 11, photo: '/images/jugadores/jesus.webp?v=2', status: 'confirmed' },
+  { id: 'jesus', teamId: 'primer-equipo', name: 'Jesús Cubero', number: 11, photo: '/images/jugadores/jesus.webp?v=2', status: 'confirmed' },
   { id: 'keko', teamId: 'primer-equipo', name: 'Keko', number: 13, photo: '/images/jugadores/keko.webp', status: 'confirmed' },
   { id: 'juanbo', teamId: 'primer-equipo', name: 'Juan Bonilla', number: 20, photo: '/images/jugadores/juanbo.webp', status: 'confirmed' },
   { id: 'borrallo', teamId: 'primer-equipo', name: 'Borrallo', number: 22, photo: '/images/jugadores/borrallo.webp', status: 'confirmed' },

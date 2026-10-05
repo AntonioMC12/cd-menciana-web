@@ -8,7 +8,7 @@ import { site } from '../data/site';
   <div class="container site-footer__inner">
     <div class="site-footer__identity"><BrandMark light /><p>{site.tagline}. Desde {site.location}, con el fútbol sala como punto de encuentro.</p><div class="site-footer__socials"><h2>Síguenos</h2><SocialLinks /></div></div>
     <div><h2>Explora</h2><nav aria-label="Navegación del pie"><a href={sitePath('/club/')}>El club</a><a href={sitePath('/equipos/')}>Equipos</a><a href={sitePath('/calendario/')}>Calendario</a><a href={sitePath('/noticias/')}>Noticias</a></nav></div>
-    <div><h2>CD Menciana</h2><nav aria-label="Más enlaces"><a href={sitePath('/patrocinadores/')}>Colaboradores</a><a href={sitePath('/contacto/')}>Contacto</a></nav><p class="site-footer__note">Correo y sede pendientes de confirmación.</p></div>
+    <div><h2>CD Menciana</h2><nav aria-label="Más enlaces"><a href={sitePath('/patrocinadores/')}>Colaboradores</a><a href={sitePath('/contacto/')}>Contacto</a></nav><p class="site-footer__note"><a href={`mailto:${site.email}`}>{site.email}</a><br />{site.address}</p></div>
   </div>
   <div class="container site-footer__bottom"><span>© {new Date().getFullYear()} {site.fullName}</span><span>Doña Mencía · Córdoba</span></div>
 </footer>
