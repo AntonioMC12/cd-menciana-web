@@ -4,13 +4,55 @@ import { sitePath } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContentHeader from '../components/ContentHeader.astro';
 import Crest from '../components/Crest.astro';
-import { site } from '../data/site';
+import '../styles/club.css';
+const board = [
+  { role: 'Presidenta', name: 'Ana Mª Jiménez Contreras' },
+  { role: 'Vicepresidente', name: 'Juan José Carrillo Rubio' },
+  { role: 'Secretario', name: 'Fernando Carrillo Guijarro' },
+  { role: 'Tesorero', name: 'Jesús Marañón Baena' },
+];
+const members = ['Jose Antonio Jiménez', 'Beatriz Luna', 'Víctor Jiménez', 'Alba Cubero', 'Adrián Luna'];
 ---
-<BaseLayout title="El club" description="Conoce la identidad, los valores y la historia visual del CD Menciana.">
-  <ContentHeader title="Más que" accent="fútbol sala." eyebrow="EL CLUB / DOÑA MENCÍA" description="Una identidad construida alrededor del esfuerzo, el compañerismo y el orgullo de pertenecer a Doña Mencía." index />
-  <section class="section"><div class="container split-intro"><div><p class="eyebrow">NUESTRA HISTORIA</p><h2>Desde 2005,<br />en Doña Mencía.</h2></div><div><p>El CD Menciana nació en 2005 y ha crecido alrededor del fútbol sala y de las personas que lo hacen posible en Doña Mencía. Su identidad reúne el nombre del municipio con el lema «Apaga y Vámonos».</p><p>La trayectoria del club combina la competición de su primer equipo con la formación y la vida deportiva local. Cada temporada suma nuevas jornadas, generaciones y colaboradores a una historia que sigue escribiéndose.</p></div></div></section>
-  <section class="section section--tint"><div class="container"><div class="section-heading"><div><p class="eyebrow">UN CAMINO COMPARTIDO</p><h2>Hitos del club</h2></div></div><div class="values-grid"><article><span>2005</span><h3>Fundación</h3><p>Nace el CD Menciana en Doña Mencía.</p></article><article><span>2017/18</span><h3>Competición nacional</h3><p>«Apaga y Vámonos» figura en el calendario de Tercera División de fútbol sala de la <a href="https://rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?NPcd_Pdf=&cod_primaria=1000120&codcompeticion=9344579&codgrupo=9362245&codtemporada=13">RFAF</a>.</p></article><article><span>2021</span><h3>Colaboración local</h3><p>El club y el Atlético Menciano anuncian una <a href="https://www.clubatleticomenciano.es/Actualidad/Comunicados/">colaboración deportiva</a> para coordinar instalaciones y fomentar el deporte base.</p></article><article><span>2026/27</span><h3>Primer equipo</h3><p>RAVI Obras & Servicios Apaga y Vámonos compite en el grupo 17 de Tercera División de fútbol sala. <a href="https://stars.rfaf.es/?delegacion=9&competicion=48466108&grupo=48466109&widget_view=classification">Ver la RFAF</a>.</p></article></div></div></section>
-  <section class="section section--tint"><div class="container"><div class="section-heading"><div><p class="eyebrow">LO QUE NOS MUEVE</p><h2>Cuatro ideas. Un mismo escudo.</h2></div></div><div class="values-grid"><article><span>01</span><h3>Cercanía</h3><p>El club y su comunidad, siempre cerca.</p></article><article><span>02</span><h3>Competición</h3><p>El esfuerzo y la pasión por jugar cada jornada.</p></article><article><span>03</span><h3>Orgullo local</h3><p>Doña Mencía como parte de nuestra identidad.</p></article><article><span>04</span><h3>Claridad</h3><p>Información accesible y fácil de encontrar.</p></article></div></div></section>
-  <section class="section"><div class="container club-identity"><Crest class="club-identity__mark" alt="Escudo del Club Deportivo Menciana" /><div><p class="eyebrow">IDENTIDAD VISUAL</p><h2>Azul para avanzar.<br />Dorado para destacar.</h2><p>La combinación de azules, blanco y acentos dorados procede del manual de marca. El patrón geométrico evoca el lenguaje de la equipación sin reproducir una pieza del manual como fondo de página.</p><p>El escudo reúne el nombre del club, el lema «Apaga y vámonos» y las iniciales CDM.</p><a class="button button--blue" href={sitePath('/contacto/')}>Contactar <ArrowIcon /></a></div></div></section>
-  <section class="club-banner"><div class="container club-banner__inner"><div><p class="eyebrow eyebrow--gold">TEMPORADA {site.season}</p><h2>El club se construye<br /><em>entre todos.</em></h2><p>Conoce al equipo, sigue el calendario y acompaña cada paso.</p><a class="button button--outline-light" href={sitePath('/equipos/')}>Ver equipos <ArrowIcon /></a></div><Crest class="club-banner__graphic" /></div></section>
+<BaseLayout title="El club" description="Historia, escudos y junta directiva del Club Deportivo Menciana Apaga y Vámonos F.S., de Doña Mencía.">
+  <ContentHeader title="Dos historias." accent="Un mismo club." eyebrow="EL CLUB / DOÑA MENCÍA" description="Menciana y Apaga y Vámonos: un camino compartido por el fútbol sala de nuestro pueblo." index />
+  <div class="club-page">
+    <section class="section" aria-labelledby="history-title">
+      <div class="container club-story-layout">
+        <div><p class="eyebrow">NUESTRA HISTORIA</p><h2 id="history-title">Raíces locales.<br />Una historia que sigue.</h2><p class="club-story-lead">De los primeros escudos a las nuevas generaciones, Doña Mencía es nuestro punto de encuentro.</p></div>
+        <div class="club-story-copy">
+          <p>La historia del Club Deportivo Menciana Apaga y Vámonos F.S. reúne dos trayectorias del deporte menciano. Por un lado, el CD Menciana y su vínculo con el deporte federado y la formación. Por otro, Apaga y Vámonos, histórico club local de fútbol sala con origen en 1999.</p>
+          <p>La fusión de ambos clubes dio continuidad a ese recorrido compartido. El nombre actual conserva las dos identidades y el vínculo con Doña Mencía, presente en sus escudos y en las personas que han acompañado al club.</p>
+          <p>Hoy, el primer equipo y las categorías de base forman parte de un mismo proyecto. La competición y la formación se encuentran en la pista, con el apoyo de las familias, la afición y quienes trabajan cada temporada para que el fútbol sala siga teniendo su lugar en el pueblo.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section section--tint" aria-labelledby="crests-title">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">NUESTRA MEMORIA</p><h2 id="crests-title">Los escudos que nos unen.</h2><p>Cada emblema guarda una parte del camino.</p></div></div>
+        <div class="club-crest-grid">
+          <figure class="club-crest-card"><div class="club-crest-stage"><img src={sitePath('/images/historia/primer-escudo-menciana.png')} width="200" height="199" alt="Primer escudo del Club Deportivo Menciana, en blanco y negro, con las iniciales CDM" loading="lazy" decoding="async" /></div><figcaption><span>LOS INICIOS</span><h3>Club Deportivo Menciana</h3><p>El primer escudo del club: las iniciales CDM, el nombre de Doña Mencía y la referencia al deporte federado.</p></figcaption></figure>
+          <figure class="club-crest-card"><div class="club-crest-stage club-crest-stage--apaga"><img src={sitePath('/images/historia/escudo-apaga-y-vamonos.png')} width="336" height="310" alt="Escudo histórico de Apaga y Vámonos, con una bombilla, dos balones y el año 1999" loading="lazy" decoding="async" /></div><figcaption><span>DESDE 1999</span><h3>Apaga y Vámonos</h3><p>La bombilla y los balones identifican al histórico club de fútbol sala local, cuya trayectoria forma parte de nuestras raíces.</p></figcaption></figure>
+          <figure class="club-crest-card club-crest-card--current"><div class="club-crest-stage"><Crest alt="Escudo actual del Club Deportivo Menciana Apaga y Vámonos F.S." /></div><figcaption><span>LA IDENTIDAD ACTUAL</span><h3>Menciana Apaga y Vámonos</h3><p>Un escudo compartido que conserva las iniciales CDM y reúne los nombres de ambas entidades.</p></figcaption></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="milestones-title">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">MOMENTOS DEL CAMINO</p><h2 id="milestones-title">Del pueblo a la pista.</h2></div></div>
+        <ol class="club-milestones">
+          <li><span>1999</span><h3>Las raíces de Apaga y Vámonos</h3><p>El año que figura en su escudo histórico marca el origen de una trayectoria ligada al fútbol sala de Doña Mencía.</p></li>
+          <li><span>2015</span><h3>Una cita con Palma Futsal</h3><p>Apaga y Vámonos, CD Menciana y la Delegación de Deportes colaboraron en la organización de un amistoso con el equipo de Primera División.</p><a href="https://www.deportesdonamencia.es/2015/11/24/amistoso-cd-apaga-y-vamonos-palma-futsa/">Crónica municipal <ArrowIcon /></a></li>
+          <li><span>2026</span><h3>Ascenso a Tercera Federación</h3><p>El sénior logró el ascenso ante Ega Futsal: 6–3 en la ida y 2–2 en la vuelta. Un paso adelante tras una temporada marcada por los daños en la cubierta del pabellón.</p><a href="https://www.deportesdonamencia.es/2026/06/02/apaga-y-vamonos-asciende-a-tercera-federacion/">Crónica del ascenso <ArrowIcon /></a></li>
+        </ol>
+      </div>
+    </section>
+    <section class="section section--tint" aria-labelledby="board-title">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">ESTRUCTURA DEL CLUB</p><h2 id="board-title">Nuestra junta directiva.</h2><p>Las personas al frente del club.</p></div></div>
+        <dl class="club-board-grid">{board.map(({ role, name }) => <div class="club-board-card"><dt>{role}</dt><dd>{name}</dd></div>)}</dl>
+        <div class="club-members"><h3>Vocales</h3><ul>{members.map(name => <li>{name}</li>)}</ul></div>
+        <div class="club-contact"><p>¿Quieres contactar con el club?</p><a class="text-link" href={sitePath('/contacto/')}>Escríbenos <ArrowIcon /></a></div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>

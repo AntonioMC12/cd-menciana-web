@@ -1,0 +1,60 @@
+.club-page h2 { font-size: clamp(2rem, 3vw, 3rem); }
+.club-page .section { padding-block: 56px; }
+.club-page .section:first-child { padding-top: 28px; }
+.club-page .section-heading p:not(.eyebrow) { margin-top: 14px; }
+.club-story-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 88px); }
+.club-story-lead { max-width: 370px; color: var(--muted); }
+.club-story-copy { color: var(--muted); }
+.club-story-copy p:last-child { margin-bottom: 0; }
+.club-page .section-heading p:not(.eyebrow) { margin-bottom: 0; color: var(--muted); }
+.club-crest-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.club-crest-card { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: white; }
+.club-crest-card--current { border-color: var(--ui-gold); }
+.club-crest-stage { display: flex; align-items: center; justify-content: center; height: 240px; padding: 28px; border-bottom: 1px solid var(--line); }
+.club-crest-stage img { width: auto; height: auto; max-width: 100%; max-height: 184px; object-fit: contain; }
+.club-crest-stage--apaga { background: #32334f; }
+.club-crest-card figcaption { padding: 24px; }
+.club-crest-card figcaption span { display: block; margin-bottom: 12px; color: var(--ui-blue-ink); font-size: .65rem; font-weight: 800; letter-spacing: .12em; }
+.club-crest-card h3 { font-size: 1.1rem; line-height: 1.25; }
+.club-crest-card p { margin-bottom: 0; color: var(--muted); font-size: .87rem; }
+.club-milestones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding: 0; margin: 0; list-style: none; }
+.club-milestones li { padding-top: 20px; border-top: 2px solid var(--ui-gold); }
+.club-milestones li > span { display: block; margin-bottom: 18px; color: var(--ui-blue-ink); font-size: 2.2rem; line-height: 1; font-weight: 800; letter-spacing: -.05em; }
+.club-milestones h3 { font-size: 1.15rem; line-height: 1.25; }
+.club-milestones p { color: var(--muted); font-size: .9rem; }
+.club-milestones a { display: inline-flex; align-items: center; gap: 8px; color: var(--ui-blue-ink); font-size: .75rem; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.club-board-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 0 0 24px; }
+.club-board-card { padding: 24px; border: 1px solid var(--line); border-radius: 10px; background: white; }
+.club-board-card:first-child { border-top: 3px solid var(--ui-gold); padding-top: 22px; }
+.club-board-card dt { margin-bottom: 14px; color: var(--ui-blue-ink); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.club-board-card dd { margin: 0; color: var(--ui-navy); font-size: 1.05rem; font-weight: 700; line-height: 1.45; }
+.club-members { display: grid; grid-template-columns: 150px 1fr; gap: 24px; align-items: baseline; padding: 24px; border: 1px solid var(--line); border-radius: 10px; background: white; }
+.club-members h3 { margin: 0; font-size: 1rem; }
+.club-members ul { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 0; padding: 0; list-style: none; }
+.club-members li { color: var(--muted); font-size: .9rem; }
+.club-contact { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.club-contact p { margin: 0; color: var(--muted); font-size: .9rem; }
+@media (max-width: 1000px) {
+  .club-board-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .club-crest-grid { gap: 16px; }
+  .club-crest-card figcaption { padding: 20px; }
+  .club-crest-stage { height: 205px; padding: 22px; }
+  .club-crest-stage img { max-height: 160px; }
+}
+@media (max-width: 700px) {
+  .club-page .section { padding-block: 40px; }
+  .club-page .section:first-child { padding-top: 22px; }
+  .club-story-layout, .club-crest-grid, .club-milestones { grid-template-columns: 1fr; }
+  .club-story-layout { gap: 16px; }
+  .club-story-lead { max-width: none; }
+  .club-crest-stage { height: 220px; }
+  .club-crest-stage img { max-height: 176px; }
+  .club-milestones { gap: 28px; }
+  .club-members { grid-template-columns: 1fr; gap: 18px; }
+  .club-members ul { flex-direction: column; gap: 12px; }
+  .club-board-card { padding: 20px; }
+  .club-board-card:first-child { padding-top: 18px; }
+  .club-board-card dd { font-size: .95rem; }
+  .club-contact { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 380px) { .club-board-grid { grid-template-columns: 1fr; } }
