@@ -44,7 +44,9 @@ Los escudos de los rivales del filial, cadete e infantil se guardan en `public/i
 
 Los escudos de los rivales publicados hasta la jornada 7 están en `public/images/equipos/` y proceden de las fichas de partido de la RFAF consultadas el 4 de octubre de 2026. Las jornadas nuevas se muestran automáticamente; sus escudos requieren guardar el archivo en esa carpeta y añadir la ruta en `src/data/first-team.ts`.
 
-El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro` lo usa en la cabecera, el pie, la portada, la página del club, las tarjetas y los elementos decorativos; el favicon apunta al mismo archivo. La portada usa la foto de la plantilla a la derecha, como en la maqueta del manual de marca, con versiones WebP para móvil y escritorio y un JPEG de respaldo. Coloca otras fotografías y logotipos autorizados en `public/images/equipo/`, `public/images/jugadores/` y `public/images/patrocinadores/`.
+El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro` lo usa en la cabecera, el pie, la portada, la página del club, las tarjetas y los elementos decorativos; el favicon apunta al mismo archivo. La portada incorpora una secuencia de los cuatro vídeos de Doña Mencía y el pabellón, con reproducción automática silenciada y en bucle, versiones optimizadas para escritorio y móvil y una imagen estática de respaldo. Las fotos de acción, celebración y afición están en `public/images/home/`; los clips están en `public/videos/home/`. La implementación y las comprobaciones se describen en [docs/HOME-DESIGN.md](docs/HOME-DESIGN.md).
+
+La historia del club incluye el apartado «Inicios», con un reconocimiento a Antonio Ruiz y Luis Lama como precursores. Sus fotografías se conservan sin retoques en `public/images/historia/`; la composición y los marcos se aplican mediante CSS. Coloca otras fotografías y logotipos autorizados en `public/images/equipo/`, `public/images/jugadores/` y `public/images/patrocinadores/`.
 
 ## Estructura
 
@@ -56,7 +58,7 @@ El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro`
 | --- | --- |
 | Portada | Mensaje “Más que fútbol sala”, gran jerarquía, azul y dorado, orgullo local. |
 | Identidad visual | Paleta general: azul `#0E62C8`, marino `#0B2F6B`, claro `#9FD6F3`, blanco `#F8FBFF`, oro `#D6A84B`, gris `#1F2A3A`. Escudo vectorizado a partir de las imágenes facilitadas por el club. |
-| Sistema gráfico | Patrón geométrico, marca circular, composición azul, fotografía de alto contraste con fondo limpio. Por falta de fotos autorizadas se usan composiciones CSS y espacios reservados. |
+| Sistema gráfico | Patrón geométrico, marca circular, composición azul, fotografías facilitadas para la web y vídeo del entorno del club. Los tratamientos decorativos se aplican mediante CSS. |
 | Publicaciones | Bloques claros para próximo partido, resultado y noticia; titulares destacados y lectura móvil. Los marcadores/nombres mostrados en las maquetas son ejemplos, no datos deportivos. |
 | Diseño web | Navegación, tarjetas, prioridad del próximo partido, resultados y noticias, botones primarios y dorados, diseño adaptable. La página propone marino `#0D2E5B`, azul `#2F7AC6`, claro `#CFE7F8`, oro `#C9A961`, fondo `#F4F7FB` y Montserrat. |
 
@@ -66,6 +68,18 @@ La paleta web difiere ligeramente de la paleta general. Las variables `--ui-*` s
 
 - Confirmación del dorsal de Adri Luna y de las posiciones de los jugadores de campo.
 - Plantilla confirmada y noticias reales; actualización periódica de calendario, sedes, resultados y clasificación.
-- Dominio personalizado, si el club decide usar uno.
+- Revisar las autorizaciones de uso de fotografías, vídeos, escudos y marcas, así como los derechos de imagen de las personas identificables, especialmente menores.
+- Completar y formalizar la cesión al club de los derechos de explotación sobre el código propio; identificar los materiales y aportaciones ajenos antes de la firma.
+- Completar la información legal y de privacidad que corresponda a la actividad y al tratamiento de datos de la web; revisar cookies si se añaden analítica o servicios de terceros.
 
 La página de contacto muestra el correo facilitado por el club, el Pabellón de Deportes Alcalde Julio Priego y los perfiles sociales como vías para enviar mensajes.
+
+## Derechos y licencias
+
+El código propio se publica con un [aviso de derechos reservados](LICENSE), sin licencia pública de reutilización comercial ni no comercial. La atribución de autoría no sustituye el permiso del titular. La reserva respeta los usos permitidos por la ley y las licencias de terceros. En un repositorio público también se aplican los permisos de visualización y fork previstos por GitHub; véase [publicación sin licencia](https://choosealicense.com/no-permission/).
+
+El código propio, los contenidos del club y los materiales de terceros deben distinguirse. Las fotografías, vídeos, escudos, logotipos y textos no reciben una licencia de reutilización por estar en este repositorio. Debe conservarse constancia de quién los aporta, quién es su titular y qué usos autoriza. Las dependencias y fuentes conservan sus propias licencias; por ejemplo, Astro utiliza MIT y Montserrat SIL Open Font License. Cualquier aviso de derechos reservados sobre el proyecto debe excluir los componentes de terceros y respetar sus condiciones.
+
+Se ha decidido preparar la cesión al club de los derechos de explotación del código propio. El [borrador de acuerdo](docs/CESION-DERECHOS-BORRADOR.md) está pendiente de identificar a las partes, inventariar las aportaciones, concretar la contraprestación, revisar y firmar. No se afirma que la cesión esté ya formalizada. Los datos personales y el acuerdo firmado deben conservarse fuera del repositorio público. Tras la firma se actualizará el aviso con la denominación legal del titular y los derechos efectivamente adquiridos.
+
+Referencias: [Ley de Propiedad Intelectual](https://www.boe.es/buscar/act.php?id=BOE-A-1996-8930), [Registro de la Propiedad Intelectual](https://www.cultura.gob.es/cultura/propiedadintelectual/la-propiedad-intelectual/preguntas-mas-frecuentes/registro.html), [LSSI](https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758) y [guía de cookies de la AEPD](https://www.aepd.es/guias/guia-cookies.pdf). Esta documentación es una orientación general y no sustituye la revisión del caso concreto.
