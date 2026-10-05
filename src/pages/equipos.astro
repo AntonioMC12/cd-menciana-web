@@ -4,6 +4,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ContentHeader from '../components/ContentHeader.astro';
 import MatchCard from '../components/MatchCard.astro';
 import PlayerCard from '../components/PlayerCard.astro';
+import TeamRoster from '../components/TeamRoster.astro';
+import { teamRosters } from '../data/team-rosters';
 import ResultCard from '../components/ResultCard.astro';
 import StandingsTable from '../components/StandingsTable.astro';
 import { firstTeamSource } from '../data/first-team';
@@ -39,6 +41,7 @@ import { sitePath } from '../lib/paths';
         </div>}
 
         {team.id === 'primer-equipo' && <div class="team-roster"><h3>Plantilla</h3><div class="player-grid">{teamPlayers.map((player) => <PlayerCard player={player} />)}</div></div>}
+        {teamRosters[team.id] && <TeamRoster roster={teamRosters[team.id]} />}
       </section>;
     })}
   </div></section>
