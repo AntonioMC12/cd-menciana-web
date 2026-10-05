@@ -7,3 +7,4 @@ PUBLIC_WEB_ORIGIN=http://127.0.0.1:4321
 # ACCESS_AUD=your-access-application-audience
 # ADMIN_EMAIL=club@example.org
 # CSRF_SECRET=at-least-32-random-characters
+# GITHUB_DEPLOY_TOKEN: production Worker secret only; do not use it in local tests.

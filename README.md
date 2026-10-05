@@ -20,7 +20,7 @@ Ejecuta `dev` y `dev:worker` en terminales distintas. Antes de abrir el panel lo
 
 ## Publicación
 
-La acción de GitHub Pages publica la web pública desde `main` en `https://cdmenciana.es/` y la conecta con `https://cms.cdmenciana.es`. También reconstruye la web cada seis horas para incorporar las publicaciones del CMS; GitHub Actions puede retrasar las ejecuciones programadas. El Worker se despliega por separado con `npm run deploy:worker` después de preparar D1, R2, Access y secretos. Las PR solo ejecutan comprobaciones.
+La acción de GitHub Pages publica la web pública desde `main` en `https://cdmenciana.es/` y la conecta con `https://cms.cdmenciana.es`. Publicar o retirar noticias y galerías solicita automáticamente una reconstrucción cuando el Worker tiene el secreto `GITHUB_DEPLOY_TOKEN` configurado; ver [configuración](docs/CLOUDFLARE.md#actualización-automática-desde-el-panel). También reconstruye la web cada seis horas como respaldo; GitHub Actions puede retrasar las ejecuciones programadas. El Worker se despliega por separado con `npm run deploy:worker` después de preparar D1, R2, Access y secretos. Las PR solo ejecutan comprobaciones.
 
 ## Contenido
 

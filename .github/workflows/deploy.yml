@@ -12,6 +12,11 @@ permissions:
   pages: write
   id-token: write
 
+# Keep an in-flight deployment and queue the newest publication behind it.
+concurrency:
+  group: public-site-deploy
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest

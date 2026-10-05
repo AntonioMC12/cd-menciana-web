@@ -93,7 +93,14 @@ form.addEventListener('submit', async event => {
 async function action(name: 'publish' | 'unpublish') {
   if (!current) return;
   show(name === 'publish' ? 'Publicando…' : 'Retirando…');
-  try { await api(`/api/admin/${kind}/${current.id}/${name}`, 'POST'); const id = current.id; await load(); await open(id); show(name === 'publish' ? 'Contenido publicado.' : 'Contenido retirado de la web.'); }
+  try {
+    const result = await api(`/api/admin/${kind}/${current.id}/${name}`, 'POST');
+    const id = current.id; await load(); await open(id);
+    const saved = name === 'publish' ? 'Contenido publicado en el CMS.' : 'Contenido retirado del CMS.';
+    if (result.siteUpdate === 'requested') show(`${saved} Actualización de la web solicitada; estará disponible cuando termine el despliegue, normalmente en unos minutos.`);
+    else if (result.siteUpdate === 'failed') show(`${saved} No se pudo solicitar la actualización de la web. Repite esta acción o ejecuta el despliegue desde GitHub Actions.`, true);
+    else show(`${saved} La actualización automática aún no está configurada. La web se actualizará en el próximo despliegue programado.`, true);
+  }
   catch (e) { show((e as Error).message, true); }
 }
 document.querySelector('#publish')!.addEventListener('click', () => action('publish'));

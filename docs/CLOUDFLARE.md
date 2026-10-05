@@ -13,9 +13,9 @@ Para comprar un dominio propio y conectar GitHub Pages con Cloudflare desde cero
 | Base de datos | Cloudflare D1 | Binding privado `DB` |
 | Fotografías | Cloudflare R2 | Bucket privado `PHOTOS` |
 
-La portada, noticias, galerías y calendario consultan la API pública del Worker en el navegador. Al publicar o retirar contenido en el panel, la API y las fotos reflejan el cambio sin reconstruir GitHub Pages. El Worker sincroniza cada hora los datos deportivos publicados por la RFAF y conserva en D1 la última consulta válida. Las páginas institucionales siguen siendo HTML estático. La web pública no contiene el código del panel.
+Las noticias y galerías se obtienen de la API durante la compilación de Astro y se publican como HTML estático en GitHub Pages. El calendario consulta la API deportiva en el navegador. El Worker sincroniza cada hora los datos deportivos de la RFAF y conserva en D1 la última consulta válida. La web pública no contiene el código del panel.
 
-**Límite de GitHub Pages:** cada noticia y galería real usa una página estática compartida (`/noticias/detalle/?slug=…` o `/galerias/detalle/?slug=…`) que obtiene el contenido en el navegador. El título y la etiqueta canónica se actualizan con JavaScript, pero las vistas previas de redes sociales y los buscadores que no ejecuten JavaScript verán los metadatos genéricos. Si el club necesita SEO completo por publicación, habrá que generar HTML estático en cada publicación o mover esas páginas a un servidor dinámico.
+Cada noticia y galería tiene su propia URL, HTML y metadatos para buscadores y redes sociales. Publicar o retirar contenido actualiza la API inmediatamente; para reflejarlo en GitHub Pages debe terminar un nuevo despliegue. El panel solicita ese despliegue automáticamente si está configurado el secreto descrito debajo, e informa si GitHub lo acepta o falla. No confirma que el despliegue haya terminado.
 
 ## Preparar Cloudflare
 
@@ -39,6 +39,17 @@ El Worker verifica firma, emisor, audiencia, expiración y correo exacto del JWT
 ## Conectar GitHub Pages
 
 El workflow `.github/workflows/deploy.yml` ya compila Astro para `https://cdmenciana.es/` con la API en `https://cms.cdmenciana.es`. Publica GitHub Pages al actualizar `main`; también puede ejecutarse manualmente. En Settings → Pages, seleccionar **GitHub Actions** como origen de publicación. No redirigir el dominio público al Worker.
+
+### Actualización automática desde el panel
+
+1. Crear un [token personal de acceso detallado de GitHub](https://github.com/settings/personal-access-tokens/new) para el propietario `AntonioMC12`, limitado al repositorio `cd-menciana-web`, con permiso **Actions: Read and write**. Elegir caducidad y renovarlo antes de que expire. No necesita permiso de escritura de contenido.
+2. Guardarlo como secreto **GITHUB_DEPLOY_TOKEN** del Worker `cd-menciana-cms` en Cloudflare → Workers & Pages → Settings → Variables and Secrets (tipo Secret), o con `npx wrangler secret put GITHUB_DEPLOY_TOKEN --config wrangler.jsonc`. No pegar el token en el chat, archivos versionados ni variables públicas.
+3. Desplegar el código actualizado con `npm run deploy:worker`.
+4. Publicar una noticia o galería desde el panel: debe indicar «Actualización de la web solicitada». Comprobar la ejecución `workflow_dispatch` en [GitHub Actions](https://github.com/AntonioMC12/cd-menciana-web/actions/workflows/deploy.yml) y después la URL pública. Retirar contenido también solicita el despliegue; guardar borradores no lo solicita.
+
+La petición a GitHub tiene un límite de diez segundos. Si falla, el contenido permanece publicado o retirado en el CMS y el panel informa del problema; puede repetirse la acción o ejecutar el workflow manualmente. La ejecución programada cada seis horas sigue como respaldo. Los despliegues se serializan y se conserva la última solicitud pendiente para incorporar las publicaciones más recientes. Hasta que termine la reconstrucción, el HTML público anterior puede seguir visible, incluso después de retirar contenido.
+
+Referencia: [API oficial de GitHub para solicitar un workflow](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event).
 
 ## Desarrollo local
 

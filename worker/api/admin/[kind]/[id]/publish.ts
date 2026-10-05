@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { requestSiteRebuild } from '../../../../../src/lib/site-rebuild';
 import { authorize, bindings, error, failure, json, type Row, type Content } from '../../../../../src/lib/cms';
 export const prerender = false;
 export const POST: APIRoute = async ({ request, params }) => {
@@ -26,10 +27,10 @@ export const POST: APIRoute = async ({ request, params }) => {
       const results = await bindings().DB.batch(statements);
       if (!results[2].meta.changes) return error('El álbum cambió en otra sesión. Recarga.', 409);
       for (const photo of removed) for (const key of [photo.image_key, photo.thumb_key]) await bindings().DB.prepare('INSERT OR IGNORE INTO object_deletions(object_key) VALUES(?)').bind(key).run();
-      return json({ ok: true });
+      return json({ ok: true, siteUpdate: await requestSiteRebuild() });
     }
     const result = await bindings().DB.prepare(`UPDATE ${kind} SET published_json=draft_json,published_slug=slug,published_version=version,published_at=COALESCE(published_at,CURRENT_TIMESTAMP) WHERE id=? AND version=?`).bind(row.id, row.version).run();
     if (!result.meta.changes) return error('El contenido cambió en otra sesión. Recarga.', 409);
-    return json({ ok: true });
+    return json({ ok: true, siteUpdate: await requestSiteRebuild() });
   } catch (e) { return failure(e); }
 };
