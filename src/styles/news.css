@@ -1,12 +1,12 @@
 /* Editorial news surfaces use the existing club palette and Montserrat. */
-.news-masthead { padding: 58px 0 30px; background: var(--ui-navy); color: white; }
-.news-masthead .eyebrow { margin-bottom: 18px; }
+.news-masthead { padding: 32px 0 24px; background: var(--ui-navy); color: white; }
+.news-masthead .eyebrow { margin-bottom: 12px; }
 .news-masthead__row { display: flex; align-items: end; justify-content: space-between; gap: 32px; }
-.news-masthead h1 { margin: 0; color: white; font-size: clamp(3.5rem, 8vw, 7.5rem); letter-spacing: -.065em; }
+.news-masthead h1 { margin: 0; color: white; font-size: clamp(2.8rem, 5vw, 4rem); letter-spacing: -.05em; }
 .news-masthead h1 span { color: var(--ui-gold); }
 .news-masthead__row > p { margin: 0 0 8px; color: #d9eaff; font-size: .95rem; }
-.news-masthead__rule { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 32px; padding-top: 18px; border-top: 1px solid #49617e; color: #d9eaff; font-size: .65rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; }
-.news-edition { padding-top: 48px; padding-bottom: 80px; }
+.news-masthead__rule { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 14px; border-top: 1px solid #49617e; color: #d9eaff; font-size: .65rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; }
+.news-edition { padding-top: 28px; padding-bottom: 56px; }
 .news-lead { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); border-bottom: 1px solid var(--line); padding-bottom: 48px; gap: 42px; align-items: center; }
 .news-lead__visual { display: grid; place-items: center; min-width: 0; aspect-ratio: 16 / 11; background: #e7eef5; overflow: hidden; }
 .news-lead__visual img { width: 100%; height: 100%; object-fit: contain; }
@@ -46,13 +46,8 @@
 .news-empty h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); }
 .news-empty p { color: var(--muted); }
 /* The current CMS accepts plain text only. Preserve whitespace, never interpret HTML. */
-.article-hero { background: var(--ui-bg); color: var(--ink); padding: 42px 0 52px; border-bottom: 1px solid var(--line); }
-.article-hero__inner { max-width: 1000px; }
-.article-hero .breadcrumbs { color: var(--muted); margin-bottom: 38px; line-height: 1.7; }
-.article-hero h1 { color: var(--ui-navy); text-transform: none; font-size: clamp(2rem, 4.7vw, 4.4rem); line-height: 1.12; letter-spacing: -.05em; margin: 22px 0; overflow-wrap: anywhere; }
-.article-hero .article-hero__inner .news-story__intro { max-width: 800px; color: #47637e; font-size: clamp(1rem, 1.7vw, 1.2rem); line-height: 1.8; overflow-wrap: anywhere; }
-.news-story { padding-top: 40px; padding-bottom: 65px; }
-.news-story__photo { aspect-ratio: 16 / 11; max-width: 1000px; margin: 0 auto 48px; background: #e7eef5; }
+.news-story { padding-top: 28px; padding-bottom: 56px; }
+.news-story__photo { aspect-ratio: 16 / 9; max-width: 1000px; margin: 0 auto 28px; background: #e7eef5; }
 .news-story__photo img { width: 100%; height: 100%; object-fit: contain; }
 .news-story__reading { max-width: 720px; margin-inline: auto; }
 .news-story__body { font-size: 1.05rem; line-height: 1.95; color: #344f68; }
@@ -67,7 +62,7 @@
 @media (max-width: 1050px) { .news-lead { gap: 28px; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } .news-grid--editorial { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 900px) { .news-lead { grid-template-columns: 1fr; gap: 24px; } .news-lead__copy { padding: 0; } }
 @media (max-width: 760px) {
-  .news-masthead { padding-top: 36px; }
+  .news-masthead { padding-top: 24px; }
   .news-masthead__row { align-items: start; flex-direction: column; gap: 16px; }
   .news-masthead__row > p { font-size: .85rem; }
   .news-masthead__rule { margin-top: 22px; }
@@ -76,8 +71,6 @@
   .news-lead__copy { padding: 0; }
   .news-lead h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); }
   .news-section-heading { flex-wrap: wrap; align-items: start; gap: 12px; }
-  .article-hero { padding: 28px 0 36px; }
-  .article-hero .breadcrumbs { margin-bottom: 25px; }
   .news-story { padding-top: 24px; padding-bottom: 44px; }
   .news-story__photo { margin-bottom: 30px; }
   .news-story__body { font-size: 1rem; line-height: 1.85; }

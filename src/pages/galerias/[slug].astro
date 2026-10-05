@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PhotoGallery from '../../components/PhotoGallery.astro';
+import ContentHeader from '../../components/ContentHeader.astro';
 import { getPublicAlbum, getPublicAlbums, publicPhoto, type PublicAlbum } from '../../lib/build-content';
 import { breadcrumbData } from '../../lib/seo';
 import { sitePath } from '../../lib/paths';
@@ -16,11 +17,10 @@ const path = `/galerias/${album.slug}/`;
 const image = album.coverPhotoId ? publicPhoto(album.coverPhotoId) : undefined;
 ---
 <BaseLayout title={album.title} description={album.description || `Galería de ${album.title} del CD Menciana.`} image={image} structuredData={breadcrumbData([{ name: 'Inicio', path: '/' }, { name: 'Galerías', path: '/galerias/' }, { name: album.title, path }])}>
-  <section class="page-hero"><div class="container">
-    <nav class="breadcrumbs breadcrumbs--dark" aria-label="Ruta de navegación"><a href={sitePath('/')}>Inicio</a><span aria-hidden="true">/</span><a href={sitePath('/galerias/')}>Galerías</a><span aria-hidden="true">/</span><span aria-current="page">{album.title}</span></nav>
-    <h1>{album.title}</h1><p>{album.description}</p>
-  </div></section>
-  <section class="section"><div class="container">
+  <ContentHeader title={album.title} description={album.description}>
+    <nav slot="breadcrumbs" class="breadcrumbs" aria-label="Ruta de navegación"><a href={sitePath('/')}>Inicio</a><span aria-hidden="true">/</span><a href={sitePath('/galerias/')}>Galerías</a><span aria-hidden="true">/</span><span aria-current="page">{album.title}</span></nav>
+  </ContentHeader>
+  <section class="section gallery-section"><div class="container">
     <PhotoGallery album={album} />
   </div></section>
 </BaseLayout>

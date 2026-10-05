@@ -5,6 +5,7 @@ import { getPublicPost, getPublicPosts, publicPhoto, type PublicPost } from '../
 import { absolutePage, breadcrumbData, organizationData } from '../../lib/seo';
 import { sitePath } from '../../lib/paths';
 import NewsCard from '../../components/NewsCard.astro';
+import ContentHeader from '../../components/ContentHeader.astro';
 import { newsDate, newsArticle, relatedNews } from '../../lib/news';
 import '../../styles/news.css';
 
@@ -31,11 +32,10 @@ const articleData = {
 };
 ---
 <BaseLayout title={post.title} description={post.excerpt || undefined} image={image} ogType="article" publishedAt={post.publishedAt} structuredData={[organizationData, breadcrumbData([{ name: 'Inicio', path: '/' }, { name: 'Noticias', path: '/noticias/' }, { name: post.title, path }]), articleData]}>
-  <header class="article-hero"><div class="container article-hero__inner">
-    <nav class="breadcrumbs" aria-label="Ruta de navegación"><a href={sitePath('/')}>Inicio</a><span aria-hidden="true">/</span><a href={sitePath('/noticias/')}>Noticias</a><span aria-hidden="true">/</span><span aria-current="page">{post.title}</span></nav>
-    <div class="news-meta">{post.category && <span>{post.category}</span>}{published && <time datetime={post.publishedAt}>{published}</time>}</div>
-    <h1>{post.title}</h1>{post.excerpt && <p class="news-story__intro">{post.excerpt}</p>}
-  </div></header>
+  <ContentHeader title={post.title} description={post.excerpt}>
+    <nav slot="breadcrumbs" class="breadcrumbs" aria-label="Ruta de navegación"><a href={sitePath('/')}>Inicio</a><span aria-hidden="true">/</span><a href={sitePath('/noticias/')}>Noticias</a><span aria-hidden="true">/</span><span aria-current="page">{post.title}</span></nav>
+    <div slot="meta" class="news-meta">{post.category && <span>{post.category}</span>}{published && <time datetime={post.publishedAt}>{published}</time>}</div>
+  </ContentHeader>
   <article class="container news-story">
     {image && <div class="news-story__photo"><img src={image} alt="" width="1600" height="1100" fetchpriority="high" decoding="async" /></div>}
     <div class="news-story__reading">

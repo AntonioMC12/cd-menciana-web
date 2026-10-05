@@ -1,0 +1,14 @@
+---
+import '../styles/content-header.css';
+interface Props { title: string; accent?: string; eyebrow?: string; description?: string; index?: boolean }
+const { title, accent, eyebrow, description, index = false } = Astro.props;
+---
+<header class:list={['page-hero', 'content-header', { 'content-header--index': index }]}>
+  <div class="container">
+    <slot name="breadcrumbs" />
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <slot name="meta" />
+    <h1>{title}{accent && <> <em>{accent}</em></>}</h1>
+    {description && <p class="content-header__description">{description}</p>}
+  </div>
+</header>

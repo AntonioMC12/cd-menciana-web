@@ -1,0 +1,18 @@
+/* Compact editorial headers share the club's existing hero texture and tokens. */
+.page-hero.content-header { padding:32px 0 30px; border-bottom:1px solid var(--line); }
+.content-header .breadcrumbs { margin:0 0 20px; color:var(--muted); gap:6px 10px; }
+.content-header .breadcrumbs [aria-current=page] { max-width:55ch; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.content-header .eyebrow { margin:0 0 14px; }
+.content-header .news-meta { margin-bottom:12px; }
+.page-hero.content-header h1 { max-width:1100px; margin:0 0 16px; font-size:clamp(2rem,3.5vw,3.25rem); line-height:1.12; letter-spacing:-.045em; text-transform:none; text-wrap:balance; overflow-wrap:anywhere; }
+.page-hero.content-header--index h1 { font-size:clamp(2.6rem,4.5vw,4rem); font-weight:800; }
+.page-hero.content-header .content-header__description { max-width:850px; margin:0; font-size:1rem; line-height:1.7; }
+.page-hero.content-header::after { width:320px; height:320px; border-width:32px; bottom:-200px; opacity:.6; }
+@media(max-width:760px) {
+  .page-hero.content-header { padding:24px 0; }
+  .content-header .breadcrumbs { margin-bottom:16px; font-size:.65rem; }
+  .content-header .breadcrumbs [aria-current=page] { max-width:100%; }
+  .page-hero.content-header h1 { font-size:clamp(1.85rem,5vw,2.7rem); margin-bottom:12px; }
+  .page-hero.content-header--index h1 { font-size:clamp(2.4rem,8vw,3.25rem); }
+  .page-hero.content-header .content-header__description { font-size:.9rem; line-height:1.65; }
+}
