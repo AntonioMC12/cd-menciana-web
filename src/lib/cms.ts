@@ -107,9 +107,10 @@ export async function readLimitedForm(request: Request, maxBytes: number): Promi
   for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
   return new Request(request.url, { method: 'POST', headers: request.headers, body: bytes }).formData();
 }
-export async function publishedList(table: 'posts' | 'albums', page: number, limit = 9): Promise<Row[]> {
-  const n = Math.max(1, Math.min(10000, page || 1));
-  const result = await bindings().DB.prepare(`SELECT * FROM ${table} WHERE published_json IS NOT NULL ORDER BY published_at DESC, id DESC LIMIT ? OFFSET ?`).bind(limit, (n - 1) * limit).all<Row>();
+export async function publishedList(table: 'posts' | 'albums', page: number, limit = 9, pageSize = limit): Promise<Row[]> {
+  const n = Math.max(1, Math.min(10000, Math.floor(page) || 1));
+  // A lookahead row detects the next page; it must not increase the offset.
+  const result = await bindings().DB.prepare(`SELECT * FROM ${table} WHERE published_json IS NOT NULL ORDER BY published_at DESC, id DESC LIMIT ? OFFSET ?`).bind(limit, (n - 1) * pageSize).all<Row>();
   return result.results;
 }
 export async function publishedBySlug(table: 'posts' | 'albums', slug: string): Promise<Row | null> {

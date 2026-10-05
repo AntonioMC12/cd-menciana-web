@@ -2,10 +2,25 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { createServer } from 'node:http';
 import { generateKeyPair, exportJWK, SignJWT } from 'jose';
 import { env } from './worker-env';
-import { authorize, csrfToken, identity, validateContent, validateSlug, webpDimensions } from '../src/lib/cms';
+import { authorize, csrfToken, identity, validateContent, validateSlug, webpDimensions, publishedList } from '../src/lib/cms';
 import { persistObjects } from '../src/lib/photo-storage';
 
 beforeEach(() => { for (const key of Object.keys(env)) delete env[key]; });
+
+describe('published archive pagination', () => {
+  it('keeps every published item across pages when requesting a lookahead row', async () => {
+    const rows = Array.from({ length: 20 }, (_, index) => ({ id: String(index) }));
+    const all = vi.fn();
+    env.DB = { prepare: () => ({ bind: (limit: number, offset: number) => ({ all: async () => { all(limit, offset); return { results: rows.slice(offset, offset + limit) }; } }) }) };
+    for (const kind of ['posts', 'albums'] as const) {
+      const pages = await Promise.all([1, 2, 3].map(page => publishedList(kind, page, 10, 9)));
+      expect(pages.flatMap(page => page.slice(0, 9).map(row => row.id))).toEqual(rows.map(row => row.id));
+      expect(pages.map(page => page.length > 9)).toEqual([true, true, false]);
+    }
+    expect(all).toHaveBeenCalledWith(10, 9);
+    expect(all).toHaveBeenCalledWith(10, 18);
+  });
+});
 describe('input and photo validation', () => {
   it('rejects duplicate style slugs and active image formats', () => {
     expect(() => validateSlug('Wrong Slug')).toThrow();

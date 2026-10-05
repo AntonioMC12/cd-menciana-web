@@ -94,7 +94,7 @@ export default {
       if (parts[0] === 'api' && parts[1] === 'posts' && method === 'GET') {
         if (parts.length === 2) {
           const page = Math.max(1, Math.min(10000, Number(url.searchParams.get('page')) || 1));
-          const rows = await publishedList('posts', page, 10);
+          const rows = await publishedList('posts', page, 10, 9);
           return cors(json({ items: rows.slice(0, 9).map(article), more: rows.length > 9 }), request);
         }
         if (parts.length === 3) {
@@ -106,7 +106,7 @@ export default {
         if (parts.length === 2) {
           const page = Math.max(1, Math.min(10000, Number(url.searchParams.get('page')) || 1));
           const post = url.searchParams.get('post');
-          const rows = post ? (await bindings().DB.prepare('SELECT * FROM albums WHERE post_id=? AND published_json IS NOT NULL ORDER BY published_at DESC LIMIT 10 OFFSET ?').bind(post, (page - 1) * 9).all<Row>()).results : await publishedList('albums', page, 10);
+          const rows = post ? (await bindings().DB.prepare('SELECT * FROM albums WHERE post_id=? AND published_json IS NOT NULL ORDER BY published_at DESC LIMIT 10 OFFSET ?').bind(post, (page - 1) * 9).all<Row>()).results : await publishedList('albums', page, 10, 9);
           return cors(json({ items: rows.slice(0, 9).map(album), more: rows.length > 9 }), request);
         }
         if (parts.length === 3) {

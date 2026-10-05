@@ -3,12 +3,14 @@ import ArrowIcon from './ArrowIcon.astro';
 import { sitePath } from '../lib/paths';
 import Crest from './Crest.astro';
 import type { Article } from '../data/types';
-interface Props { article: Article; index?: number }
-const { article, index = 0 } = Astro.props;
+import { newsDate } from '../lib/news';
+interface Props { article: Article; index?: number; editorial?: boolean }
+const { article, index = 0, editorial = false } = Astro.props;
+const date = newsDate(article.publishedAt);
 ---
-<article class="news-card">
+<article class:list={['news-card', { 'news-card--editorial': editorial }]}>
   <a class="news-card__visual" href={sitePath(`/noticias/${article.slug}/`)} aria-label={`Leer ${article.title}`}>
-    {article.image ? <img class="news-card__image" src={article.image} alt="" width="480" height="320" loading="lazy" decoding="async" /> : <><span class="news-card__visual-index">0{index + 1}</span><span class="news-card__visual-pattern" aria-hidden="true"></span><Crest class="news-card__visual-crest" /></>}
+    {article.image ? <img class="news-card__image" src={article.image} alt="" width="480" height="320" loading="lazy" decoding="async" /> : <>{!editorial && <span class="news-card__visual-index">0{index + 1}</span>}<span class="news-card__visual-pattern" aria-hidden="true"></span><Crest class="news-card__visual-crest" /></>}
   </a>
-  <div class="news-card__body"><div class="news-card__meta"><span>{article.category}</span><span>{article.status === 'provisional' ? 'Contenido de muestra' : article.publishedAt}</span></div><h3><a href={sitePath(`/noticias/${article.slug}/`)}>{article.title}</a></h3><p>{article.excerpt}</p><a class="text-link" href={sitePath(`/noticias/${article.slug}/`)}>Leer artículo <ArrowIcon /></a></div>
+  <div class="news-card__body"><div class="news-card__meta">{article.category && <span>{article.category}</span>}{article.status === 'provisional' ? <span>Contenido de muestra</span> : date && <time datetime={article.publishedAt}>{date}</time>}</div><h3><a href={sitePath(`/noticias/${article.slug}/`)}>{article.title}</a></h3>{article.excerpt && <p>{article.excerpt}</p>}<a class="text-link" href={sitePath(`/noticias/${article.slug}/`)}>Leer noticia <ArrowIcon /></a></div>
 </article>

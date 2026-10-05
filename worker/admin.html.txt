@@ -11,6 +11,7 @@
 <label id="category-label">Categoría <input name="category" maxlength="50" required></label>
 <label id="body-label">Cuerpo (texto, párrafos separados por línea en blanco) <textarea name="body" maxlength="20000" rows="12" required></textarea></label>
 <label id="post-link-label" hidden>Publicación asociada <select name="postId"><option value="">Álbum independiente</option></select></label>
-<label>Portada <select name="coverPhotoId"><option value="">Sin portada</option></select></label>
+<label>Portada <select name="coverPhotoId" aria-describedby="cover-help"><option value="">Sin portada</option></select></label>
+<p id="cover-help">La portada es opcional. Elige una fotografía horizontal y nítida; la noticia mostrará la imagen completa. Sin foto se utiliza el escudo del club.</p>
 <div class="admin-actions"><button class="button button--blue" type="submit">Guardar borrador</button><button class="button button--gold" type="button" id="publish">Publicar</button><button type="button" id="unpublish">Retirar</button><button type="button" id="delete-item">Eliminar</button></div>
 </form><div id="photo-panel" hidden><h3>Fotografías</h3><p>Hasta 20 imágenes WebP optimizadas por álbum. Se procesan en este dispositivo antes de enviarse.</p><label>Subir fotos <input id="photo-files" type="file" accept="image/jpeg,image/png,image/webp" multiple></label><div id="upload-list" aria-live="polite"></div><div id="photo-list"></div></div><a id="preview-link" href="#" target="_blank" rel="noopener">Previsualizar borrador ↗</a></section></div></main><script src="/admin/client.js" defer></script></body></html>

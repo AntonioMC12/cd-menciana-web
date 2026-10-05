@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsCard from './NewsCard.astro';
+import Crest from './Crest.astro';
+import ArrowIcon from './ArrowIcon.astro';
+import { publicPhoto, type PublicPost } from '../lib/build-content';
+import { NEWS_PAGE_SIZE, newsArticle, newsDate, newsPagePath } from '../lib/news';
+import { sitePath } from '../lib/paths';
+import '../styles/news.css';
+interface Props { posts: PublicPost[]; page?: number }
+const { posts, page = 1 } = Astro.props;
+const totalPages = Math.max(1, Math.ceil(posts.length / NEWS_PAGE_SIZE));
+const pagePosts = posts.slice((page - 1) * NEWS_PAGE_SIZE, page * NEWS_PAGE_SIZE);
+const lead = page === 1 ? pagePosts[0] : undefined;
+const rest = lead ? pagePosts.slice(1) : pagePosts;
+const date = lead && newsDate(lead.publishedAt);
+---
+<BaseLayout title={`Noticias de fútbol sala y actualidad del club${page > 1 ? ` · Página ${page}` : ''}`} description="Crónicas, resultados y noticias publicadas por el CD Menciana Apaga y Vámonos F.S. en Doña Mencía.">
+  <header class="news-masthead"><div class="container">
+    <p class="eyebrow eyebrow--gold">CD Menciana / Actualidad</p>
+    <div class="news-masthead__row"><h1>Noticias<span>.</span></h1><p>Dentro de la pista.<br />Cerca de nuestra gente.</p></div>
+    <div class="news-masthead__rule"><span>La actualidad del club</span><span>Doña Mencía · Fútbol sala</span></div>
+  </div></header>
+  <div class="container news-edition">
+    {lead && <section aria-labelledby="lead-title" class="news-lead">
+      <div class:list={['news-lead__visual', { 'news-lead__visual--empty': !lead.coverPhotoId }]}>
+        {lead.coverPhotoId ? <img src={publicPhoto(lead.coverPhotoId)} alt="" width="1600" height="1100" fetchpriority="high" decoding="async" /> : <Crest class="news-lead__crest" />}
+      </div>
+      <div class="news-lead__copy"><p class="eyebrow">Última noticia</p><div class="news-meta">{lead.category && <span>{lead.category}</span>}{date && <time datetime={lead.publishedAt}>{date}</time>}</div>
+        <h2 id="lead-title"><a href={sitePath(`/noticias/${lead.slug}/`)}>{lead.title}</a></h2>
+        {lead.excerpt && <p class="news-lead__excerpt">{lead.excerpt}</p>}
+        <a class="text-link" href={sitePath(`/noticias/${lead.slug}/`)}>Leer noticia <ArrowIcon /></a>
+      </div>
+    </section>}
+    {rest.length > 0 && <section class="news-archive" aria-labelledby="archive-title"><div class="news-section-heading"><h2 id="archive-title">{page === 1 ? 'Más actualidad' : 'Archivo de noticias'}</h2><span>Página {page} de {totalPages}</span></div><div class="news-grid news-grid--editorial">{rest.map(post => <NewsCard article={newsArticle(post)} editorial />)}</div></section>}
+    {!posts.length && <section class="news-empty"><Crest class="news-empty__crest" /><h2>La próxima historia está por llegar.</h2><p>Aún no hay noticias publicadas. Aquí encontrarás las novedades del club.</p><a class="text-link" href={sitePath('/')}>Volver al inicio <ArrowIcon /></a></section>}
+    {totalPages > 1 && <nav class="news-pagination" aria-label="Páginas de noticias">
+      {page > 1 ? <a href={sitePath(newsPagePath(page - 1))} rel="prev">← Más recientes</a> : <span />}
+      <span aria-current="page">{page} / {totalPages}</span>
+      {page < totalPages ? <a href={sitePath(newsPagePath(page + 1))} rel="next">Noticias anteriores →</a> : <a href={sitePath('/noticias/')}>Volver a la actualidad ↑</a>}
+    </nav>}
+  </div>
+</BaseLayout>
