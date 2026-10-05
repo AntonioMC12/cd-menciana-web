@@ -37,7 +37,7 @@ const publishedPosts = (await getPublicPosts()).slice(0, 3);
 
   <section class="section sponsor-section">
     <div class="container">
-      <SectionHeading eyebrow="04 / PATROCINIO" title="Impulsan al Menciana" intro="Nuestros patrocinadores principales hacen posible seguir creciendo juntos." href={sitePath('/patrocinadores/')} linkLabel="Todos los colaboradores" />
+      <SectionHeading eyebrow="04 / PATROCINIO" title="Impulsan al C.D Menciana" intro="Nuestros patrocinadores principales hacen posible seguir creciendo juntos." href={sitePath('/patrocinadores/')} linkLabel="Todos los colaboradores" />
       <div class="sponsor-grid sponsor-grid--featured">{principalSponsors.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div>
       <div class="sponsor-group"><h3>Colaboración institucional</h3><p>Entidades públicas que acompañan al CD Menciana.</p><div class="sponsor-grid">{institutionalPartners.map((sponsor) => <SponsorCard sponsor={sponsor} />)}</div></div>
     </div>
