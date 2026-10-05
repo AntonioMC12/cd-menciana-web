@@ -53,4 +53,4 @@ export const getPublicPosts = () => postsPromise ??= allPublished<PublicPost>('p
 export const getPublicAlbums = () => albumsPromise ??= allPublished<PublicAlbum>('albums');
 export const getPublicPost = (slug: string) => request<PublicPost>(`/api/posts/${encodeURIComponent(slug)}`);
 export const getPublicAlbum = (slug: string) => request<PublicAlbum>(`/api/albums/${encodeURIComponent(slug)}`);
-export const publicPhoto = (id: string, size: 'thumb' | 'web' = 'web') => `${api}/media/${encodeURIComponent(id)}/${size}`;
+export const publicPhoto = (id: string, size: 'thumb' | 'web' | 'download' = 'web') => `${api}/media/${encodeURIComponent(id)}/${size}`;

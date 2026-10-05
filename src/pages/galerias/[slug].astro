@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PhotoGallery from '../../components/PhotoGallery.astro';
 import { getPublicAlbum, getPublicAlbums, publicPhoto, type PublicAlbum } from '../../lib/build-content';
 import { breadcrumbData } from '../../lib/seo';
 import { sitePath } from '../../lib/paths';
@@ -20,8 +21,6 @@ const image = album.coverPhotoId ? publicPhoto(album.coverPhotoId) : undefined;
     <h1>{album.title}</h1><p>{album.description}</p>
   </div></section>
   <section class="section"><div class="container">
-    <div class="gallery-grid">
-      {(album.photos || []).map(photo => <a href={publicPhoto(photo.id)} target="_blank" rel="noopener noreferrer" aria-label={`Abrir imagen: ${photo.alt}`}><img src={publicPhoto(photo.id, 'thumb')} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" decoding="async" /></a>)}
-    </div>
+    <PhotoGallery album={album} />
   </div></section>
 </BaseLayout>

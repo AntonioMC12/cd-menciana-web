@@ -78,7 +78,7 @@ export default {
         return page(content.title, `<p>BORRADOR / PREVISUALIZACIÓN</p><h1>${escape(content.title)}</h1><p>${escape(content.excerpt)}</p>${cover}${detail}`);
       }
       if (parts[0] === 'admin' && parts[1] === 'media' && parts.length === 4 && method === 'GET') return privateMedia({ request, params: { id: parts[2], size: parts[3] } } as never);
-      if (parts[0] === 'media' && parts.length === 3 && method === 'GET') return publicMedia({ request, params: { id: parts[1], size: parts[2] } } as never);
+      if (parts[0] === 'media' && parts.length === 3 && method === 'GET') return cors(await publicMedia({ request, params: { id: parts[1], size: parts[2] } } as never), request);
       if (parts[0] === 'api' && parts[1] === 'admin') {
         const params = { kind: parts[2], id: parts[3] };
         if (parts.length === 3 && (parts[2] === 'posts' || parts[2] === 'albums')) return responseFor(collection, method, request, params);
