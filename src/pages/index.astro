@@ -19,7 +19,7 @@ const publishedAlbums = await Promise.all(albums.slice(0, 3).map(async album => 
   ...album,
   displayCoverId: album.coverPhotoId || (await getPublicAlbum(album.slug)).photos?.[0]?.id,
 })));
-const featuredPlayers = ['mara', 'tamajon', 'jesus'].map(id => players.find(player => player.id === id)!);
+const featuredPlayers = ['mara', 'david', 'jesus'].map(id => players.find(player => player.id === id)!);
 ---
 <BaseLayout title="Club de fútbol sala en Doña Mencía" description="CD Menciana Apaga y Vámonos F.S.: equipos, calendario, resultados y noticias del club de fútbol sala de Doña Mencía, Córdoba." structuredData={organizationData}>
   <div class="home-page">
