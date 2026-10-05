@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContentHeader from '../components/ContentHeader.astro';
 import StandingsTable from '../components/StandingsTable.astro';
 import { firstTeamSource } from '../data/first-team';
 import { firstTeamMatches } from '../data/first-team';
@@ -10,7 +11,7 @@ import '../styles/calendar.css';
 const formatMatchDate = (date?: string) => date ? new Intl.DateTimeFormat('es-ES', { dateStyle: 'long', timeZone: 'Europe/Madrid' }).format(new Date(date.includes('T') ? date : `${date}T12:00:00+02:00`)) : 'Fecha pendiente';
 ---
 <BaseLayout title="Calendario y resultados de fútbol sala 2026/27" description="Consulta fechas, rivales, pabellones, jornadas y resultados del CD Menciana Apaga y Vámonos F.S. y sus categorías de fútbol sala.">
-  <section class="page-hero calendar-hero"><div class="container"><p class="eyebrow">TEMPORADA 2026–27 / CD MENCIANA</p><h1>Calendario<span>.</span></h1><p>Encuentra el próximo partido de cada categoría y sigue cada jornada de un vistazo.</p></div></section>
+  <ContentHeader title="Calendario" accent="y resultados." eyebrow="TEMPORADA 2026–27 / CD MENCIANA" description="Encuentra el próximo partido de cada categoría y sigue cada jornada de un vistazo." index />
 
   <section class="section calendar-section" data-calendar>
     <div class="container">

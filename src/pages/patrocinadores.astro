@@ -2,12 +2,13 @@
 import ArrowIcon from '../components/ArrowIcon.astro';
 import { sitePath } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContentHeader from '../components/ContentHeader.astro';
 import Crest from '../components/Crest.astro';
 import SponsorCard from '../components/SponsorCard.astro';
 import { institutionalPartners, otherSponsors, principalSponsors } from '../data/site';
 ---
 <BaseLayout title="Patrocinadores y colaboradores" description="Patrocinadores principales y entidades colaboradoras del CD Menciana.">
-  <section class="page-hero"><div class="container"><p class="eyebrow">PATROCINIO / COMUNIDAD</p><h1>Crecer<br /><em>juntos.</em></h1><p>Reconocemos a quienes hacen posible el camino del CD Menciana.</p></div></section>
+  <ContentHeader title="Crecer" accent="juntos." eyebrow="PATROCINIO / COMUNIDAD" description="Reconocemos a quienes hacen posible el camino del CD Menciana." index />
   <section class="section sponsor-section">
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">PATROCINADORES PRINCIPALES</p><h2>Un apoyo fundamental</h2><p class="section-heading__intro">Capricho Andaluz y RAVI ocupan un lugar destacado en el club.</p></div></div>

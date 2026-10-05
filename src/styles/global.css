@@ -232,7 +232,7 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .team-competition__grid .match-card__teams > div { flex-direction: column; justify-content: center; gap: 8px; text-align: center; }
 .team-competition__grid .match-card__teams strong { font-size: .75rem; }
 .team-competition__grid .team-crest, .team-competition__grid .team-initial { width: 48px; height: 48px; }
-.team-competition__grid .result-card { padding: 17px; }
+.team-competition__grid .result-card { min-width: 0; padding: 17px; }
 .team-competition__grid .result-card__teams h3 { font-size: .72rem; }
 .team-section__heading { display: flex; justify-content: space-between; gap: 24px; align-items: start; margin-bottom: 25px; }
 .team-section__heading h2 { margin-bottom: 8px; }

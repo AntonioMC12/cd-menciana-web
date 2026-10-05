@@ -1,6 +1,7 @@
 ---
 import ArrowIcon from '../components/ArrowIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContentHeader from '../components/ContentHeader.astro';
 import MatchCard from '../components/MatchCard.astro';
 import PlayerCard from '../components/PlayerCard.astro';
 import ResultCard from '../components/ResultCard.astro';
@@ -13,7 +14,7 @@ import { sitePath } from '../lib/paths';
 ---
 
 <BaseLayout title="Equipos y plantilla" description="Los equipos del CD Menciana, sus partidos, resultados y clasificaciones de la temporada 2026/27.">
-  <section class="page-hero"><div class="container"><p class="eyebrow">EL CLUB / EQUIPOS</p><h1>El equipo<br /><em>hace el club.</em></h1><p>Elige una categoría para conocerla y seguir su temporada.</p></div></section>
+  <ContentHeader title="El equipo" accent="hace el club." eyebrow="EL CLUB / EQUIPOS" description="Elige una categoría para conocerla y seguir su temporada." index />
 
   <section class="section"><div class="container">
     <nav class="team-selector" aria-label="Seleccionar equipo">

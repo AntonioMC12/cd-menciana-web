@@ -2,9 +2,10 @@
 import ArrowIcon from '../components/ArrowIcon.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContentHeader from '../components/ContentHeader.astro';
 import { site } from '../data/site';
 ---
 <BaseLayout title="Contacto" description="Información de contacto del CD Menciana.">
-  <section class="page-hero"><div class="container"><p class="eyebrow">HABLEMOS / CD MENCIANA</p><h1>Estamos<br /><em>cerca.</em></h1><p>Escríbenos para consultas sobre el club, la competición y las colaboraciones.</p></div></section>
+  <ContentHeader title="Estamos" accent="cerca." eyebrow="HABLEMOS / CD MENCIANA" description="Escríbenos para consultas sobre el club, la competición y las colaboraciones." index />
   <section class="section"><div class="container contact-grid"><div><p class="eyebrow">CONTACTO</p><h2>Conectados con<br />Doña Mencía.</h2><p>Puedes escribirnos por correo electrónico o dejarnos un mensaje en las redes sociales del club.</p><div class="contact-socials"><h3>Escríbenos en redes</h3><SocialLinks /></div></div><div class="contact-card"><ArrowIcon class="contact-card__symbol" /><h3>Canales oficiales</h3><dl><div><dt>Localidad</dt><dd>{site.location}, Córdoba</dd></div><div><dt>Correo electrónico</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div><div><dt>Sede</dt><dd>{site.address}</dd></div></dl></div></div></section>
 </BaseLayout>
