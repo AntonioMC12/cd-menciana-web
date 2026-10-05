@@ -20,7 +20,7 @@ Ejecuta `dev` y `dev:worker` en terminales distintas. Antes de abrir el panel lo
 
 ## Publicación
 
-La acción de GitHub Pages publica la web pública desde `main` en `https://cdmenciana.es/` y la conecta con `https://cms.cdmenciana.es`. El Worker se despliega por separado con `npm run deploy:worker` después de preparar D1, R2, Access y secretos. Las PR solo ejecutan comprobaciones; esta rama no despliega automáticamente ningún servicio.
+La acción de GitHub Pages publica la web pública desde `main` en `https://cdmenciana.es/` y la conecta con `https://cms.cdmenciana.es`. También reconstruye la web cada seis horas para incorporar las publicaciones del CMS; GitHub Actions puede retrasar las ejecuciones programadas. El Worker se despliega por separado con `npm run deploy:worker` después de preparar D1, R2, Access y secretos. Las PR solo ejecutan comprobaciones.
 
 ## Contenido
 
@@ -48,7 +48,7 @@ El escudo vectorizado está en `public/images/escudo-oficial.svg`. `Crest.astro`
 
 ## Estructura
 
-`src/pages/` contiene la web pública. `worker/` contiene el panel y las rutas API. `src/lib/cms.ts` centraliza acceso a D1/R2, validación y autorización. `migrations/` define el esquema. `@astrojs/sitemap` genera el mapa de páginas estáticas. `scripts/generate-og.py` permite regenerar la imagen social PNG con Pillow. Las publicaciones reales cargan en el navegador y usan las rutas de detalle con `?slug=`; sus metadatos iniciales son genéricos por la naturaleza estática de GitHub Pages.
+`src/pages/` contiene la web pública. `worker/` contiene el panel y las rutas API. `src/lib/cms.ts` centraliza acceso a D1/R2, validación y autorización. `migrations/` define el esquema. `@astrojs/sitemap` genera el mapa de páginas estáticas. `scripts/generate-og.py` permite regenerar la imagen social PNG con Pillow. Las publicaciones reales se obtienen del CMS durante la compilación y generan HTML en `/noticias/[slug]/` y `/galerias/[slug]/`, con metadatos y datos estructurados propios. El título, resumen y portada de la publicación alimentan los metadatos; el texto alternativo de las fotos se muestra en las galerías. Si el CMS configurado falla durante el build, la compilación falla para evitar publicar una web vacía. Las rutas antiguas `detalle/?slug=` redirigen en el navegador y están excluidas del sitemap.
 
 ## Decisiones del manual
 

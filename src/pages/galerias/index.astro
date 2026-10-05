@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublicAlbums, publicPhoto } from '../../lib/build-content';
+import { sitePath } from '../../lib/paths';
+const albums = await getPublicAlbums();
 ---
-<BaseLayout title="Galerías" description="Fotografías y álbumes publicados por el CD Menciana.">
+<BaseLayout title="Galerías de fútbol sala del CD Menciana" description="Fotografías y álbumes de partidos y actividades publicados por el CD Menciana en Doña Mencía.">
   <section class="page-hero"><div class="container"><p class="eyebrow">IMÁGENES / CD MENCIANA</p><h1>Galerías<br /><em>del club.</em></h1><p>Momentos de nuestra comunidad.</p></div></section>
-  <section class="section"><div class="container"><div data-cms-root="albums"><div class="empty-panel">Cargando galerías…</div></div></div></section>
+  <section class="section"><div class="container">{albums.length ? <div class="news-grid">{albums.map(album => <article class="news-card"><a class="news-card__visual" href={sitePath(`/galerias/${album.slug}/`)} aria-label={`Ver galería: ${album.title}`}>{album.coverPhotoId ? <img class="news-card__image" src={publicPhoto(album.coverPhotoId, 'thumb')} alt="" width="480" height="320" loading="lazy" decoding="async" /> : <span class="news-card__visual-index">CD MENCIANA</span>}</a><div class="news-card__body"><h3><a href={sitePath(`/galerias/${album.slug}/`)}>{album.title}</a></h3><p>{album.description}</p><a class="text-link" href={sitePath(`/galerias/${album.slug}/`)}>Ver galería →</a></div></article>)}</div> : <div class="empty-panel">Aún no hay galerías publicadas.</div>}</div></section>
 </BaseLayout>
-<script>import '../../scripts/public-cms.ts';</script>

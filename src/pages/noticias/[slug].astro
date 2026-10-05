@@ -1,0 +1,39 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublicPost, getPublicPosts, publicPhoto, type PublicPost } from '../../lib/build-content';
+import { absolutePage, breadcrumbData, organizationData } from '../../lib/seo';
+import { sitePath } from '../../lib/paths';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPublicPosts();
+  return Promise.all(posts.map(async ({ slug }) => ({ params: { slug }, props: { post: await getPublicPost(slug) } })));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props as { post: PublicPost };
+const path = `/noticias/${post.slug}/`;
+const image = post.coverPhotoId ? publicPhoto(post.coverPhotoId) : undefined;
+const published = post.publishedAt ? new Intl.DateTimeFormat('es-ES', { dateStyle: 'long', timeZone: 'Europe/Madrid' }).format(new Date(`${post.publishedAt}T12:00:00Z`)) : undefined;
+const articleData = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: post.title,
+  description: post.excerpt,
+  mainEntityOfPage: absolutePage(path),
+  ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
+  ...(image ? { image } : {}),
+  publisher: { '@id': organizationData['@id'] },
+};
+---
+<BaseLayout title={post.title} description={post.excerpt} image={image} ogType="article" publishedAt={post.publishedAt} structuredData={[organizationData, breadcrumbData([{ name: 'Inicio', path: '/' }, { name: 'Noticias', path: '/noticias/' }, { name: post.title, path }]), articleData]}>
+  <header class="article-hero"><div class="container article-hero__inner">
+    <nav class="breadcrumbs" aria-label="Ruta de navegación"><a href={sitePath('/')}>Inicio</a><span aria-hidden="true">/</span><a href={sitePath('/noticias/')}>Noticias</a><span aria-hidden="true">/</span><span aria-current="page">{post.title}</span></nav>
+    <p class="eyebrow eyebrow--gold">{post.category}{published && ` · ${published}`}</p>
+    <h1>{post.title}</h1><p>{post.excerpt}</p>
+  </div></header>
+  <article class="section"><div class="container article-layout"><div class="article-content">
+    {image && <img class="article-image" src={image} alt="" width="1200" height="800" decoding="async" />}
+    {post.body.map(paragraph => <p>{paragraph}</p>)}
+    <a class="text-link" href={sitePath('/galerias/')}>Ver galerías del club →</a>
+  </div><aside class="article-aside"><p>{post.category}</p><p>Temporada 2026/27</p></aside></div></article>
+</BaseLayout>

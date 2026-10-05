@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { getPublicPosts, publicPhoto } from '../../lib/build-content';
+const posts = await getPublicPosts();
 ---
-<BaseLayout title="Noticias" description="Actualidad, comunicados y noticias del CD Menciana.">
+<BaseLayout title="Noticias de fútbol sala y actualidad del club" description="Crónicas, resultados y noticias publicadas por el CD Menciana Apaga y Vámonos F.S. en Doña Mencía.">
   <section class="page-hero"><div class="container"><p class="eyebrow">ACTUALIDAD / CD MENCIANA</p><h1>Lo que pasa<br /><em>dentro y fuera de pista.</em></h1><p>Un lugar para las novedades, las crónicas y las historias del club.</p></div></section>
-  <section class="section"><div class="container"><div data-cms-root="posts"><div class="empty-panel">Cargando noticias…</div></div></div></section>
+  <section class="section"><div class="container">{posts.length ? <div class="news-grid">{posts.map((post, index) => <NewsCard article={{ slug: post.slug, title: post.title, excerpt: post.excerpt, body: post.body, category: post.category, image: post.coverPhotoId ? publicPhoto(post.coverPhotoId, 'thumb') : undefined, publishedAt: post.publishedAt, status: 'confirmed' }} index={index} />)}</div> : <div class="empty-panel">Aún no hay noticias publicadas.</div>}</div></section>
 </BaseLayout>
-<script>import '../../scripts/public-cms.ts';</script>

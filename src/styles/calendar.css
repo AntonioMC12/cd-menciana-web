@@ -75,6 +75,10 @@
 .calendar-match__mini { display: block; color: var(--ui-navy); font-size: .64rem; font-weight: 750; line-height: 1.25; overflow-wrap: anywhere; }
 .calendar-match--compact .calendar-match__score { display: block; margin-top: 4px; color: var(--ui-blue-ink); font-size: .64rem; }
 .calendar-agenda { display: grid; gap: 25px; }
+.calendar-static-match { padding: 20px; border: 1px solid var(--line); border-left: 4px solid var(--ui-blue); border-radius: 7px; background: white; }
+.calendar-static-match .eyebrow { margin: 0 0 8px; }
+.calendar-static-match h3 { margin: 0 0 8px; overflow-wrap: anywhere; }
+.calendar-static-match p { margin: 5px 0; overflow-wrap: anywhere; }
 .calendar-agenda__day h3 { margin: 0 0 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); font-size: 1.1rem; text-transform: capitalize; }
 .calendar-agenda__cards { display: grid; gap: 10px; }
 .calendar-empty { padding: 42px; border: 1px dashed #a9bfd1; border-radius: 8px; background: #f7fafd; }

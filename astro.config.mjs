@@ -5,5 +5,7 @@ export default defineConfig({
   site: process.env.PUBLIC_SITE_URL || 'https://cdmenciana.es',
   base: process.env.PUBLIC_SITE_BASE || '/',
   devToolbar: { enabled: false },
-  integrations: [sitemap()],
+  integrations: [sitemap({
+    filter: (page) => !['/404.html', '/noticias/detalle/', '/galerias/detalle/'].some(path => new URL(page).pathname.endsWith(path)),
+  })],
 });

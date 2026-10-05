@@ -2,10 +2,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StandingsTable from '../components/StandingsTable.astro';
 import { firstTeamSource } from '../data/first-team';
+import { firstTeamMatches } from '../data/first-team';
+import MatchCard from '../components/MatchCard.astro';
+import { upcomingMatches } from '../data/site';
 import { teamCompetitions, competitiveTeamIds } from '../data/team-competitions';
 import '../styles/calendar.css';
+const formatMatchDate = (date?: string) => date ? new Intl.DateTimeFormat('es-ES', { dateStyle: 'long', timeZone: 'Europe/Madrid' }).format(new Date(date.includes('T') ? date : `${date}T12:00:00+02:00`)) : 'Fecha pendiente';
 ---
-<BaseLayout title="Calendario y resultados" description="Calendario, próximos partidos y resultados de los equipos del CD Menciana.">
+<BaseLayout title="Calendario y resultados de fútbol sala 2026/27" description="Consulta fechas, rivales, pabellones, jornadas y resultados del CD Menciana Apaga y Vámonos F.S. y sus categorías de fútbol sala.">
   <section class="page-hero calendar-hero"><div class="container"><p class="eyebrow">TEMPORADA 2026–27 / CD MENCIANA</p><h1>Calendario<span>.</span></h1><p>Encuentra el próximo partido de cada categoría y sigue cada jornada de un vistazo.</p></div></section>
 
   <section class="section calendar-section" data-calendar>
@@ -33,9 +37,18 @@ import '../styles/calendar.css';
         </div>
       </div>
       <p class="calendar-notice" role="status" data-calendar-status></p>
-      <div class="calendar-next" data-calendar-next></div>
+      <div class="calendar-next" id="proximo-partido" data-calendar-next>{upcomingMatches[0] && <MatchCard match={upcomingMatches[0]} prominent />}</div>
       <div class="calendar-results-heading"><div><p class="eyebrow">CADA JORNADA CUENTA</p><h2>Los encuentros</h2></div><p data-calendar-count></p></div>
-      <div class="calendar-content" data-calendar-content aria-live="polite"></div>
+      <div class="calendar-content" data-calendar-content aria-live="polite">
+        <div class="calendar-agenda" aria-label="Partidos del primer equipo publicados por la RFAF">
+          {firstTeamMatches.map((match) => <article class="calendar-static-match">
+            <p class="eyebrow">{match.competition} · {match.round}</p>
+            <h3>{match.homeTeam} — {match.awayTeam}</h3>
+            <p>{formatMatchDate(match.date)} · {match.date?.includes('T') ? new Intl.DateTimeFormat('es-ES', { timeStyle: 'short', timeZone: 'Europe/Madrid' }).format(new Date(match.date)) : 'Hora pendiente'} · {match.venue || 'Pabellón pendiente'}</p>
+            <p>{match.status === 'finished' ? `Finalizado · ${match.homeScore}–${match.awayScore}` : match.status === 'postponed' ? 'Aplazado' : 'Próximo partido'}</p>
+          </article>)}
+        </div>
+      </div>
       <p class="sports-source">Datos oficiales RFAF · <span data-calendar-updated>Primera copia verificada el {firstTeamSource.checkedOn}</span>. <a href={firstTeamSource.resultsUrl} data-calendar-source target="_blank" rel="noopener noreferrer">Consultar la competición ↗</a></p>
     </div>
   </section>

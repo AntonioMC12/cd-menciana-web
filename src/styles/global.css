@@ -253,6 +253,10 @@ h3 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.025em; }
 .notice-banner strong { color: var(--ui-navy); font-size: .75rem; text-transform: uppercase; }
 .notice-banner p { margin: 3px 0 0; color: #60583e; font-size: .8rem; }
 .article-hero { padding: 70px 0 75px; background: linear-gradient(115deg, #092a57, #165795); color: white; }
+.breadcrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 28px; color: #d9eaff; font-size: .72rem; font-weight: 700; }
+.breadcrumbs a { text-decoration: underline; text-underline-offset: 3px; }
+.breadcrumbs [aria-current="page"] { overflow-wrap: anywhere; }
+.breadcrumbs--dark { color: var(--ui-navy); }
 .article-hero__inner { max-width: 840px; }
 .back-link { display: inline-block; margin-bottom: 50px; color: #d9eaff; font-size: .75rem; font-weight: 700; }
 .back-link:hover { text-decoration: underline; }
