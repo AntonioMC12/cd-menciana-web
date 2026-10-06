@@ -52,3 +52,8 @@ Si estás en el navegador de Instagram o Facebook, abre el enlace en Safari o Ch
 ## Fuentes para revisión (no forman parte del copy)
 - Apple: https://support.apple.com/es-es/guide/iphone/iph42ab2f3a7/ios
 - Google Chrome para Android: https://support.google.com/chrome/answer/15085120?hl=es&co=GENIE.Platform%3DAndroid
+
+
+## Historia de Instagram con capturas
+
+[Descargar historia para iPhone](piezas/ig-historia-iphone-app-capturas.png) · 1080 × 1920 px. Usar después del anuncio, como alternativa a la guía de texto de iPhone. Incluye los pasos Compartir, Añadir a pantalla de inicio y la confirmación final.

@@ -38,7 +38,7 @@ export const teams: Team[] = [
 // Field-player positions remain unset until the club confirms them.
 export const players: Player[] = [
   { id: 'raton', teamId: 'primer-equipo', name: 'Jesús Luna', number: 1, position: 'Portero', photo: '/images/jugadores/raton.webp', status: 'confirmed' },
-  { id: 'alex', teamId: 'primer-equipo', name: 'Álex', number: 3, position: 'Portero', photo: '/images/jugadores/alex.webp?v=2', status: 'confirmed' },
+  { id: 'alex', teamId: 'primer-equipo', name: 'Álex', number: 25, position: 'Portero', photo: '/images/jugadores/alex.webp?v=2', status: 'confirmed' },
   { id: 'melli', teamId: 'primer-equipo', name: 'Melli', number: 15, position: 'Portero', photo: '/images/jugadores/melli.webp', status: 'confirmed' },
   { id: 'campitos', teamId: 'primer-equipo', name: 'Campitos', number: 4, photo: '/images/jugadores/campitos.webp', status: 'confirmed' },
   { id: 'cala', teamId: 'primer-equipo', name: 'Cala', number: 5, photo: '/images/jugadores/cala.webp?v=2', status: 'confirmed' },

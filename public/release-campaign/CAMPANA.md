@@ -86,4 +86,6 @@ La captura de inicio en escritorio se ha sustituido por la imagen aportada por e
 
 
 ## Ampliación: guardar en pantalla de inicio
-Dos historias adicionales (iPhone y Android), 1080 × 1920 px, después del lanzamiento. Copys en TEXTOS.txt; instrucciones y fuentes en GUARDAR-EN-INICIO.md. 17 imágenes finales en total. El acceso abre la web; no se anuncia una PWA instalada.
+Dos historias adicionales (iPhone y Android), 1080 × 1920 px, después del lanzamiento. Copys en TEXTOS.txt; instrucciones y fuentes en GUARDAR-EN-INICIO.md. 18 imágenes finales en total. El acceso abre la web; no se anuncia una PWA instalada.
+
+Historia visual adicional para iPhone: `piezas/ig-historia-iphone-app-capturas.png`, 1080 × 1920 px, con capturas reales y botones destacados. Usar después del lanzamiento como alternativa a la guía de texto de iPhone. Copy: HISTORIA IPHONE APP CAPTURAS.
