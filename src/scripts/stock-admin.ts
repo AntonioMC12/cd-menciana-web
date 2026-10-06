@@ -99,7 +99,7 @@ stockEl('add-variant').addEventListener('click',e=>stockOpen('variant',undefined
 stockEl('back').addEventListener('click',()=>{stockSelected=undefined;stockEl('product-detail').hidden=true;stockEl('catalogue-panel').hidden=false;stockEl('stock-search').focus();});
 stockEl('filters').addEventListener('submit',e=>e.preventDefault());stockEl('filters').addEventListener('input',stockRenderList);stockEl('history-filter').addEventListener('change',stockRenderHistory);
 stockEl('refresh').addEventListener('click',stockLoad);stockEl('refresh-detail').addEventListener('click',stockLoad);
-stockEl('logout').addEventListener('click',async()=>{try{await stockCall('/logout',{});location.assign(stockBase+'/');}catch(e){stockFeedback(e instanceof Error?e.message:'No se pudo cerrar la sesión.',true);}});
+stockEl('logout').addEventListener('click',async()=>{try{await stockCall('/logout',{});location.assign('/cdn-cgi/access/logout');}catch(e){stockFeedback(e instanceof Error?e.message:'No se pudo cerrar la sesión.',true);}});
 window.addEventListener('beforeunload',e=>{if(stockDirty){e.preventDefault();}});
 void stockLoad();
 

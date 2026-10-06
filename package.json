@@ -10,7 +10,6 @@
     "dev:worker": "npm run build:worker && wrangler dev --config wrangler.jsonc",
     "preview": "astro preview",
     "check": "astro check",
-    "stock:password": "node scripts/stock-password.mjs",
     "test": "vitest run",
     "db:local": "wrangler d1 migrations apply cd-menciana --local --config wrangler.jsonc",
     "db:remote": "wrangler d1 migrations apply cd-menciana --remote --config wrangler.jsonc",

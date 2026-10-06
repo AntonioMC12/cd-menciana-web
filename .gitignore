@@ -9,3 +9,7 @@ worker/admin-client.txt
 worker/stock/client.txt
 .wrangler-config/
 assets/
+
+# Local review captures and generated Worker types
+output/
+worker-configuration.d.ts

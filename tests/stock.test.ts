@@ -1,11 +1,10 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync } from 'node:fs';
-import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import type { D1Database, D1PreparedStatement, D1Result } from '@cloudflare/workers-types';
 import { env } from './worker-env';
 import { syncInventory, inventorySnapshot, recordMovement, saveVariant, findVariant, history, publicAvailability, normalizeOptions, integer } from '../worker/stock/inventory';
-import { createSession, session, login, verifyPassword, checkCsrf } from '../worker/stock/auth';
+import { csrfToken } from '../src/lib/cms';
 import { stockRoutes } from '../worker/stock/routes';
 import type { ShopProduct } from '../src/data/shop';
 
@@ -21,10 +20,9 @@ function database(): D1Database {
   return {prepare,batch:async(statements:D1PreparedStatement[])=>{sqlite.exec('BEGIN');try{const results=[];for(const statement of statements)results.push(await statement.run());sqlite.exec('COMMIT');return results;}catch(e){sqlite.exec('ROLLBACK');throw e;}}} as D1Database;
 }
 const shirt:ShopProduct={id:'camiseta-test',name:'Camiseta',description:'Prueba',category:'Equipaciones',images:[]};
-const hashPassword=(password:string)=>{const salt=randomBytes(32);return `pbkdf2-sha256$100000$${salt.toString('hex')}$${pbkdf2Sync(password,salt,100000,32,'sha256').toString('hex')}`;};
 const request=()=>new Request('http://127.0.0.1:8787/tienda/stock');
 const movement=(version:number,kind='entry',amount=5)=>({version,kind,amount,reason:'Prueba',note:'',operationId:crypto.randomUUID()});
-beforeEach(()=>{for(const key of Object.keys(env))delete env[key];sqlite=new DatabaseSync(':memory:');sqlite.exec(readFileSync('migrations/0004_inventory.sql','utf8'));env.DB=database();env.ENVIRONMENT='local';env.STOCK_PASSWORD_HASH=hashPassword('test-only-password');});
+beforeEach(()=>{for(const key of Object.keys(env))delete env[key];sqlite=new DatabaseSync(':memory:');sqlite.exec(readFileSync('migrations/0004_inventory.sql','utf8'));env.DB=database();env.ENVIRONMENT='local';sqlite.exec('CREATE TABLE request_limits(identity TEXT, minute INTEGER, hits INTEGER, PRIMARY KEY(identity,minute));');});
 afterEach(()=>sqlite.close());
 async function initial(){await syncInventory([shirt]);return (await inventorySnapshot()).items[0].variants[0];}
 
@@ -45,16 +43,38 @@ describe('inventory persistence and source catalogue',()=>{
 });
 describe('private access',()=>{
   it('redirects the public stock address to the CMS before loading private data',async()=>{const response=await stockRoutes(new Request('https://cdmenciana.es/tienda/stock/?page=1'));expect(response?.status).toBe(302);expect(response?.headers.get('location')).toBe('https://cms.cdmenciana.es/tienda/stock/?page=1');expect(response?.headers.get('cache-control')).toBe('no-store');expect(await response!.text()).toBe('');expect((await stockRoutes(new Request('https://cms.cdmenciana.es/tienda/stock/api/inventory')))?.status).toBe(401);});
-  it('requires the existing administrative access when configured and fails closed on partial configuration',async()=>{
-    env.ACCESS_TEAM_DOMAIN='club.cloudflareaccess.com';
-    expect((await stockRoutes(request()))?.status).toBe(503);
+  it('requires Access even without configuration and rejects incomplete or forged identity',async()=>{
+    expect((await stockRoutes(request()))?.status).toBe(401);
+    env.ACCESS_TEAM_DOMAIN='https://club.cloudflareaccess.com';expect((await stockRoutes(request()))?.status).toBe(503);
     env.ACCESS_AUD='test-audience';env.ADMIN_EMAIL='admin@example.com';
     expect((await stockRoutes(request()))?.status).toBe(401);
-    await expect(login(request(),'test-only-password')).rejects.toThrow('Cloudflare Access');
+    expect((await stockRoutes(new Request(request().url,{headers:{'cf-access-jwt-assertion':'invalid'}})))?.status).toBe(401);
   });
-  it('fails closed for every private endpoint and does not leak an inventory page',async()=>{for(const [path,method] of [['/api/inventory','GET'],['/client.js','GET'],['/api/products/camiseta-test/history','GET'],['/api/products/camiseta-test/variants','POST'],['/api/variants/00000000-0000-0000-0000-000000000000/movements','POST'],['/logout','POST']]){const response=await stockRoutes(new Request('http://127.0.0.1:8787/tienda/stock'+path,{method}));expect(response?.status).toBe(401);expect(response?.headers.get('cache-control')).toContain('no-store');}const page=await stockRoutes(request());expect(await page!.text()).not.toContain('data-stock');});
-  it('uses expiring HttpOnly sessions, Secure cookies on HTTPS, and invalidates on logout/rotation',async()=>{const created=await createSession(request(),'app','admin');expect(created.cookie).toContain('HttpOnly');expect(created.cookie).toContain('SameSite=Strict');const req=new Request(request().url,{headers:{cookie:created.cookie.split(';')[0]}});const auth=await session(req);expect(auth?.actor).toBe('admin');env.STOCK_PASSWORD_HASH=hashPassword('different');expect(await session(req)).toBeNull();const secure=await createSession(new Request('https://club.test/tienda/stock'),'app');expect(secure.cookie).toContain('__Host-');expect(secure.cookie).toContain('; Secure');});
-  it('rejects expired sessions and CSRF or foreign origins',async()=>{const created=await createSession(request(),'app'),req=new Request(request().url,{headers:{cookie:created.cookie}}),auth=(await session(req))!;expect(()=>checkCsrf(new Request(req.url,{headers:{origin:'https://evil.test'}}),auth,created.csrf)).toThrow();expect(()=>checkCsrf(new Request(req.url,{headers:{origin:'http://127.0.0.1:8787'}}),auth,'wrong')).toThrow();sqlite.prepare('UPDATE stock_sessions SET expires_at=0').run();expect(await session(req)).toBeNull();});
-  it('verifies password hashes and throttles failed attempts persistently',async()=>{expect(await verifyPassword('test-only-password',String(env.STOCK_PASSWORD_HASH))).toBe(true);expect(await verifyPassword('wrong',String(env.STOCK_PASSWORD_HASH))).toBe(false);for(let i=0;i<5;i++)await expect(login(request(),'wrong')).rejects.toThrow('contraseña');await expect(login(request(),'wrong')).rejects.toThrow('15 minutos');});
-  it('logs in with the form nonce, rejects CSRF and really revokes the app session',async()=>{const pre=await createSession(request(),'login');const post=(csrf:string)=>new Request(request().url+'/login',{method:'POST',headers:{cookie:pre.cookie,origin:'http://127.0.0.1:8787','content-type':'application/x-www-form-urlencoded'},body:new URLSearchParams({csrf,password:'test-only-password'})});expect((await stockRoutes(post('bad')))?.status).toBe(403);const response=(await stockRoutes(post(pre.csrf)))!;expect(response.status).toBe(303);const cookie=response.headers.get('set-cookie')!.split(';')[0];const req=new Request(request().url,{headers:{cookie}});const auth=(await session(req))!;expect(auth).not.toBeNull();const result=await stockRoutes(new Request(request().url+'/logout',{method:'POST',headers:{cookie,origin:'http://127.0.0.1:8787','x-cdm-csrf':auth.csrf}}));expect(result?.status).toBe(200);expect(await session(req)).toBeNull();});
+  it('fails closed for all private endpoints and does not accept legacy stock cookies',async()=>{
+    for(const [path,method] of [['/api/inventory','GET'],['/client.js','GET'],['/api/products/camiseta-test/history','GET'],['/api/products/camiseta-test/variants','POST'],['/api/variants/00000000-0000-0000-0000-000000000000/movements','POST'],['/logout','POST'],['/login','POST']]){const response=await stockRoutes(new Request(request().url+path,{method,headers:{cookie:'cdm-stock-app='+ 'a'.repeat(64)}}));expect(response?.status).toBe(401);expect(response?.headers.get('cache-control')).toContain('no-store');}
+    const html=await (await stockRoutes(request()))!.text();expect(html).not.toContain('data-stock');expect(html).not.toContain('type="password"');
+  });
+  it('opens the panel and inventory directly for an explicitly authorized local identity',async()=>{
+    env.LOCAL_ADMIN_BYPASS='1';const response=(await stockRoutes(request()))!;expect(response.status).toBe(200);const html=await response.text();expect(html).toContain('data-stock');expect(html).toContain('local-admin');expect(html).not.toContain('type="password"');expect(response.headers.get('set-cookie')).toBeNull();
+    const inventory=(await stockRoutes(new Request(request().url+'/api/inventory')))!;expect(inventory.status).toBe(200);expect((await inventory.json() as {items:unknown[]}).items.length).toBeGreaterThan(0);
+  });
+  it('never permits the local bypass on a remote host or in production',async()=>{
+    env.LOCAL_ADMIN_BYPASS='1';expect((await stockRoutes(new Request('https://cms.cdmenciana.es/tienda/stock/')))?.status).toBe(401);
+    env.ENVIRONMENT='production';expect((await stockRoutes(new Request('https://127.0.0.1:8787/tienda/stock')))?.status).toBe(401);
+  });
+  it('records the verified identity without requiring an additional session cookie',async()=>{
+    env.LOCAL_ADMIN_BYPASS='1';const variant=await initial();const response=await stockRoutes(new Request(request().url+'/api/variants/'+variant.id+'/movements',{method:'POST',headers:{origin:'http://127.0.0.1:8787','x-cdm-csrf':await csrfToken('local-admin'),'content-type':'application/json'},body:JSON.stringify(movement(1))}));
+    expect(response?.status).toBe(201);expect((await history(shirt.id))[0].actor).toBe('local-admin');expect((await findVariant(variant.id)).quantity).toBe(5);
+  });
+  it('rejects missing CSRF, a wrong token, and a foreign origin without modifying stock',async()=>{
+    env.LOCAL_ADMIN_BYPASS='1';const v=await initial(),csrf=await csrfToken('local-admin');
+    for(const headers of [{origin:'http://127.0.0.1:8787'},{origin:'http://127.0.0.1:8787','x-cdm-csrf':'wrong'},{origin:'https://evil.test','x-cdm-csrf':csrf}]){const response=await stockRoutes(new Request(request().url+'/api/variants/'+v.id+'/movements',{method:'POST',headers:headers as Record<string,string>,body:JSON.stringify(movement(1))}));expect(response?.status).toBe(403);}
+    expect(await history(shirt.id)).toHaveLength(0);expect((await findVariant(v.id)).quantity).toBe(0);
+  });
+  it('logs out through Cloudflare Access and throttles authenticated mutations',async()=>{
+    env.LOCAL_ADMIN_BYPASS='1';const csrf=await csrfToken('local-admin');
+    const logout=()=>stockRoutes(new Request(request().url+'/logout',{method:'POST',headers:{origin:'http://127.0.0.1:8787','x-cdm-csrf':csrf}}));
+    const response=(await logout())!;expect(response.status).toBe(200);expect(await response.json()).toEqual({redirect:'/cdn-cgi/access/logout'});expect(response.headers.get('set-cookie')).toBeNull();
+    for(let i=1;i<60;i++)expect((await logout())?.status).toBe(200);expect((await logout())?.status).toBe(429);
+  });
 });

@@ -1,8 +1,8 @@
 # Control privado de stock
 
-Implementación en Astro + el Worker existente + D1. Publicación autorizada el 6 de octubre de 2026: migración aplicada en remoto, contraseña configurada como secreto, Worker publicado y catálogo sincronizado con 20 productos activos. El pantalón largo de chándal es único y común a todas las categorías; mantiene el identificador `chandal-primer-equipo-inferior`. El duplicado anterior se archiva si ya existía, conservando su historial.
+Implementación en Astro + el Worker existente + D1. Publicación autorizada el 6 de octubre de 2026: migración aplicada en remoto, Worker publicado y catálogo sincronizado con 20 productos activos. El pantalón largo de chándal es único y común a todas las categorías; mantiene el identificador `chandal-primer-equipo-inferior`. El duplicado anterior se archiva si ya existía, conservando su historial.
 
-El dominio principal pasa por el proxy de Cloudflare, autorizado por el propietario, con las mismas cuatro IP de GitHub Pages. Access sigue vinculado al Worker y mantiene su audiencia y política administrativa. Se añadió únicamente `/api/shop/availability` a las excepciones públicas; el inventario privado sigue protegido por Access y contraseña.
+El dominio principal pasa por el proxy de Cloudflare, autorizado por el propietario, con las mismas cuatro IP de GitHub Pages. Access sigue vinculado al Worker y mantiene su audiencia y política administrativa. Se añadió únicamente `/api/shop/availability` a las excepciones públicas; el inventario privado sigue protegido por Cloudflare Access.
 
 La dirección canónica del panel es `https://cms.cdmenciana.es/tienda/stock/`. Una regla de redirección de Cloudflare lleva las peticiones de `/tienda/stock` y sus subrutas en el dominio principal al mismo camino en el CMS, conservando la consulta. Se ejecuta antes de Access para que el inicio de sesión y sus cookies correspondan al CMS. El Worker también devuelve la redirección como respaldo; no se entrega inventario privado desde el dominio principal.
 
@@ -22,11 +22,10 @@ Desde la raíz del proyecto:
 
 ```powershell
 npm run db:local
-node scripts/stock-password.mjs --local
 npm run build:worker
 ```
 
-El comando solicita una contraseña de al menos 12 caracteres sin mostrarla y guarda exclusivamente su hash en `.dev.vars`, ignorado por Git. Asegúrate de que ese archivo tenga `ENVIRONMENT=local` y `PUBLIC_WEB_ORIGIN=http://127.0.0.1:4321`. No pongas valores privados en variables `PUBLIC_*`.
+Para el desarrollo local, configura `.dev.vars` con `ENVIRONMENT=local`, `LOCAL_ADMIN_BYPASS=1` y `PUBLIC_WEB_ORIGIN=http://127.0.0.1:4321`. El bypass solo funciona en localhost con entorno local; nunca en producción. No pongas valores privados en variables `PUBLIC_*`.
 
 En una terminal:
 
@@ -44,27 +43,17 @@ node node_modules/astro/bin/astro.mjs dev --host 127.0.0.1 --port 4321
 
 Abre `http://127.0.0.1:8788/tienda/stock/` y la tienda en `http://127.0.0.1:4321/tienda/`. Usa el host indicado para que coincidan origen, cookies y CSRF. El panel no funciona en el servidor estático anterior del puerto 8771.
 
-La migración ya se ha aplicado a D1 local y remoto. La contraseña elegida por el propietario está configurada mediante hash en `.dev.vars` y en el secreto remoto `STOCK_PASSWORD_HASH`; su valor no se guarda en Git. Las pruebas del navegador registraron movimientos identificados como pruebas locales, sin afectar a producción.
+La migración ya se ha aplicado a D1 local y remoto. Las pruebas usan datos locales sin afectar a producción. Las tablas históricas de sesiones y límites de contraseña permanecen para evitar una migración destructiva, pero ya no se consultan ni autorizan ningún acceso.
 
-## Contraseña, acceso y mantenimiento en producción
+## Cloudflare Access y mantenimiento en producción
 
-Se almacena un hash PBKDF2-SHA256 con sal aleatoria y 100.000 iteraciones, compatible con Web Crypto de Workers. No se guarda la contraseña en HTML, JavaScript o el repositorio. Las sesiones duran ocho horas, están en D1 y usan cookies `HttpOnly`, `SameSite=Strict` y `Secure` en HTTPS. Cerrar sesión revoca la sesión; cambiar el hash invalida las existentes. Las modificaciones requieren token CSRF y origen coincidente. El acceso limita a cinco intentos por IP en ventanas de 15 minutos. HTTP solo se permite en localhost con entorno local.
+Cloudflare Access es el único inicio de sesión del panel. Después del acceso autorizado al CMS, el inventario se abre directamente, sin otra contraseña ni cookies de sesión propias del stock. El Worker valida el JWT de Access, su firma, issuer, audiencia, caducidad y el correo administrativo autorizado. Sin identidad válida se rechazan tanto la página como sus endpoints privados. La configuración incompleta bloquea el acceso; la ausencia de configuración tampoco habilita un acceso público.
 
-Cuando están configurados `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD` y `ADMIN_EMAIL`, también se exige la identidad administrativa existente de Cloudflare Access para entrar y usar los endpoints. Una configuración parcial bloquea el acceso. La contraseña no sustituye esa identidad. El bypass local del CMS no evita la contraseña del panel.
+Se reutiliza la autorización del CMS: las modificaciones exigen origen coincidente y token CSRF, y tienen un límite de 60 solicitudes por identidad y minuto. HTTP solo se admite en localhost y entorno local. Cada movimiento conserva la identidad verificada en su historial. Cerrar sesión utiliza la ruta de Cloudflare `/cdn-cgi/access/logout`.
 
-Estos son los pasos de configuración y mantenimiento utilizados para la publicación. Para futuras modificaciones, aplicar solo los que correspondan:
+Mantener `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `ADMIN_EMAIL` y `CSRF_SECRET` en el Worker, y la política de Access existente sobre el CMS y todos los endpoints privados de stock. El endpoint público de disponibilidad mantiene su excepción. El secreto `STOCK_PASSWORD_HASH` y su herramienta ya no son necesarios y se retiran; no trasladar `.dev.vars` a producción.
 
-1. Aplicar las migraciones a la D1 existente: `npm run db:remote`.
-2. Ejecutar `node scripts/stock-password.mjs` en una terminal privada. Genera el hash en `tmp/stock-password-hash.txt`; configurarlo como secreto del Worker:
-
-   ```powershell
-   Get-Content -Raw -LiteralPath .\tmp\stock-password-hash.txt | npx wrangler secret put STOCK_PASSWORD_HASH --config wrangler.jsonc
-   Remove-Item -LiteralPath .\tmp\stock-password-hash.txt
-   ```
-
-3. Mantener `PUBLIC_WEB_ORIGIN=https://cdmenciana.es`. Configurar la identidad administrativa existente completa y proteger `cdmenciana.es/tienda/stock*` con Cloudflare Access, incluido su login y sus endpoints. El audience debe corresponder al que valida el Worker. No proteger con Access el endpoint público de disponibilidad.
-4. La ruta `cdmenciana.es/tienda/stock*` ya está preparada en `wrangler.jsonc`. Requiere que el dominio principal esté en la zona Cloudflare y su DNS pase por el proxy. El resto de la web sigue en su alojamiento estático. Verificar esto antes de publicar el Worker; la ruta por sí sola no configura DNS ni Access.
-5. Publicar Worker y web con el procedimiento existente cuando se autorice. La web compila con `PUBLIC_CMS_API_URL=https://cms.cdmenciana.es`. No trasladar `.dev.vars` a producción: configurar cada secreto por separado.
+Para futuros cambios, aplicar las migraciones necesarias con `npm run db:remote`, compilar el cliente con `npm run build:worker` y publicar el Worker con el procedimiento existente. La web estática compila con `PUBLIC_CMS_API_URL=https://cms.cdmenciana.es`. La ruta del dominio principal y su redirección al CMS conservan la configuración existente.
 
 ## Tienda pública
 
@@ -76,16 +65,16 @@ Las tarjetas y el detalle de producto muestran una etiqueta automática: «En st
 
 ## Archivos principales y comprobaciones
 
-- `worker/stock/auth.ts`: contraseña, sesiones, Access, CSRF y límite de intentos.
+- `worker/stock/auth.ts`: validación obligatoria de Access y autorización reutilizada del CMS (CSRF y límites de escritura).
 - `worker/stock/inventory.ts`: sincronización del catálogo, variantes, existencias e historial.
 - `worker/stock/routes.ts`, `page.ts`, `style.css.txt` y `src/scripts/stock-admin.ts`: endpoints y panel responsive.
 - `worker/index.ts`, `wrangler.jsonc`, `src/lib/cms.ts` y `scripts/build-worker.mjs`: integración con el Worker existente.
 - `src/data/shop.ts`, `src/pages/tienda.astro`, `src/components/ShopProductCard.astro` y `src/scripts/shop.ts`: catálogo y disponibilidad pública.
-- `scripts/stock-password.mjs`, `package.json`, `.gitignore`, `astro.config.mjs` y `tsconfig.json`: configuración y herramientas.
+- `package.json`, `.gitignore`, `astro.config.mjs` y `tsconfig.json`: configuración y herramientas.
 - `tests/stock.test.ts`: SQLite real con la migración, constraints, transacciones y triggers.
 
-Ejecuta `npm test`, `npm run build` y `npm run build:worker`. Las pruebas cubren altas automáticas, productos simples y combinaciones, conservación al editar/archivar, entradas/salidas/recuentos, rollback del historial, duplicados, cantidades inválidas, concurrencia, reintentos, paginación, disponibilidad sin datos privados, sesiones, CSRF, rate limit y Access. También se revisó el panel en navegador en ordenador, tablet y móvil, incluida persistencia real en D1 local y disponibilidad de la tienda.
+Ejecuta `npm test`, `npm run build` y `npm run build:worker`. Las pruebas cubren altas automáticas, productos simples y combinaciones, conservación al editar/archivar, entradas/salidas/recuentos, rollback del historial, duplicados, cantidades inválidas, concurrencia, reintentos, paginación, disponibilidad sin datos privados, acceso directo sin contraseña, rechazo de identidades inválidas y cookies antiguas, CSRF, límites de escritura y bypass exclusivamente local. También se revisó el panel en navegador en ordenador, tablet y móvil, incluida persistencia real en D1 local y disponibilidad de la tienda.
 
-Para una comprobación manual: entrar, abrir un producto, crear una talla, añadir unidades, registrar salida y recuento, revisar historial y tienda. Abrir dos pestañas y guardar un recuento antiguo debe producir un conflicto. Cerrar sesión y acceder a `/tienda/stock/api/inventory` debe devolver 401 sin existencias. No se han probado credenciales ni rutas remotas.
+Para una comprobación manual: acceder mediante Cloudflare Access y comprobar que se abre el panel directamente; abrir un producto, crear una talla, añadir unidades, registrar salida y recuento, revisar historial y tienda. Abrir dos pestañas y guardar un recuento antiguo debe producir un conflicto. Cerrar sesión debe llevar al logout de Cloudflare. Una petición sin JWT válido debe ser interceptada por Access o recibir 401 del Worker, sin existencias.
 
-Resultado de la revisión del 6 de octubre de 2026: 57 pruebas superadas en siete archivos; build de Astro con cero errores, avisos o hints; build del cliente Worker correcto. Comprobado en navegador el cambio público a «Agotado» tras un recuento, y por HTTP el 401 de inventario después de cerrar sesión. El catálogo local queda con 21 productos, cero unidades activas y pendiente de configurar; la talla QA se archivó y su historial se conserva.
+Revisión del 6 de octubre de 2026: 64 pruebas superadas en ocho archivos. Se mantienen las existencias y el historial de producción; este cambio no requiere migraciones ni modifica datos del inventario.
