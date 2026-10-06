@@ -20,14 +20,16 @@ const publishedAlbums = await Promise.all(albums.slice(0, 3).map(async album => 
   displayCoverId: album.coverPhotoId || (await getPublicAlbum(album.slug)).photos?.[0]?.id,
 })));
 const featuredPlayers = ['mara', 'david', 'jesus'].map(id => players.find(player => player.id === id)!);
+const heroPhotos = ['equipo', 'capitan', 'disparo', 'jugada'];
 ---
 <BaseLayout title="Club de fútbol sala en Doña Mencía" description="CD Menciana Apaga y Vámonos F.S.: equipos, calendario, resultados y noticias del club de fútbol sala de Doña Mencía, Córdoba." structuredData={organizationData}>
   <div class="home-page">
     <section class="home-hero" aria-labelledby="home-title" data-home-film>
-      <picture class="home-hero__photo">
-        <source media="(max-width: 767px)" type="image/webp" srcset={sitePath('/images/home/accion-mobile.webp')} />
-        <img src={sitePath('/images/home/film-poster.webp')} alt="Doña Mencía y el fútbol sala del CD Menciana" width="1280" height="720" fetchpriority="high" decoding="async" />
-      </picture>
+      <div class="home-hero__photo" aria-hidden="true">
+        {heroPhotos.map((photo, index) => <picture class:list={['home-hero__slide', { 'home-hero__slide--active': index === 0 }]} data-hero-slide>
+          <img src={sitePath(`/images/home/fallback-${photo}-1000.webp`)} srcset={[640, 1000, 1600].map(width => `${sitePath(`/images/home/fallback-${photo}-${width}.webp`)} ${width}w`).join(', ')} sizes="(max-width: 767px) 100vw, 60vw" alt="" width="1000" height={photo === 'equipo' ? 667 : 1500} fetchpriority={index === 0 ? 'high' : 'low'} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+        </picture>)}
+      </div>
       <video class="home-hero__film" data-film-desktop={sitePath('/videos/home/menciana-film.mp4')} data-film-mobile={sitePath('/videos/home/menciana-film-mobile.mp4')} poster={sitePath('/images/home/film-poster.webp')} autoplay muted playsinline loop preload="auto" aria-hidden="true" tabindex="-1"></video>
       <div class="container home-hero__inner">
         <div class="home-hero__copy">
@@ -36,7 +38,7 @@ const featuredPlayers = ['mara', 'david', 'jesus'].map(id => players.find(player
           <p class="home-hero__lead">Un equipo en la pista.<br />Todo un pueblo detrás.</p>
           <div class="home-hero__actions"><a class="button button--gold" href="#competicion">La próxima cita <ArrowIcon /></a><a class="home-hero__link" href={sitePath('/club/')}>Conoce el club <ArrowIcon /></a></div>
         </div>
-        <div class="home-hero__caption"><span>DOÑA MENCÍA</span><span>Nuestra casa · Temporada {site.season}</span></div>
+        <div class="home-hero__caption"><span>DOÑA MENCÍA</span><span>Nuestra casa · Temporada {site.season}</span><a class="home-hero__tourism" href="https://www.menciaecoturismo.es/" target="_blank" rel="noopener noreferrer" aria-label="Descubre Doña Mencía en su web de turismo (abre en nueva pestaña)">Descubre Doña Mencía <ArrowIcon /></a></div>
       </div>
       <div class="container home-hero__footer"><span>Orgullo de pertenecer.</span><a href={sitePath('/equipos/')}>Nuestros equipos <ArrowIcon /></a></div>
     </section>

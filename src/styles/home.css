@@ -12,7 +12,8 @@ body:has(.home-page) { min-width: 0; }
 .home-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--ui-navy); color: white; }
 .home-hero__photo { position: absolute; z-index: -2; inset: 0 0 0 auto; width: 60%; overflow: hidden; transition: opacity .7s ease; }
 .home-hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
-.home-hero__photo:has(img[src$="film-poster.webp"]) { width: 100%; }
+.home-hero__slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.1s ease; }
+.home-hero__slide--active { opacity: 1; }
 .home-hero__film { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; opacity: 0; transition: opacity .7s ease; pointer-events: none; }
 .home-hero--has-film .home-hero__film { opacity: 1; }
 .home-hero--has-film .home-hero__photo { opacity: 0; }
@@ -28,7 +29,10 @@ body:has(.home-page) { min-width: 0; }
 .home-hero__link:hover { text-decoration: underline; text-underline-offset: 6px; }
 .home-hero__caption { position: absolute; right: 0; bottom: 112px; display: grid; gap: 4px; padding-left: 16px; border-left: 2px solid var(--home-gold); text-shadow: 0 2px 8px #0d2e5b; }
 .home-hero__caption span:first-child { font-size: .8rem; font-weight: 800; letter-spacing: .18em; }
-.home-hero__caption span:last-child { font-size: .7rem; color: #e2edf8; }
+.home-hero__caption > span:nth-of-type(2) { font-size: .7rem; color: #e2edf8; }
+.home-hero__tourism { display: inline-flex; align-items: center; gap: 7px; min-height: 32px; width: fit-content; color: #e2edf8; font-size: .68rem; text-decoration: underline; text-decoration-color: rgb(226 237 248 / 40%); text-underline-offset: 4px; }
+.home-hero__tourism:hover { color: #e4c77f; text-decoration-color: currentColor; }
+.home-hero__tourism .arrow-icon { width: 12px; height: 12px; }
 .home-hero__footer { display: flex; justify-content: space-between; align-items: center; padding-block: 20px 72px; border-top: 1px solid rgb(207 231 248 / 25%); font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .home-hero__footer a { display: flex; align-items: center; gap: 16px; min-height: 44px; }
 .home-hero__footer a:hover { color: #e4c77f; }
