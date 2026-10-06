@@ -16,7 +16,7 @@ Guarda cdmenciana.es junto a tus apps y vuelve al calendario, las noticias y los
 
 Si has llegado desde Instagram, Facebook u otra red, abre primero la web en Safari o Chrome desde el menú del navegador de la red, o copia la dirección.
 
-El acceso abre la web. En Android puede abrirse en Chrome. La web todavía no tiene configurado el modo app; estos materiales enseñan a guardar el acceso, sin prometer instalación como PWA, funcionamiento sin conexión ni notificaciones.
+El acceso abre la web. En Android puede abrirse en Chrome. La web tiene configurados el escudo como icono, el nombre CD Menciana y la apertura en ventana propia en navegadores compatibles. Estos materiales enseñan a guardar el acceso; no se anuncia funcionamiento sin conexión ni notificaciones.
 
 ## Texto para Instagram y Facebook
 Tu club, también en la pantalla de inicio.
