@@ -4,6 +4,8 @@ Implementación en Astro + el Worker existente + D1. Publicación autorizada el 
 
 El dominio principal pasa por el proxy de Cloudflare, autorizado por el propietario, con las mismas cuatro IP de GitHub Pages. Access sigue vinculado al Worker y mantiene su audiencia y política administrativa. Se añadió únicamente `/api/shop/availability` a las excepciones públicas; el inventario privado sigue protegido por Access y contraseña.
 
+La dirección canónica del panel es `https://cms.cdmenciana.es/tienda/stock/`. Una regla de redirección de Cloudflare lleva las peticiones de `/tienda/stock` y sus subrutas en el dominio principal al mismo camino en el CMS, conservando la consulta. Se ejecuta antes de Access para que el inicio de sesión y sus cookies correspondan al CMS. El Worker también devuelve la redirección como respaldo; no se entrega inventario privado desde el dominio principal.
+
 ## Arquitectura y catálogo
 
 La tienda se genera como HTML estático; el panel privado lo sirve el Worker, nunca Astro ni GitHub Pages. La ruta preparada es `/tienda/stock/`, sin enlaces públicos, excluida del sitemap y con `noindex`, CSP y respuestas `private, no-store`.

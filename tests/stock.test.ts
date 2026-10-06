@@ -44,6 +44,7 @@ describe('inventory persistence and source catalogue',()=>{
   it('normalizes option ordering and validates integers on the server',()=>{expect(normalizeOptions({Color:' Azul ',Talla:'M'}).key).toBe(normalizeOptions({talla:'m',color:'azul'}).key);expect(()=>normalizeOptions({x:''})).toThrow();expect(()=>integer('2')).toThrow();});
 });
 describe('private access',()=>{
+  it('redirects the public stock address to the CMS before loading private data',async()=>{const response=await stockRoutes(new Request('https://cdmenciana.es/tienda/stock/?page=1'));expect(response?.status).toBe(302);expect(response?.headers.get('location')).toBe('https://cms.cdmenciana.es/tienda/stock/?page=1');expect(response?.headers.get('cache-control')).toBe('no-store');expect(await response!.text()).toBe('');expect((await stockRoutes(new Request('https://cms.cdmenciana.es/tienda/stock/api/inventory')))?.status).toBe(401);});
   it('requires the existing administrative access when configured and fails closed on partial configuration',async()=>{
     env.ACCESS_TEAM_DOMAIN='club.cloudflareaccess.com';
     expect((await stockRoutes(request()))?.status).toBe(503);

@@ -5,7 +5,12 @@ import { loginPage, stockPage, stockResponse, stockJsonResponse } from './page';
 import stockCss from './style.css.txt';
 import stockJs from './client.txt';
 export async function stockRoutes(request: Request): Promise<Response | null> {
-  const path = new URL(request.url).pathname.replace(/\/$/, ''), method = request.method;
+  const url = new URL(request.url);
+  const path = url.pathname.replace(/\/$/, ''), method = request.method;
+  // Keep authentication and session cookies on the CMS origin.
+  if (url.hostname === 'cdmenciana.es' && (path === STOCK_ROOT || path.startsWith(`${STOCK_ROOT}/`)) && ['GET','HEAD'].includes(method)) {
+    return new Response(null,{status:302,headers:{location:`https://cms.cdmenciana.es${url.pathname}${url.search}`,'cache-control':'no-store','x-robots-tag':'noindex, nofollow'}});
+  }
   if (path === '/api/shop/availability' && method === 'GET') {
     try { return stockJsonResponse(await publicAvailability()); }
     catch { return stockJsonResponse({ error: 'Disponibilidad no disponible. Consulta con el club.' }, 503); }
