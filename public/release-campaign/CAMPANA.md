@@ -79,3 +79,7 @@ Los guiones están planteados sin música y se entienden sin sonido. No se adjun
 ## Medición propuesta, sin cifras inventadas
 
 Anotar las visitas registradas por la analítica que ya use el club durante el 7–9 de octubre y compararlas con días equivalentes si existen datos. En redes, revisar alcance, compartidos, guardados y clics del sticker/enlace disponibles en cada cuenta. El enlace principal permanece limpio y fácil de recordar; no se afirma que exista una herramienta de analítica concreta.
+
+## Cambio de captura de inicio
+
+La captura de inicio en escritorio se ha sustituido por la imagen aportada por el club el 6 de octubre de 2026. Se han actualizado la portada del carrusel, la imagen principal, la historia de anuncio, la pieza horizontal, la vista previa y el paquete descargable. La captura de móvil mantiene su encuadre original.
