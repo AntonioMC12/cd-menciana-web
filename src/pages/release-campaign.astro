@@ -1,0 +1,11 @@
+---
+import campaignHtml from '../content/release-campaign.html?raw';
+import { sitePath } from '../lib/paths';
+
+// Keep the review page outside the site's navigation. Its assets use absolute
+// site paths so both /release-campaign and /release-campaign/ work correctly.
+const assetBase = sitePath('/release-campaign/');
+const page = campaignHtml.replace(/(href|src)="(?!#|https?:|\/)([^"]+)"/g,
+  (_, attribute, resource) => `${attribute}="${assetBase}${resource}"`);
+---
+<Fragment set:html={page} />
