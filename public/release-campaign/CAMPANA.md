@@ -83,3 +83,7 @@ Anotar las visitas registradas por la analítica que ya use el club durante el 7
 ## Cambio de captura de inicio
 
 La captura de inicio en escritorio se ha sustituido por la imagen aportada por el club el 6 de octubre de 2026. Se han actualizado la portada del carrusel, la imagen principal, la historia de anuncio, la pieza horizontal, la vista previa y el paquete descargable. La captura de móvil mantiene su encuadre original.
+
+
+## Ampliación: guardar en pantalla de inicio
+Dos historias adicionales (iPhone y Android), 1080 × 1920 px, después del lanzamiento. Copys en TEXTOS.txt; instrucciones y fuentes en GUARDAR-EN-INICIO.md. 17 imágenes finales en total. El acceso abre la web; no se anuncia una PWA instalada.
