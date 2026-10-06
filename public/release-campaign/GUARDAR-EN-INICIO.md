@@ -8,6 +8,18 @@ Guarda cdmenciana.es junto a tus apps y vuelve al calendario, las noticias y los
 3. Selecciona «Añadir a pantalla de inicio».
 4. Si aparece «Abrir como app web», actívalo. Ponle el nombre «CD Menciana» y pulsa «Añadir».
 
+
+
+### Capturas reales de iPhone
+
+**1. Pulsa Compartir.** En Safari, abre el menú y pulsa «Compartir».
+
+![Captura real de Safari con la opción Compartir en el menú](capturas/guia-iphone-01-compartir.webp)
+
+**2. Añade la web a inicio.** En las opciones de compartir, pulsa «Añadir a pantalla de inicio». Después, confirma con «Añadir».
+
+![Captura real del menú de compartir de iPhone con Añadir a pantalla de inicio](capturas/guia-iphone-02-anadir-inicio.webp)
+
 ## Android · Chrome
 1. Abre https://cdmenciana.es/ en Chrome.
 2. Abre el menú de los tres puntos.
