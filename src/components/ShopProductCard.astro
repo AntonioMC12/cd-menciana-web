@@ -14,11 +14,12 @@ const cover = product.images[0];
   <div class="shop-product__body">
     <p class="shop-product__category">{product.category}</p>
     <h3>{product.name}</h3>
+    <span class="shop-stock-tag" data-stock-tag data-stock-state="unknown">Consultar disponibilidad</span>
     <p class="shop-product__description">{product.description}</p>
     <div class="shop-product__price"><strong>{formatShopPrice(product.price)}</strong>{shop.preview && !product.priceConfirmed && product.price !== undefined && <span>Precio de prueba</span>}</div>
     {product.sizes?.length && <p class="shop-product__options">Tallas: {product.sizes.join(' · ')}</p>}
     {product.variants?.length && <p class="shop-product__options">Variantes: {product.variants.join(' · ')}</p>}
-    <p class="shop-product__availability" data-availability>{product.availability || 'Consultar disponibilidad con el club.'}</p>
+    <p class="shop-product__availability" data-availability hidden={!product.availability}>{product.availability || 'Consultar disponibilidad con el club.'}</p>
     <a class="button button--blue" href={productContactUrl(product)}>Consultar este producto <ArrowIcon /></a>
   </div>
 </article>

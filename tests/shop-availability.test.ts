@@ -1,0 +1,9 @@
+import { describe, expect, it } from 'vitest';
+import { availabilityTag } from '../src/lib/shop-availability';
+describe('public stock tags',()=>{
+  it('keeps unconfigured or unavailable data as a consultation',()=>{expect(availabilityTag().state).toBe('unknown');expect(availabilityTag({status:'Consultar disponibilidad',variants:[]}).state).toBe('unknown');});
+  it('labels confirmed simple stock and exhaustion',()=>{expect(availabilityTag({status:'Disponible',variants:[]}).label).toBe('En stock');expect(availabilityTag({status:'Stock bajo',variants:[]}).state).toBe('available');expect(availabilityTag({status:'Agotado',variants:[]}).label).toBe('Pendiente de pedido');});
+  it('distinguishes partial sizes from all sizes available',()=>{const variants=[{options:{talla:'M'},status:'Disponible'},{options:{talla:'L'},status:'Agotado'}];expect(availabilityTag({status:'Disponible',variants}).label).toBe('En stock en algunas tallas');variants[1].status='Disponible';expect(availabilityTag({status:'Disponible',variants}).label).toBe('En stock');});
+  it('does not imply an order is pending for unconfigured sizes',()=>{const variants=[{options:{talla:'M'},status:'Agotado'},{options:{talla:'L'},status:'Consultar disponibilidad'}];expect(availabilityTag({status:'Consultar disponibilidad',variants}).state).toBe('unknown');variants[1].status='Disponible';expect(availabilityTag({status:'Consultar disponibilidad',variants}).state).toBe('partial');});
+  it('uses options wording for colors and labels completely exhausted variants',()=>{const variants=[{options:{color:'azul'},status:'Disponible'},{options:{color:'blanco'},status:'Agotado'}];expect(availabilityTag({status:'Disponible',variants}).label).toBe('En stock en algunas opciones');variants[0].status='Agotado';expect(availabilityTag({status:'Agotado',variants}).state).toBe('order');});
+});

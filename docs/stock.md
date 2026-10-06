@@ -72,6 +72,8 @@ Estos son los pasos de configuración y mantenimiento utilizados para la publica
 
 WhatsApp y las ventas en el pabellón mantienen su flujo. Abrir una consulta no reserva ni descuenta stock: el personal registra la venta o salida en el panel.
 
+Las tarjetas y el detalle de producto muestran una etiqueta automática: «En stock» si todas las variantes públicas están disponibles; «En stock en algunas tallas» si solo parte tiene unidades (o «algunas opciones» si son colores u otras variantes); «Pendiente de pedido» si todas están configuradas y agotadas. Si falta configuración o falla la API, se muestra «Consultar disponibilidad». «Pendiente de pedido» describe la falta de existencias; no confirma que el club haya hecho un pedido al proveedor ni promete un plazo de entrega. No se muestran cantidades y las etiquetas se actualizan con la misma consulta periódica del catálogo.
+
 ## Archivos principales y comprobaciones
 
 - `worker/stock/auth.ts`: contraseña, sesiones, Access, CSRF y límite de intentos.

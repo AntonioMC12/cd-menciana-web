@@ -1,3 +1,4 @@
+import { availabilityTag } from '../lib/shop-availability';
 type PreviewProduct = {
   id: string; name: string; category: string; description: string; priceLabel: string; contactUrl: string; priceConfirmed?: boolean;
   images: { src: string; alt: string; width: number; height: number }[];
@@ -23,6 +24,18 @@ const availabilityApi = (import.meta.env.PUBLIC_CMS_API_URL || '').replace(/\/$/
 type PublicAvailability = { items: { id: string; status: string; variants: { options: Record<string,string>; status: string }[] }[] };
 let availabilityLoading = false;
 const availabilityFallback = new Map(cards.map(card => [card, card.querySelector('[data-availability]')?.textContent || 'Consultar disponibilidad con el club.']));
+function setAvailabilityTag(card: HTMLElement, product?: PublicAvailability['items'][number]) {
+  const target = card.querySelector<HTMLElement>('[data-stock-tag]');
+  const tag = availabilityTag(product);
+  if (target) { target.textContent = tag.label; target.dataset.stockState = tag.state; }
+  // Keep an open product detail in sync with the same confirmed availability.
+  if (dialog?.open && dialog.dataset.productId === card.dataset.productId) {
+    const previewTag = dialog.querySelector<HTMLElement>('[data-stock-tag]');
+    if (previewTag) { previewTag.textContent = tag.label; previewTag.dataset.stockState = tag.state; }
+    const detail = dialog.querySelector('#shop-dialog-availability');
+    if (detail) { const source = card.querySelector<HTMLElement>('[data-availability]'); detail.textContent = source?.textContent || ''; (detail as HTMLElement).hidden = !!source?.hidden; }
+  }
+}
 async function updateShopAvailability() {
   if (!availabilityApi || availabilityLoading) return;
   availabilityLoading = true;
@@ -34,11 +47,13 @@ async function updateShopAvailability() {
       const product = result.items.find(item => item.id === card.dataset.productId);
       const target = card.querySelector('[data-availability]');
       if (!target) continue;
-      if (!product) { target.textContent = availabilityFallback.get(card)!; continue; }
-      target.textContent = product.variants.length ? product.variants.map(variant => `${Object.entries(variant.options).map(([key,value])=>`${key}: ${value}`).join(' · ')}: ${variant.status}`).join(' / ') : product.status;
+      if (!product) { target.textContent = availabilityFallback.get(card)!; (target as HTMLElement).hidden = target.textContent === 'Consultar disponibilidad con el club.'; setAvailabilityTag(card); continue; }
+      target.textContent = product.variants.length ? product.variants.map(variant => `${Object.entries(variant.options).map(([key,value])=>`${key}: ${value}`).join(' · ')}: ${variant.status}`).join(' / ') : availabilityFallback.get(card)!;
+      (target as HTMLElement).hidden = !product.variants.length && target.textContent === 'Consultar disponibilidad con el club.';
+      setAvailabilityTag(card,product);
     }
   } catch {
-    for (const card of cards) { const target = card.querySelector('[data-availability]'); if (target) target.textContent = availabilityFallback.get(card)!; }
+    for (const card of cards) { const target = card.querySelector<HTMLElement>('[data-availability]'); if (target) { target.textContent = availabilityFallback.get(card)!; target.hidden = target.textContent === 'Consultar disponibilidad con el club.'; } setAvailabilityTag(card); }
   } finally { availabilityLoading = false; }
 }
 void updateShopAvailability();
@@ -68,6 +83,14 @@ if (dialog && data) {
       event.preventDefault(); index = 0; trigger = link;
       setText('#shop-dialog-title', selected.name); setText('#shop-dialog-category', selected.category);
       setText('#shop-dialog-description', selected.description); setText('#shop-dialog-price', selected.priceLabel);
+      dialog.dataset.productId = selected.id;
+      const card = cards.find(card => card.dataset.productId === selected!.id);
+      const cardTag = card?.querySelector<HTMLElement>('[data-stock-tag]');
+      const previewTag = dialog.querySelector<HTMLElement>('[data-stock-tag]');
+      if (previewTag) { previewTag.textContent = cardTag?.textContent || 'Consultar disponibilidad'; previewTag.dataset.stockState = cardTag?.dataset.stockState || 'unknown'; }
+      setText('#shop-dialog-availability',card?.querySelector('[data-availability]')?.textContent || 'Consultar disponibilidad con el club.');
+      const previewAvailability = dialog.querySelector<HTMLElement>('#shop-dialog-availability');
+      if (previewAvailability) previewAvailability.hidden = !!card?.querySelector<HTMLElement>('[data-availability]')?.hidden;
       const priceNote = dialog.querySelector<HTMLElement>('#shop-dialog-price-note');
       if (priceNote) priceNote.hidden = !!selected.priceConfirmed;
       contact.href = selected.contactUrl;
