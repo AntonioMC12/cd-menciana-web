@@ -1,5 +1,5 @@
 type PreviewProduct = {
-  id: string; name: string; category: string; description: string; priceLabel: string; contactUrl: string;
+  id: string; name: string; category: string; description: string; priceLabel: string; contactUrl: string; priceConfirmed?: boolean;
   images: { src: string; alt: string; width: number; height: number }[];
 };
 const cards = [...document.querySelectorAll<HTMLElement>('.shop-product')];
@@ -40,6 +40,8 @@ if (dialog && data) {
       event.preventDefault(); index = 0; trigger = link;
       setText('#shop-dialog-title', selected.name); setText('#shop-dialog-category', selected.category);
       setText('#shop-dialog-description', selected.description); setText('#shop-dialog-price', selected.priceLabel);
+      const priceNote = dialog.querySelector<HTMLElement>('#shop-dialog-price-note');
+      if (priceNote) priceNote.hidden = !!selected.priceConfirmed;
       contact.href = selected.contactUrl;
       dialog.querySelector<HTMLElement>('.shop-dialog__gallery')!.hidden = selected.images.length < 2;
       updateImage(); dialog.showModal();

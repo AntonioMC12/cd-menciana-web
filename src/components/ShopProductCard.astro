@@ -15,7 +15,7 @@ const cover = product.images[0];
     <p class="shop-product__category">{product.category}</p>
     <h3>{product.name}</h3>
     <p class="shop-product__description">{product.description}</p>
-    <div class="shop-product__price"><strong>{formatShopPrice(product.price)}</strong>{shop.preview && product.price !== undefined && <span>Precio de prueba</span>}</div>
+    <div class="shop-product__price"><strong>{formatShopPrice(product.price)}</strong>{shop.preview && !product.priceConfirmed && product.price !== undefined && <span>Precio de prueba</span>}</div>
     {product.sizes?.length && <p class="shop-product__options">Tallas: {product.sizes.join(' · ')}</p>}
     {product.variants?.length && <p class="shop-product__options">Variantes: {product.variants.join(' · ')}</p>}
     <p class="shop-product__availability">{product.availability || (shop.contact.whatsappConfirmed ? 'Consulta artículos y tallas por WhatsApp.' : 'Consulta artículos y tallas con el club.')}</p>

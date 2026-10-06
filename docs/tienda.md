@@ -10,7 +10,7 @@ El CMS actual gestiona noticias y galerías. El catálogo permanece en este arch
 
 El precio ausente se muestra como «Precio a consultar». Las tallas y variantes solo se muestran si se rellenan; no se presuponen existencias. Un catálogo vacío conserva el bloque de contacto y muestra «Estamos preparando el catálogo». Si falta una imagen, la tarjeta muestra «Imagen pendiente».
 
-El catálogo contiene 24 artículos: la tarjeta de socio de la temporada 26/27, la bufanda y 22 prendas independientes. En las prendas, las partes superiores y los pantalones de las 11 imágenes originales se presentan por separado, conservando las vistas delantera y trasera. Cada prenda tiene su propio precio de prueba y consulta de WhatsApp.
+El catálogo contiene 21 artículos: la tarjeta de socio de la temporada 26/27, la bufanda y 19 prendas independientes. En las prendas, las partes superiores y los pantalones de las 11 imágenes originales se presentan por separado, conservando las vistas delantera y trasera. Cada prenda tiene su propio precio de prueba y consulta de WhatsApp.
 
 ## Contacto y precios de prueba
 
@@ -31,3 +31,7 @@ Los botones de consulta, tanto en las tarjetas como en el visor, abren `https://
 - `astro.config.mjs`: exclusión de la tienda del sitemap.
 
 La navegación y los archivos de la campaña no se modifican. El catálogo funciona sin JavaScript: todos los productos se muestran, las imágenes enlazan al archivo y las consultas siguen abriendo WhatsApp.
+
+Precios confirmados: camiseta de juego (incluidos porteros) 25 €, pantalón de juego 20 €, sudadera/chaqueta de chándal 25 €, pantalón de chándal 20 €, polo 20 € y bermuda de paseo 15 €. Estos artículos tienen `priceConfirmed: true` y no llevan el aviso de precio de prueba. Entrenamiento, bufanda y tarjeta de socio conservan sus precios provisionales.
+
+El pantalón corto de entrenamiento es un único artículo común a todas las categorías, con la imagen `pantalon-entrenamiento.webp` facilitada por el club. Sustituye a los cuatro pantalones anteriores por equipo y conserva el precio provisional de 10 €.
