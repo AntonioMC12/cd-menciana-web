@@ -46,7 +46,7 @@ Si estás en el navegador de Instagram o Facebook, abre el enlace en Safari o Ch
 #CDMenciana #ApagaYVamonos #DoñaMencía #FútbolSala
 
 ## Orden de publicación
-7 de octubre, después de las tres historias de lanzamiento: historia iPhone y después historia Android. Sticker de enlace: https://cdmenciana.es/.
+7 de octubre, después de las cuatro historias de lanzamiento: historia iPhone y después historia Android. Sticker de enlace: https://cdmenciana.es/.
 9 de octubre, tras el recordatorio: repetir ambas historias si interesa recordar cómo guardar el acceso.
 
 ## Fuentes para revisión (no forman parte del copy)

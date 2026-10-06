@@ -5,11 +5,13 @@ piezas/ig-carrusel-03-equipos.png;"Instagram; Facebook (álbum opcional)";Carrus
 piezas/ig-carrusel-04-noticias.png;"Instagram; Facebook (álbum opcional)";Carrusel;1080 × 1350 px;Imagen estática;CARRUSEL + DIAPOSITIVA 04;4;2026-10-07 19:30;https://cdmenciana.es/;PNG listo
 piezas/ig-carrusel-05-historia.png;"Instagram; Facebook (álbum opcional)";Carrusel;1080 × 1350 px;Imagen estática;CARRUSEL + DIAPOSITIVA 05;4;2026-10-07 19:30;https://cdmenciana.es/;PNG listo
 piezas/ig-carrusel-06-galerias.png;"Instagram; Facebook (álbum opcional)";Carrusel;1080 × 1350 px;Imagen estática;CARRUSEL + DIAPOSITIVA 06;4;2026-10-07 19:30;https://cdmenciana.es/;PNG listo
-piezas/ig-carrusel-07-visitala.png;"Instagram; Facebook (álbum opcional)";Carrusel;1080 × 1350 px;Imagen estática;CARRUSEL + DIAPOSITIVA 07;4;2026-10-07 19:30;https://cdmenciana.es/;PNG listo
+piezas/ig-carrusel-07-tienda.png;"Instagram; Facebook (álbum opcional)";Carrusel;1080 × 1350 px;Imagen estática;CARRUSEL + DIAPOSITIVA 07;4;2026-10-07 19:30;https://cdmenciana.es/tienda/;PNG listo
+piezas/ig-carrusel-08-visitala.png;"Instagram; Facebook (álbum opcional)";Carrusel;1080 × 1350 px;Imagen estática;CARRUSEL + DIAPOSITIVA 08;4;2026-10-07 19:30;https://cdmenciana.es/;PNG listo
 piezas/ig-feed-lanzamiento.png;"Instagram; Facebook";Feed;1080 × 1350 px;Imagen estática;PRINCIPAL-IG / PRINCIPAL-FB;2;2026-10-07 12:30;https://cdmenciana.es/;PNG listo
 piezas/ig-historia-01-anuncio.png;"Instagram; Facebook Stories";Historia;1080 × 1920 px;Imagen estática;HISTORIA 01;3;2026-10-07 12:35 (posición 1);https://cdmenciana.es/;PNG listo
 piezas/ig-historia-02-descubrimiento.png;"Instagram; Facebook Stories";Historia;1080 × 1920 px;Imagen estática;HISTORIA 02;3;2026-10-07 12:35 (posición 2);https://cdmenciana.es/;PNG listo
-piezas/ig-historia-03-invitacion.png;"Instagram; Facebook Stories";Historia;1080 × 1920 px;Imagen estática;HISTORIA 03;3;2026-10-07 12:35 (posición 3);https://cdmenciana.es/;PNG listo
+piezas/ig-historia-03-tienda.png;"Instagram; Facebook Stories";Historia;1080 × 1920 px;Imagen estática;HISTORIA 03 / TIENDA-HISTORIA;3;2026-10-07 12:35 (posición 3);https://cdmenciana.es/tienda/;PNG listo
+piezas/ig-historia-04-invitacion.png;"Instagram; Facebook Stories";Historia;1080 × 1920 px;Imagen estática;HISTORIA 04;3;2026-10-07 12:35 (posición 4);https://cdmenciana.es/;PNG listo
 piezas/reel-portada.png;"Instagram Reels; TikTok (portada)";"Portada estática; vídeo pendiente";1080 × 1920 px;Imagen estática;VIDEO-CORTO;5;2026-10-08 19:30 (si vídeo editado);https://cdmenciana.es/;PNG listo
 piezas/ig-historia-adelanto-06oct.png;"Instagram; Facebook Stories";Historia de adelanto;1080 × 1920 px;Imagen estática;ADELANTO;1;2026-10-06 20:30;Sin sticker necesario;PNG listo
 piezas/ig-historia-recordatorio-09oct.png;"Instagram; Facebook Stories";Historia de recordatorio;1080 × 1920 px;Imagen estática;RECORDATORIO;6;2026-10-09 18:30;https://cdmenciana.es/calendario/;PNG listo
@@ -18,4 +20,6 @@ piezas/ig-historia-guardar-iphone.png;"Instagram; Facebook Stories";Historia: gu
 piezas/ig-historia-guardar-android.png;"Instagram; Facebook Stories";Historia: guardar en pantalla de inicio;1080 × 1920 px;Imagen estática;HISTORIA GUARDAR ANDROID;3;2026-10-07 12:40 (posición 2);https://cdmenciana.es/;PNG listo
 piezas/ig-historia-iphone-app-capturas.png;"Instagram; Facebook Stories";Historia visual: app en iPhone;1080 × 1920 px;Imagen estática;HISTORIA IPHONE APP CAPTURAS;3;2026-10-07 12:40 (alternativa a guía iPhone);https://cdmenciana.es/;PNG listo
 
-TIENDA-TEXTOS.txt;"Instagram; Facebook; Reels; TikTok; Stories; X";Textos de tienda;No aplica;No aplica;TIENDA-IG-FB + TIENDA-REELS-TIKTOK + TIENDA-HISTORIA + TIENDA-X;Después del lanzamiento;2026-10-08;https://cdmenciana.es/tienda/;Textos listos (sin nueva pieza gráfica)
+TIENDA-TEXTOS.txt;"Instagram; Facebook; Reels; TikTok; Stories; X";Textos de tienda;No aplica;No aplica;TIENDA-IG-FB + TIENDA-REELS-TIKTOK + TIENDA-HISTORIA + TIENDA-X;Después del lanzamiento;2026-10-08;https://cdmenciana.es/tienda/;Textos listos y PNG de tienda disponibles
+
+piezas/ig-feed-tienda-cuadrado.png;"Instagram; Facebook";Feed cuadrado;1080 × 1080 px;Imagen estática;TIENDA-IG-FB;5;2026-10-08 19:30;https://cdmenciana.es/tienda/;PNG listo

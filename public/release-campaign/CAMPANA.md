@@ -49,7 +49,7 @@ En feed se reserva un margen de 64 px. En historias, la información principal q
 
 ## Archivos listos
 
-Hay **15 PNG finales** en `piezas/`: siete diapositivas, imagen principal, tres historias de lanzamiento, portada de Reel, adelanto, recordatorio e imagen horizontal. Los JPG de esa carpeta son las capturas de renderizado; para publicar utiliza los PNG.
+Hay **21 PNG finales** en `piezas/`: ocho diapositivas, cuatro historias de lanzamiento, imagen principal, pieza cuadrada de tienda, portada de Reel, adelanto, recordatorio, imagen horizontal y tres guías para guardar la web en el móvil. Para publicar utiliza los PNG; las capturas originales se conservan en `capturas/`.
 
 Los diseños están en `editables/` como HTML con sus recursos locales en `assets/` y `capturas/`. Se pueden abrir en un navegador para revisar; para exportar después de una modificación debe usarse el tamaño de la pieza y una captura completa. La portada de Reel está lista como imagen aunque el vídeo quede pendiente.
 
@@ -86,7 +86,7 @@ La captura de inicio en escritorio se ha sustituido por la imagen aportada por e
 
 
 ## Ampliación: guardar en pantalla de inicio
-Dos historias adicionales (iPhone y Android), 1080 × 1920 px, después del lanzamiento. Copys en TEXTOS.txt; instrucciones y fuentes en GUARDAR-EN-INICIO.md. 18 imágenes finales en total. El acceso abre la web; no se anuncia una PWA instalada.
+Dos historias adicionales (iPhone y Android), 1080 × 1920 px, después del lanzamiento. Copys en TEXTOS.txt; instrucciones y fuentes en GUARDAR-EN-INICIO.md. 21 imágenes finales en total, incluida la ampliación de tienda. El acceso abre la web; no se anuncia una PWA instalada.
 
 Historia visual adicional para iPhone: `piezas/ig-historia-iphone-app-capturas.png`, 1080 × 1920 px, con capturas reales y botones destacados. Usar después del lanzamiento como alternativa a la guía de texto de iPhone. Copy: HISTORIA IPHONE APP CAPTURAS.
 
@@ -95,4 +95,15 @@ Historia visual adicional para iPhone: `piezas/ig-historia-iphone-app-capturas.p
 
 La tienda se abre al público en https://cdmenciana.es/tienda/ y se enlaza desde los menús de ordenador y móvil y el pie de página. Catálogo de equipaciones, entrenamiento, paseo, bufanda y tarjeta de socio; imágenes por prenda y disponibilidad conectada al inventario. Cada producto ofrece WhatsApp con José A. Jiménez (+34 633 21 47 02) o Ana Mª Jiménez (+34 607 79 49 11), con el nombre del artículo en el mensaje. El visitante confirma el envío. No se anuncia carrito, pago online, reserva automática ni envío automático.
 
-Mensaje: **Viste tus colores. También fuera de la pista.** CTA: **Ver tienda**. Anunciar el 8 de octubre tras el lanzamiento de la web; recordar el catálogo el 9. Los copys completos de Instagram/Facebook, Reels/TikTok, Stories y X están en TIENDA-TEXTOS.txt y TEXTOS.txt. La sección Tienda de la página de revisión muestra imágenes reales del catálogo y acceso al catálogo público; no se han generado nuevas piezas PNG ni vídeos de tienda.
+Mensaje: **Viste tus colores. También fuera de la pista.** CTA: **Ver tienda**. Anunciar el 8 de octubre tras el lanzamiento de la web; recordar el catálogo el 9. Los copys completos de Instagram/Facebook, Reels/TikTok, Stories y X están en TIENDA-TEXTOS.txt y TEXTOS.txt. La sección Tienda de la página de revisión muestra imágenes reales del catálogo y acceso al catálogo público; se entregan carrusel, historia y feed cuadrado de tienda como PNG con sus HTML editables. No se entrega vídeo de tienda.
+
+
+## Capturas y piezas de tienda · actualización del 6 de octubre
+
+Capturas reales de https://cdmenciana.es/tienda/ en ordenador (viewport 1440 × 1000; sección exportada 1425 × 1000) y móvil (viewport 390 × 844; captura 375 × 811). Se capturó contenido cargado y los precios vigentes, sin avisos de prueba, menús abiertos ni información privada. Se mantiene el mensaje real «Consultar disponibilidad»; no se simula stock. Los mockups muestran las pantallas sin cambiar su contenido.
+
+- `ig-carrusel-07-tienda.png`: 1080 × 1350. La antigua diapositiva de cierre pasa a `ig-carrusel-08-visitala.png`; todas las numeraciones se han exportado de nuevo sobre ocho diapositivas.
+- `ig-historia-03-tienda.png`: 1080 × 1920. Sticker «Ver tienda» → https://cdmenciana.es/tienda/ en el espacio libre de la derecha (x=470, y=1400, 475 × 90). La invitación pasa a `ig-historia-04-invitacion.png`.
+- `ig-feed-tienda-cuadrado.png`: 1080 × 1080, publicación específica de tienda el 8 de octubre. Copy: TIENDA-IG-FB.
+
+Historias del lanzamiento: 01 anuncio, 02 descubrimiento, 03 tienda, 04 invitación; después, guía iPhone o Android. Carrusel: portada, calendario, equipos, noticias, historia, galerías, tienda y cierre. Precios destacados de tienda: carnet 20 € y bufanda 5 €. Capturas originales en `capturas/17-tienda-escritorio-catalogo.png` y `capturas/19-tienda-movil-producto.png`.
