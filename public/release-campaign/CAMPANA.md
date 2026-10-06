@@ -107,3 +107,8 @@ Capturas reales de https://cdmenciana.es/tienda/ en ordenador (viewport 1440 × 
 - `ig-feed-tienda-cuadrado.png`: 1080 × 1080, publicación específica de tienda el 8 de octubre. Copy: TIENDA-IG-FB.
 
 Historias del lanzamiento: 01 anuncio, 02 descubrimiento, 03 tienda, 04 invitación; después, guía iPhone o Android. Carrusel: portada, calendario, equipos, noticias, historia, galerías, tienda y cierre. Precios destacados de tienda: carnet 20 € y bufanda 5 €. Capturas originales en `capturas/17-tienda-escritorio-catalogo.png` y `capturas/19-tienda-movil-producto.png`.
+
+
+## Guía Android con captura real · 6 de octubre
+
+La historia `ig-historia-guardar-android.png` se sustituye por una guía visual con la captura de Chrome aportada por el club, siguiendo la identidad de la historia visual de iPhone. Se destaca «Instalar y crear acceso directo» y se explica la confirmación del acceso. PNG de 1080 × 1920 px, HTML editable y captura original WebP. Se mantiene el orden: después del lanzamiento, guía iPhone y luego Android. Espacio del sticker: x=76, y=1520, 894 × 80 px. El total sigue siendo 21 imágenes finales.

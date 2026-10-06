@@ -23,8 +23,14 @@ Guarda cdmenciana.es junto a tus apps y vuelve al calendario, las noticias y los
 ## Android · Chrome
 1. Abre https://cdmenciana.es/ en Chrome.
 2. Abre el menú de los tres puntos.
-3. Pulsa «Añadir a pantalla de inicio». En versiones recientes: «Instalar y crear acceso directo» → «Crear acceso directo».
+3. Pulsa «Instalar y crear acceso directo» y elige «Crear acceso directo» si aparece. En otras versiones, la opción se llama «Añadir a pantalla de inicio».
 4. Ponle el nombre «CD Menciana» y confirma con «Añadir».
+
+### Captura real de Android
+
+![Captura real del menú de Chrome con Instalar y crear acceso directo](capturas/guia-android-01-acceso-directo.webp)
+
+[Descargar historia para Android](piezas/ig-historia-guardar-android.png) · Instagram y Facebook Stories · 1080 × 1920 px. Comparte el diseño de la guía visual de iPhone. Copy: HISTORIA GUARDAR ANDROID. Publicar después de la historia de iPhone. Espacio para el sticker «Abrir la web»: x=76, y=1520, 894 × 80 px.
 
 Si has llegado desde Instagram, Facebook u otra red, abre primero la web en Safari o Chrome desde el menú del navegador de la red, o copia la dirección.
 

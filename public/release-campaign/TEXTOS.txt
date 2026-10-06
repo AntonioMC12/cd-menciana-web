@@ -221,14 +221,14 @@ Si aparece «Abrir como app web», actívalo.
 Sticker: Abrir la web · https://cdmenciana.es/
 
 HISTORIA GUARDAR ANDROID
-Tu club, a un toque.
-Guárdalo en tu Android.
-1. Abre cdmenciana.es en Chrome.
-2. Pulsa el menú de los tres puntos.
-3. Añadir a pantalla de inicio.
-4. Nombre: CD Menciana. Pulsa Añadir.
-Si ves «Instalar y crear acceso directo», elige «Crear acceso directo».
+Tu club. Como una app.
+Abre cdmenciana.es en Chrome.
+1. Abre el menú de los tres puntos.
+2. Pulsa «Instalar y crear acceso directo».
+3. Elige «Crear acceso directo» si aparece. Nombre: CD Menciana. Pulsa «Añadir» y confirma.
+Listo: entra desde el icono del escudo.
 Sticker: Abrir la web · https://cdmenciana.es/
+Espacio reservado para el sticker: x=76, y=1520, 894 × 80 px.
 
 
 HISTORIA IPHONE APP CAPTURAS · Instagram Stories · 1080 × 1920 px
