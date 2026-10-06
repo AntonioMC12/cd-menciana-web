@@ -91,8 +91,6 @@ if (dialog && data) {
       setText('#shop-dialog-availability',card?.querySelector('[data-availability]')?.textContent || 'Consultar disponibilidad con el club.');
       const previewAvailability = dialog.querySelector<HTMLElement>('#shop-dialog-availability');
       if (previewAvailability) previewAvailability.hidden = !!card?.querySelector<HTMLElement>('[data-availability]')?.hidden;
-      const priceNote = dialog.querySelector<HTMLElement>('#shop-dialog-price-note');
-      if (priceNote) priceNote.hidden = !!selected.priceConfirmed;
       contacts.forEach((contact, index) => { contact.href = selected!.contactUrls[index]; });
       dialog.querySelector<HTMLElement>('.shop-dialog__gallery')!.hidden = selected.images.length < 2;
       updateImage(); dialog.showModal();

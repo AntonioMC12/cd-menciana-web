@@ -14,9 +14,8 @@ export interface ShopProduct {
   archived?: boolean;
 }
 
-// Catálogo provisional. Sustituir los precios y confirmar tallas antes del lanzamiento.
+// Catálogo público de la tienda del club.
 export const shop = {
-  preview: true,
   contacts: [
     { name: 'José A. Jiménez', shortName: 'José', phone: '+34 633 21 47 02' },
     { name: 'Ana Mª Jiménez', shortName: 'Ana', phone: '+34 607 79 49 11' },
