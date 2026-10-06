@@ -12,7 +12,7 @@ CTA principal: **Entra y descubre tu club en cdmenciana.es**. CTA de las histori
 
 Público deducido de los contenidos: afición de Doña Mencía y su entorno, familias y personas vinculadas a las categorías de base, seguidores del primer equipo y del fútbol sala provincial, antiguos integrantes del club y colaboradores locales. Instagram comunica pertenencia y descubrimiento; Facebook permite una explicación y un enlace directo; X sirve para el anuncio breve y el acceso al calendario; TikTok y Reels se orientan a enseñar la navegación cuando se produzca el vídeo.
 
-La presentación se centra en pertenencia y utilidad. No promete inscripciones, venta de entradas, tienda, resultados en directo ni alertas: esas funciones no se han verificado.
+La presentación se centra en pertenencia y utilidad. No promete inscripciones, venta de entradas, resultados en directo ni alertas: esas funciones no se han verificado.
 
 ## Qué se ha comprobado en la web real
 
@@ -89,3 +89,10 @@ La captura de inicio en escritorio se ha sustituido por la imagen aportada por e
 Dos historias adicionales (iPhone y Android), 1080 × 1920 px, después del lanzamiento. Copys en TEXTOS.txt; instrucciones y fuentes en GUARDAR-EN-INICIO.md. 18 imágenes finales en total. El acceso abre la web; no se anuncia una PWA instalada.
 
 Historia visual adicional para iPhone: `piezas/ig-historia-iphone-app-capturas.png`, 1080 × 1920 px, con capturas reales y botones destacados. Usar después del lanzamiento como alternativa a la guía de texto de iPhone. Copy: HISTORIA IPHONE APP CAPTURAS.
+
+
+## Tienda pública · ampliación de campaña
+
+La tienda se abre al público en https://cdmenciana.es/tienda/ y se enlaza desde los menús de ordenador y móvil y el pie de página. Catálogo de equipaciones, entrenamiento, paseo, bufanda y tarjeta de socio; imágenes por prenda y disponibilidad conectada al inventario. Cada producto ofrece WhatsApp con José A. Jiménez (+34 633 21 47 02) o Ana Mª Jiménez (+34 607 79 49 11), con el nombre del artículo en el mensaje. El visitante confirma el envío. No se anuncia carrito, pago online, reserva automática ni envío automático. Los precios pendientes conservan su marca de prueba.
+
+Mensaje: **Viste tus colores. También fuera de la pista.** CTA: **Ver tienda**. Anunciar el 8 de octubre tras el lanzamiento de la web; recordar el catálogo el 9. Los copys completos de Instagram/Facebook, Reels/TikTok, Stories y X están en TIENDA-TEXTOS.txt y TEXTOS.txt. La sección Tienda de la página de revisión muestra imágenes reales del catálogo y acceso al catálogo público; no se han generado nuevas piezas PNG ni vídeos de tienda.

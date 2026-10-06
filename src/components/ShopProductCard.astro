@@ -20,6 +20,6 @@ const cover = product.images[0];
     {product.sizes?.length && <p class="shop-product__options">Tallas: {product.sizes.join(' · ')}</p>}
     {product.variants?.length && <p class="shop-product__options">Variantes: {product.variants.join(' · ')}</p>}
     <p class="shop-product__availability" data-availability hidden={!product.availability}>{product.availability || 'Consultar disponibilidad con el club.'}</p>
-    <a class="button button--blue" href={productContactUrl(product)}>Consultar este producto <ArrowIcon /></a>
+    <div class="shop-product__contacts" aria-label="Consultar este producto por WhatsApp">{shop.contacts.map(contact => <a class="button button--blue" href={productContactUrl(product, undefined, contact)}>Consultar con {contact.shortName} <ArrowIcon /></a>)}</div>
   </div>
 </article>

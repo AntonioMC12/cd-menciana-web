@@ -1,4 +1,3 @@
-import { site } from './site';
 
 export type ShopCategory = 'Equipaciones' | 'Porteros' | 'Entrenamiento' | 'Paseo' | 'Complementos' | 'Socios';
 export interface ShopProduct {
@@ -18,7 +17,10 @@ export interface ShopProduct {
 // Catálogo provisional. Sustituir los precios y confirmar tallas antes del lanzamiento.
 export const shop = {
   preview: true,
-  contact: { email: site.email, phone: '+34 628 112 604', phoneIsExample: false, whatsappConfirmed: true },
+  contacts: [
+    { name: 'José A. Jiménez', shortName: 'José', phone: '+34 633 21 47 02' },
+    { name: 'Ana Mª Jiménez', shortName: 'Ana', phone: '+34 607 79 49 11' },
+  ],
 };
 
 const image = (id: string, name: string, width: number, height: number) => [{
@@ -52,8 +54,7 @@ export const formatShopPrice = (price?: number) => price === undefined
   ? 'Precio a consultar'
   : new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(price);
 
-export function productContactUrl(product?: ShopProduct, variant?: string) {
-  const subject = product ? `Consulta de tienda: ${product.name}` : 'Consulta de la tienda del CD Menciana';
+export function productContactUrl(product?: ShopProduct, variant?: string, contact = shop.contacts[0]) {
   const body = product?.category === 'Socios'
     ? `Hola, me interesa ${product.name}.\n\n¿Podéis informarme sobre las condiciones, el precio definitivo y cómo solicitarla?\n\nGracias.`
     : product?.category === 'Complementos'
@@ -61,8 +62,5 @@ export function productContactUrl(product?: ShopProduct, variant?: string) {
     : product
     ? `Hola, me interesa ${product.name}${variant ? ` (${variant})` : ''}.\n\nTalla que me interesa: \n\n¿Podéis confirmarme disponibilidad, precio definitivo, pago y entrega?\n\nGracias.`
     : 'Hola, me gustaría consultar los productos de la tienda del club. ¿Podéis informarme sobre disponibilidad, precios, pago y entrega?\n\nGracias.';
-  if (shop.contact.whatsappConfirmed && !shop.contact.phoneIsExample && shop.contact.phone) {
-    return `https://wa.me/${shop.contact.phone.replace(/\D/g, '')}?text=${encodeURIComponent(body)}`;
-  }
-  return `mailto:${shop.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return `https://wa.me/${contact.phone.replace(/\D/g, '')}?text=${encodeURIComponent(body)}`;
 }

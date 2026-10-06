@@ -1,6 +1,6 @@
 import { availabilityTag } from '../lib/shop-availability';
 type PreviewProduct = {
-  id: string; name: string; category: string; description: string; priceLabel: string; contactUrl: string; priceConfirmed?: boolean;
+  id: string; name: string; category: string; description: string; priceLabel: string; contactUrls: string[]; priceConfirmed?: boolean;
   images: { src: string; alt: string; width: number; height: number }[];
 };
 const cards = [...document.querySelectorAll<HTMLElement>('.shop-product')];
@@ -63,7 +63,7 @@ window.setInterval(() => { if (!document.hidden) void updateShopAvailability(); 
 if (dialog && data) {
   const products: PreviewProduct[] = JSON.parse(data.textContent || '[]');
   const image = dialog.querySelector<HTMLImageElement>('#shop-dialog-image')!;
-  const contact = dialog.querySelector<HTMLAnchorElement>('#shop-dialog-contact')!;
+  const contacts = dialog.querySelectorAll<HTMLAnchorElement>('[data-shop-dialog-contact]');
   let selected: PreviewProduct | undefined;
   let index = 0;
   let trigger: HTMLElement | undefined;
@@ -93,7 +93,7 @@ if (dialog && data) {
       if (previewAvailability) previewAvailability.hidden = !!card?.querySelector<HTMLElement>('[data-availability]')?.hidden;
       const priceNote = dialog.querySelector<HTMLElement>('#shop-dialog-price-note');
       if (priceNote) priceNote.hidden = !!selected.priceConfirmed;
-      contact.href = selected.contactUrl;
+      contacts.forEach((contact, index) => { contact.href = selected!.contactUrls[index]; });
       dialog.querySelector<HTMLElement>('.shop-dialog__gallery')!.hidden = selected.images.length < 2;
       updateImage(); dialog.showModal();
     });
