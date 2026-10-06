@@ -5,7 +5,7 @@ import { rfafWidgetUrl, teamCompetitions, type CompetitiveTeamId, type TeamCompe
 import type { Match } from '../src/data/types';
 import { competitionMatch } from '../src/lib/sports-teams';
 
-export type SportsSnapshot = { updatedAt: string; matches: Match[]; standings: StandingRow[]; source?: 'initial' };
+export type SportsSnapshot = { updatedAt: string; matches: Match[]; standings: StandingRow[]; roundsChecked?: number; source?: 'initial' };
 const plain = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&nbsp;|&#160;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'").replace(/\s+/g, ' ').trim();
 const normalized = (name: string) => name.replace(/&#0?39;|&apos;/g, "'").normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').toLowerCase();
 const knownTeams = new Map(firstTeamStandings.map(row => [normalized(row.team), row.team]));
@@ -91,8 +91,8 @@ async function fetchRfaf(url: string): Promise<string> {
 export async function syncSports(teamId: CompetitiveTeamId = 'primer-equipo'): Promise<SportsSnapshot> {
   const team = teamCompetitions[teamId];
   const standings = parseStandings(await fetchRfaf(rfafWidgetUrl(team, 'classification')), teamId);
-  const played = Math.max(...standings.map(row => row.played));
-  const finalRound = Math.min(team.rounds, Math.max(teamId === 'primer-equipo' ? 7 : 3, played + 3));
+  // Check the whole season, including future rounds with no published matches yet.
+  const finalRound = team.rounds;
   const matches: Match[] = [];
   for (let first = 1; first <= finalRound; first += 4) {
     const rounds = Array.from({ length: Math.min(4, finalRound - first + 1) }, (_, index) => first + index);
@@ -104,7 +104,7 @@ export async function syncSports(teamId: CompetitiveTeamId = 'primer-equipo'): P
   }
   const clubPlayed = standings.find(row => row.isClub)?.played ?? 0;
   if (matches.length < (teamId === 'primer-equipo' ? 3 : 1) || matches.filter(match => match.status === 'finished').length < clubPlayed) throw new Error('Calendario RFAF incompleto.');
-  const snapshot = withTeamCrests({ updatedAt: new Date().toISOString(), matches, standings }, teamId);
+  const snapshot = withTeamCrests({ updatedAt: new Date().toISOString(), matches, standings, roundsChecked: finalRound }, teamId);
   await bindings().DB.prepare('INSERT INTO sports_snapshots (key, payload_json, updated_at) VALUES (?, ?, ?) ON CONFLICT(key) DO UPDATE SET payload_json=excluded.payload_json, updated_at=excluded.updated_at').bind(snapshotKey(teamId), JSON.stringify(snapshot), snapshot.updatedAt).run();
   return snapshot;
 }

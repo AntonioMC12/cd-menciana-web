@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { parseStandings, parseTeamMatch } from '../worker/sports';
+import { parseStandings, parseTeamMatch, syncSports } from '../worker/sports';
+import { env } from './worker-env';
 import { teamCompetitions, competitiveTeamIds } from '../src/data/team-competitions';
 import { competitionMatch, isClubTeam } from '../src/lib/sports-teams';
 import { firstTeamMatches } from '../src/data/first-team';
@@ -10,6 +11,46 @@ const fixtureRows = Array.from({ length: 16 }, (_, index) => {
   const team = index === 6 ? 'C.D. APAGA Y VAMONOS RAVI OBRAS &amp; SERVICIOS' : `EQUIPO ${index + 1}`;
   return `<tr><td>&nbsp;</td><td>${index + 1}</td><td><div class="novanet-classification-team"><span>${team}</span></div></td><td>7</td><td>4</td><td>2</td><td>1</td><td>1</td><td>13</td><td>16</td></tr>`;
 }).join('');
+
+describe('full-season RFAF synchronization', () => {
+  afterEach(() => { vi.unstubAllGlobals(); delete env.DB; });
+
+  it('checks all 30 rounds and saves a published May match even when only four rounds were played', async () => {
+    const run = vi.fn().mockResolvedValue({ success: true });
+    const bind = vi.fn().mockReturnValue({ run });
+    env.DB = { prepare: vi.fn().mockReturnValue({ bind }) };
+    const fetchMock = vi.fn(async (input: string) => {
+      const url = new URL(input);
+      if (url.searchParams.get('widget_view') === 'classification') return new Response(`<table class="novanet-classification-table"><tbody>${fixtureRows}</tbody></table>`);
+      const round = Number(url.searchParams.get('jornada'));
+      const page = round <= 4 || round === 30
+        ? `<article class="novanet-match-row"><span class="min-w-0 truncate">C.D. APAGA Y VAMONOS RAVI OBRAS &amp; SERVICIOS</span><div class="novanet-score-value">${round <= 4 ? '2-1' : '-'}</div><span class="font-semibold text-slate-900">Fecha:</span> ${round === 30 ? '16/05/2027' : '04/10/2026'}<div><span class="font-semibold text-slate-900">Hora:</span> Pendiente</div><div><span class="font-semibold text-slate-900">Estado:</span> ${round <= 4 ? 'Jugado' : 'Sin jugar'}</div><span class="min-w-0 truncate">EQUIPO RIVAL</span></article>`
+        : '<div>No hay partidos publicados para esta jornada.</div>';
+      return new Response(page.padEnd(2200, ' '));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    const snapshot = await syncSports();
+    expect(fetchMock).toHaveBeenCalledTimes(31);
+    expect(snapshot.roundsChecked).toBe(30);
+    expect(snapshot.matches).toHaveLength(5);
+    expect(snapshot.matches.at(-1)).toMatchObject({ id: '2026-27-j30', date: '2027-05-16', status: 'scheduled' });
+    expect(run).toHaveBeenCalledOnce();
+    expect(JSON.parse(bind.mock.calls[0][1]).matches).toHaveLength(5);
+  });
+
+  it('does not overwrite the saved calendar if a future round fails', async () => {
+    const prepare = vi.fn();
+    env.DB = { prepare };
+    vi.stubGlobal('fetch', vi.fn(async (input: string) => {
+      const url = new URL(input);
+      if (url.searchParams.get('widget_view') === 'classification') return new Response(`<table class="novanet-classification-table"><tbody>${fixtureRows}</tbody></table>`);
+      if (url.searchParams.get('jornada') === '10') return new Response('Unavailable', { status: 503 });
+      return new Response('<div>No hay partidos publicados para esta jornada.</div>'.padEnd(2200, ' '));
+    }));
+    await expect(syncSports()).rejects.toThrow('RFAF respondió 503');
+    expect(prepare).not.toHaveBeenCalled();
+  });
+});
 
 describe('RFAF sports parser', () => {
   it('reads the published standing order and finds the first team', () => {

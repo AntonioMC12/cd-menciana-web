@@ -16,6 +16,7 @@ import { getSportsSnapshot, syncSports } from './sports';
 import { competitiveTeamIds, teamCompetitions, type CompetitiveTeamId } from '../src/data/team-competitions';
 import { stockRoutes } from './stock/routes';
 import { syncInventory } from './stock/inventory';
+import type { ScheduledController } from '@cloudflare/workers-types';
 
 const html = (value: string, status = 200) => new Response(value, { status, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'content-security-policy': "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'" } });
 const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
@@ -122,7 +123,14 @@ export default {
       if (path === '/api/sports' && method === 'GET') {
         const teamId = url.searchParams.get('team') || 'primer-equipo';
         if (!Object.hasOwn(teamCompetitions, teamId)) return cors(error('Equipo no encontrado.', 404), request);
-        const snapshot = await getSportsSnapshot(teamId as CompetitiveTeamId) || await syncSports(teamId as CompetitiveTeamId);
+        let snapshot = await getSportsSnapshot(teamId as CompetitiveTeamId);
+        if (!snapshot || snapshot.roundsChecked !== teamCompetitions[teamId as CompetitiveTeamId].rounds) {
+          try { snapshot = await syncSports(teamId as CompetitiveTeamId); }
+          catch (cause) {
+            if (!snapshot) throw cause;
+            console.error(`No se pudo completar el calendario RFAF de ${teamId}; se conserva la última copia.`, cause);
+          }
+        }
         return cors(json(snapshot), request);
       }
       if (parts[0] === 'api' && method === 'OPTIONS' && (parts[1] === 'posts' || parts[1] === 'albums' || parts[1] === 'sports' || path === '/api/shop/availability')) return cors(new Response(null, { status: 204 }), request);
@@ -132,12 +140,12 @@ export default {
       return error('Error interno.', 500);
     }
   },
-  async scheduled(): Promise<void> {
+  async scheduled(controller: ScheduledController): Promise<void> {
     try { await syncInventory(); }
     catch { console.error('No se pudo sincronizar el inventario; se conservan las existencias.'); }
-    for (const teamId of competitiveTeamIds) {
-      try { await syncSports(teamId); }
-      catch (cause) { console.error(`No se pudo actualizar la competición RFAF de ${teamId}; se conserva la última copia.`, cause); }
-    }
+    // One category per invocation keeps full-season requests within Workers limits.
+    const teamId = competitiveTeamIds[Math.floor(new Date(controller.scheduledTime).getUTCMinutes() / 15) % competitiveTeamIds.length];
+    try { await syncSports(teamId); }
+    catch (cause) { console.error(`No se pudo actualizar la competición RFAF de ${teamId}; se conserva la última copia.`, cause); }
   },
 };
