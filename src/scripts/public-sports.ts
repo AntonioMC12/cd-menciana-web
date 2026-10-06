@@ -41,7 +41,7 @@ export const matchCard = (match?: Match, first = false) => {
     teams.append(side);
   }
   const bottom = element('div', 'match-card__bottom');
-  const time = match?.date?.includes('T') ? ` · ${match.date.slice(11, 16)}` : ' · hora pendiente';
+  const time = match?.dateIsRound ? ' · fecha de jornada; día y hora por confirmar' : match?.date?.includes('T') ? ` · ${match.date.slice(11, 16)}` : ' · hora pendiente';
   bottom.append(element('span', '', match?.date ? `${date(match.date, 'full')}${time}` : 'Fecha y hora pendientes'), element('span', '', match?.venue || 'Sede por confirmar'));
   card.append(top, teams, bottom);
   return card;

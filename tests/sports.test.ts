@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { parseStandings, parseTeamMatch, syncSports } from '../worker/sports';
+import { parseStandings, parseTeamMatch, readWidgetSports } from '../worker/sports';
 import { env } from './worker-env';
 import { teamCompetitions, competitiveTeamIds } from '../src/data/team-competitions';
 import { competitionMatch, isClubTeam } from '../src/lib/sports-teams';
@@ -29,13 +29,12 @@ describe('full-season RFAF synchronization', () => {
       return new Response(page.padEnd(2200, ' '));
     });
     vi.stubGlobal('fetch', fetchMock);
-    const snapshot = await syncSports();
+    const snapshot = await readWidgetSports();
     expect(fetchMock).toHaveBeenCalledTimes(31);
     expect(snapshot.roundsChecked).toBe(30);
     expect(snapshot.matches).toHaveLength(5);
     expect(snapshot.matches.at(-1)).toMatchObject({ id: '2026-27-j30', date: '2027-05-16', status: 'scheduled' });
-    expect(run).toHaveBeenCalledOnce();
-    expect(JSON.parse(bind.mock.calls[0][1]).matches).toHaveLength(5);
+    expect(run).not.toHaveBeenCalled();
   });
 
   it('does not overwrite the saved calendar if a future round fails', async () => {
@@ -47,7 +46,7 @@ describe('full-season RFAF synchronization', () => {
       if (url.searchParams.get('jornada') === '10') return new Response('Unavailable', { status: 503 });
       return new Response('<div>No hay partidos publicados para esta jornada.</div>'.padEnd(2200, ' '));
     }));
-    await expect(syncSports()).rejects.toThrow('RFAF respondió 503');
+    await expect(readWidgetSports()).rejects.toThrow('RFAF respondió 503');
     expect(prepare).not.toHaveBeenCalled();
   });
 });

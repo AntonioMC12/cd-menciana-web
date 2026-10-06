@@ -124,7 +124,7 @@ export default {
         const teamId = url.searchParams.get('team') || 'primer-equipo';
         if (!Object.hasOwn(teamCompetitions, teamId)) return cors(error('Equipo no encontrado.', 404), request);
         let snapshot = await getSportsSnapshot(teamId as CompetitiveTeamId);
-        if (!snapshot || snapshot.roundsChecked !== teamCompetitions[teamId as CompetitiveTeamId].rounds) {
+        if (!snapshot || !snapshot.calendarSource || snapshot.roundsChecked !== teamCompetitions[teamId as CompetitiveTeamId].rounds) {
           try { snapshot = await syncSports(teamId as CompetitiveTeamId); }
           catch (cause) {
             if (!snapshot) throw cause;

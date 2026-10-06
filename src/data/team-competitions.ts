@@ -45,3 +45,5 @@ export const getTeamCompetition = (id: string): TeamCompetition | null =>
   Object.hasOwn(teamCompetitions, id) ? teamCompetitions[id as CompetitiveTeamId] : null;
 export const rfafWidgetUrl = (team: TeamCompetition, view: 'results' | 'classification') =>
   `https://stars.rfaf.es/?delegacion=${team.delegation}&competicion=${team.competition}&grupo=${team.group}&widget_view=${view}`;
+export const rfafCalendarUrl = (team: TeamCompetition) =>
+  `https://www.rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?cod_primaria=1000120&codtemporada=22&codcompeticion=${team.competition}&codgrupo=${team.group}&CodJornada=`;

@@ -28,6 +28,7 @@ export interface Match {
   homeLogo?: string;
   awayLogo?: string;
   date?: string; // ISO 8601, including the timezone when known.
+  dateIsRound?: boolean; // Official round date; the match day is not confirmed yet.
   venue?: string;
   homeScore?: number;
   awayScore?: number;

@@ -1,10 +1,12 @@
 import type { Match } from '../data/types';
 import { createSvgIcon } from '../lib/icons';
-import { firstTeamMatches } from '../data/first-team';
-import { competitiveTeamIds, teamCompetitions, rfafWidgetUrl, type CompetitiveTeamId } from '../data/team-competitions';
+import { firstTeamMatches, firstTeamSource } from '../data/first-team';
+import { competitiveTeamIds, teamCompetitions, rfafCalendarUrl, type CompetitiveTeamId } from '../data/team-competitions';
 import { renderStandings } from './public-sports';
 import type { StandingRow } from '../data/first-team';
 import { competitionMatch, isClubTeam } from '../lib/sports-teams';
+import seasonCalendars from '../data/season-calendars.json';
+import { mergeSeasonMatches } from '../lib/season-calendar';
 
 type Selection = CompetitiveTeamId | 'all';
 type Entry = { teamId: CompetitiveTeamId; match: Match };
@@ -26,7 +28,7 @@ if (root) {
   const validCategory = (value: string | null): value is Selection => value === 'all' || competitiveTeamIds.includes(value as CompetitiveTeamId);
   const validMonth = (value: string | null) => Boolean(value && /^\d{4}-(0[1-9]|1[0-2])$/.test(value));
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
-  const store = new Map<CompetitiveTeamId, Match[]>([['primer-equipo', firstTeamMatches]]);
+  const store = new Map<CompetitiveTeamId, Match[]>(competitiveTeamIds.map(id => [id, id === 'primer-equipo' ? firstTeamMatches : seasonCalendars[id].matches as Match[]]));
   const updated = new Map<CompetitiveTeamId, string>();
   const unavailable = new Set<CompetitiveTeamId>();
   let category: Selection = validCategory(params.get('categoria')) ? params.get('categoria') as Selection : 'primer-equipo';
@@ -45,7 +47,7 @@ if (root) {
     new Intl.DateTimeFormat('es-ES', { ...options, timeZone: 'Europe/Madrid' }).format(new Date(`${iso.slice(0, 10)}T12:00:00Z`));
   const fullDate = (value?: string) => value ? madridDate(value, { weekday: 'long', day: 'numeric', month: 'long' }) : 'Fecha por confirmar';
   const time = (value?: string) => value?.includes('T') ? `${value.slice(11, 16)} h` : 'Hora pendiente';
-  const stateLabel = (match: Match) => match.status === 'finished' ? 'Finalizado' : match.status === 'postponed' ? 'Aplazado' : match.date?.includes('T') ? 'Próximo' : 'Horario pendiente';
+  const stateLabel = (match: Match) => match.status === 'finished' ? 'Finalizado' : match.status === 'postponed' ? 'Aplazado' : match.dateIsRound ? 'Fecha de jornada' : match.date?.includes('T') ? 'Próximo' : 'Horario pendiente';
   const isHome = (match: Match) => isClubTeam(match.homeTeam);
   const clubSide = (match: Match) => isHome(match) ? 'En casa' : isClubTeam(match.awayTeam) ? 'Fuera de casa' : 'Sede por confirmar';
   const labelFor = (id: Selection) => id === 'all' ? 'Todas las categorías' : teamCompetitions[id].label;
@@ -123,6 +125,7 @@ if (root) {
     intro.append(node('span', 'pill pill--blue', 'PRÓXIMO PARTIDO'), node('p', '', `${labelFor(teamId)} · ${match.competition}`), node('h2', '', `${fullDate(match.date)} · ${time(match.date)}`));
     const info = node('p', '', `${clubSide(match)} · ${match.venue || 'Pabellón por confirmar'}`);
     intro.append(info);
+    if (match.dateIsRound) intro.append(node('p', '', 'Fecha general de la jornada. Día y hora del partido por confirmar.'));
     card.append(intro, teams(match));
     const detail = node('button', 'calendar-feature__detail', 'Ver detalles ') as HTMLButtonElement;
     detail.append(createSvgIcon());
@@ -187,8 +190,8 @@ if (root) {
       empty(hasAny ? 'No hay partidos publicados para este mes. Puedes navegar a otro mes o cambiar de categoría.' : 'Aún no hay partidos publicados para esta categoría. Prueba otra selección.'));
     const selected = category === 'all' ? 'primer-equipo' : category;
     const stamp = updated.get(selected);
-    find('[data-calendar-updated]').textContent = stamp ? `Actualizados ${new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Europe/Madrid' }).format(new Date(stamp))}` : selected === 'primer-equipo' ? 'Primera copia verificada el 4 de octubre de 2026' : 'Actualización pendiente';
-    (find<HTMLAnchorElement>('[data-calendar-source]')).href = rfafWidgetUrl(teamCompetitions[selected], 'results');
+    find('[data-calendar-updated]').textContent = stamp ? `Actualizados ${new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Europe/Madrid' }).format(new Date(stamp))}` : `Calendario verificado el ${firstTeamSource.checkedOn}`;
+    (find<HTMLAnchorElement>('[data-calendar-source]')).href = rfafCalendarUrl(teamCompetitions[selected]);
     setUrl();
   };
   const closeMenu = (focus = false) => {
@@ -246,7 +249,7 @@ if (root) {
     const description = node('dl');
     for (const [label, value] of [
       ['Categoría', labelFor(teamId)], ['Estado', stateLabel(match)], ['Condición', clubSide(match)],
-      ['Fecha', fullDate(match.date)], ['Hora', time(match.date)], ['Competición', match.competition],
+      [match.dateIsRound ? 'Fecha de jornada (día del partido por confirmar)' : 'Fecha', fullDate(match.date)], ['Hora', time(match.date)], ['Competición', match.competition],
       ['Jornada', match.round || 'Pendiente'], ['Pabellón', match.venue || 'Por confirmar'],
       ...(match.status === 'finished' ? [['Resultado', scoreText(match)]] : []),
     ]) {
@@ -278,7 +281,7 @@ if (root) {
     results.forEach((result, index) => {
       const id = missing[index];
       if (result.status === 'fulfilled') {
-        store.set(id, result.value.snapshot.matches.map(match => competitionMatch(match, id)));
+        store.set(id, mergeSeasonMatches(seasonCalendars[id].matches as Match[], result.value.snapshot.matches).map(match => competitionMatch(match, id)));
         updated.set(id, result.value.snapshot.updatedAt);
         unavailable.delete(id);
         if (id === 'primer-equipo' && Array.isArray(result.value.snapshot.standings)) renderStandings(document.querySelector('[data-sports-standings]'), result.value.snapshot.standings);

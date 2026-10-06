@@ -1,11 +1,14 @@
 import type { Match } from './types';
+import seasonCalendars from './season-calendars.json';
+import { mergeSeasonMatches } from '../lib/season-calendar';
 import { teamCompetitions } from './team-competitions';
 
-// Build-time fallback checked against the RFAF Novanet widget on 2026-10-04.
+// Match details checked against the RFAF Novanet widget on 2026-10-04.
+// Complete round calendar checked against the classic RFAF site on 2026-10-06.
 // The Worker refreshes the published results and standings automatically.
 // Opponent crests in /public/images/equipos/ were downloaded from these match cards.
 export const firstTeamSource = {
-  checkedOn: '4 de octubre de 2026',
+  checkedOn: '6 de octubre de 2026',
   resultsUrl: 'https://stars.rfaf.es/?delegacion=9&competicion=48466108&grupo=48466109&widget_view=results',
   standingsUrl: 'https://stars.rfaf.es/?delegacion=9&competicion=48466108&grupo=48466109&widget_view=classification',
 };
@@ -13,15 +16,17 @@ export const firstTeamSource = {
 const club = teamCompetitions['primer-equipo'].officialName;
 const competition = '3.ª División F.S. · Grupo 17';
 
-export const firstTeamMatches: Match[] = [
+const verifiedMatchDetails: Match[] = [
   { id: '2026-27-j1', competition, round: 'Jornada 1', homeTeam: club, awayTeam: 'CD La Palma F.S.', awayLogo: '/images/equipos/la-palma.jpg', date: '2026-09-12T18:30:00+02:00', venue: 'PMD Alcalde Julio Priego · Doña Mencía', homeScore: 5, awayScore: 3, status: 'finished', publication: 'confirmed' },
   { id: '2026-27-j2', competition, round: 'Jornada 2', homeTeam: 'Hamar CD GSport Ciudad Inmobiliaria', homeLogo: '/images/equipos/hamar-bormujos.jpg', awayTeam: club, date: '2026-09-20T12:00:00+02:00', venue: 'Pabellón Juan Manuel Acevedo · Bormujos', homeScore: 2, awayScore: 2, status: 'finished', publication: 'confirmed' },
   { id: '2026-27-j3', competition, round: 'Jornada 3', homeTeam: club, awayTeam: 'CD Santaella 2010', awayLogo: '/images/equipos/santaella.jpg', date: '2026-09-27T12:30:00+02:00', venue: 'PMD Alcalde Julio Priego · Doña Mencía', homeScore: 2, awayScore: 0, status: 'finished', publication: 'confirmed' },
   { id: '2026-27-j4', competition, round: 'Jornada 4', homeTeam: 'CD Córdoba Futsal Patrimonio', homeLogo: '/images/equipos/cordoba-futsal.jpg', awayTeam: club, date: '2026-10-04T13:30:00+02:00', venue: 'Pabellón Vista Alegre · Córdoba', homeScore: 11, awayScore: 4, status: 'finished', publication: 'confirmed' },
-  { id: '2026-27-j5', competition, round: 'Jornada 5', homeTeam: club, awayTeam: 'Círculo Mercantil e Industrial', awayLogo: '/images/equipos/circulo-mercantil.jpg', date: '2026-10-10', venue: 'PMD Alcalde Julio Priego · Doña Mencía', status: 'scheduled', publication: 'confirmed' },
+  { id: '2026-27-j5', competition, round: 'Jornada 5', homeTeam: club, awayTeam: 'Círculo Mercantil e Industrial', awayLogo: '/images/equipos/circulo-mercantil.jpg', date: '2026-10-10T19:00:00+02:00', venue: 'PMD Alcalde Julio Priego · Doña Mencía', status: 'scheduled', publication: 'confirmed' },
   { id: '2026-27-j6', competition, round: 'Jornada 6', homeTeam: 'CD Benalup', homeLogo: '/images/equipos/benalup.jpg', awayTeam: club, date: '2026-10-18', venue: 'Pabellón Municipal 28 de Febrero · Benalup-Casas Viejas', status: 'scheduled', publication: 'confirmed' },
   { id: '2026-27-j7', competition, round: 'Jornada 7', homeTeam: club, awayTeam: 'CD Unión Deportiva Los Amigos', awayLogo: '/images/equipos/union-los-amigos.jpg', date: '2026-10-25', venue: 'PMD Alcalde Julio Priego · Doña Mencía', status: 'scheduled', publication: 'confirmed' },
 ];
+
+export const firstTeamMatches: Match[] = mergeSeasonMatches(seasonCalendars['primer-equipo'].matches as Match[], verifiedMatchDetails);
 
 export interface StandingRow {
   position: number;

@@ -80,3 +80,16 @@ La sincronización deportiva consulta todas las jornadas de cada competición: 3
 Solo consulta páginas públicas de la RFAF, valida que la clasificación y los partidos estén completos y sustituye la instantánea en D1 cuando toda la consulta termina bien. `GET /api/sports` sirve esa copia; también completa automáticamente una copia antigua que aún no tenga `roundsChecked` con todas las jornadas. Si falla una sincronización, el Worker registra el error y la web conserva la última información disponible. Revisar los logs del Worker y la fecha visible en `/calendario/` si no se actualiza. Un mes vacío significa que no hay partidos publicados en la copia disponible; no se calculan fechas ni rivales por extrapolación.
 
 Referencias: [GitHub Pages con Astro](https://docs.astro.build/en/guides/deploy/github/), [Workers y CORS](https://developers.cloudflare.com/workers/examples/cors-header-proxy/), [validación JWT de Access](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), [D1 con Wrangler](https://developers.cloudflare.com/d1/wrangler-commands/), [R2 con rclone](https://developers.cloudflare.com/r2/examples/rclone/).
+
+
+### Calendario completo clásico de la RFAF
+
+El enlace NFG_VisCalendario_Vis de temporada 22 publica el calendario completo en una sola página. Se consulta para cada competición; se exige la temporada 2026-2027 y todas las jornadas. Se omiten descansos y se marcan sus fechas generales con dateIsRound=true. Los horarios, resultados y pabellones verificados en Novanet/D1 se conservan cuando coinciden jornada y ambos equipos. No se ejecutan los scripts de marcadores del sitio clásico.
+
+Copia pública verificada desde el navegador el 6 de octubre de 2026: src/data/season-calendars.json. Primer equipo: 30 partidos, septiembre 2026 a abril 2027; filial: 14, octubre a febrero; cadete: 12 partidos y dos descansos en 14 jornadas, septiembre a febrero; infantil: 18, septiembre a marzo. Si la descarga automática del sitio clásico devuelve la página «No se ha aceptado el cookie», se conserva el último calendario completo válido o esta copia verificada. La clasificación conserva su propia fecha en standingsUpdatedAt cuando Novanet no está disponible.
+
+Fuentes:
+- primer-equipo: https://www.rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?cod_primaria=1000120&codtemporada=22&codcompeticion=48466108&codgrupo=48466109&CodJornada=
+- filial: https://www.rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?cod_primaria=1000120&codtemporada=22&codcompeticion=49113015&codgrupo=49113036&CodJornada=
+- cadete: https://www.rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?cod_primaria=1000120&codtemporada=22&codcompeticion=49465203&codgrupo=49465413&CodJornada=
+- infantil: https://www.rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?cod_primaria=1000120&codtemporada=22&codcompeticion=49520234&codgrupo=49520774&CodJornada=

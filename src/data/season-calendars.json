@@ -1,0 +1,840 @@
+{
+  "primer-equipo": {
+    "verifiedAt": "2026-10-06T15:01:56.766Z",
+    "sourceUrl": "https://www.rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?cod_primaria=1000120&codtemporada=22&codcompeticion=48466108&codgrupo=48466109&CodJornada=",
+    "matches": [
+      {
+        "id": "2026-27-j1",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 1",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. LA PALMA F.S.",
+        "date": "2026-09-13",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j2",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 2",
+        "homeTeam": "HAMAR CLUB DEPORTIVO GSPORT CIUDAD INMOBILIARIA",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2026-09-20",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j3",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 3",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. SANTAELLA 2010",
+        "date": "2026-09-27",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j4",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 4",
+        "homeTeam": "C.D. CÓRDOBA FUTSAL PATRIMONIO",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2026-10-04",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j5",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 5",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "CIRCULO MERCANTIL E INDUSTRIAL",
+        "date": "2026-10-11",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j6",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 6",
+        "homeTeam": "C.D. BENALUP",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2026-10-18",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j7",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 7",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. UNION DEPORTIVA LOS AMIGOS",
+        "date": "2026-10-25",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j8",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 8",
+        "homeTeam": "U.D. ALCHOYANO",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2026-11-01",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j9",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 9",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "CD CÁDIZ FUTSAL YOU ASESORÍA",
+        "date": "2026-11-08",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j10",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 10",
+        "homeTeam": "C.D. ISLEÑO SAN FERNANDO F.S.",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2026-11-15",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j11",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 11",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. VILLALBA F.S.",
+        "date": "2026-11-22",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j12",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 12",
+        "homeTeam": "C.D. ALCALA DE GUADAIRA F.S.",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2026-11-29",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j13",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 13",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. DECORSENECA",
+        "date": "2026-12-06",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j14",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 14",
+        "homeTeam": "C.D. OLIMPIC DE TRIANA",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2026-12-13",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j15",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 15",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. DEPORTE Y OCIO (ADYO)",
+        "date": "2026-12-20",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j16",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 16",
+        "homeTeam": "C.D. LA PALMA F.S.",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2027-01-10",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j17",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 17",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "HAMAR CLUB DEPORTIVO GSPORT CIUDAD INMOBILIARIA",
+        "date": "2027-01-17",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j18",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 18",
+        "homeTeam": "C.D. SANTAELLA 2010",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2027-01-24",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j19",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 19",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. CÓRDOBA FUTSAL PATRIMONIO",
+        "date": "2027-01-31",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j20",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 20",
+        "homeTeam": "CIRCULO MERCANTIL E INDUSTRIAL",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2027-02-07",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j21",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 21",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. BENALUP",
+        "date": "2027-02-14",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j22",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 22",
+        "homeTeam": "C.D. UNION DEPORTIVA LOS AMIGOS",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2027-02-21",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j23",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 23",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "U.D. ALCHOYANO",
+        "date": "2027-02-28",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j24",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 24",
+        "homeTeam": "CD CÁDIZ FUTSAL YOU ASESORÍA",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2027-03-07",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j25",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 25",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. ISLEÑO SAN FERNANDO F.S.",
+        "date": "2027-03-14",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j26",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 26",
+        "homeTeam": "C.D. VILLALBA F.S.",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2027-03-21",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j27",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 27",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. ALCALA DE GUADAIRA F.S.",
+        "date": "2027-04-04",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j28",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 28",
+        "homeTeam": "C.D. DECORSENECA",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2027-04-11",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j29",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 29",
+        "homeTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "awayTeam": "C.D. OLIMPIC DE TRIANA",
+        "date": "2027-04-18",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-j30",
+        "competition": "3.ª División F.S. · Grupo 17",
+        "round": "Jornada 30",
+        "homeTeam": "C.D. DEPORTE Y OCIO (ADYO)",
+        "awayTeam": "C.D. APAGA Y VAMONOS RAVI OBRAS & SERVICIOS",
+        "date": "2027-04-25",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      }
+    ]
+  },
+  "filial": {
+    "verifiedAt": "2026-10-06T15:01:56.768Z",
+    "sourceUrl": "https://www.rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?cod_primaria=1000120&codtemporada=22&codcompeticion=49113015&codgrupo=49113036&CodJornada=",
+    "matches": [
+      {
+        "id": "2026-27-filial-j1",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 1",
+        "homeTeam": "C.D. APAGA Y VAMONOS",
+        "awayTeam": "C.D. FUTBOL SALA LUQUE",
+        "date": "2026-10-04",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j2",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 2",
+        "homeTeam": "C.D. CARCABUEY",
+        "awayTeam": "C.D. APAGA Y VAMONOS",
+        "date": "2026-10-18",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j3",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 3",
+        "homeTeam": "C.D. APAGA Y VAMONOS",
+        "awayTeam": "C.D. EGA FUTSAL",
+        "date": "2026-10-25",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j4",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 4",
+        "homeTeam": "C.D. ASOC. JUVENIL PALENCIANA",
+        "awayTeam": "C.D. APAGA Y VAMONOS",
+        "date": "2026-11-08",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j5",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 5",
+        "homeTeam": "C.D. APAGA Y VAMONOS",
+        "awayTeam": "C.D. MIRAGENIL F.S. NOLITO'S",
+        "date": "2026-11-15",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j6",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 6",
+        "homeTeam": "C.D. APAGA Y VAMONOS",
+        "awayTeam": "C.D. MONTILLA FUTSAL",
+        "date": "2026-11-22",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j7",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 7",
+        "homeTeam": "C.D. VILLA DE BENAMEJI",
+        "awayTeam": "C.D. APAGA Y VAMONOS",
+        "date": "2026-11-29",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j8",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 8",
+        "homeTeam": "C.D. FUTBOL SALA LUQUE",
+        "awayTeam": "C.D. APAGA Y VAMONOS",
+        "date": "2026-12-13",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j9",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 9",
+        "homeTeam": "C.D. APAGA Y VAMONOS",
+        "awayTeam": "C.D. CARCABUEY",
+        "date": "2026-12-20",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j10",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 10",
+        "homeTeam": "C.D. EGA FUTSAL",
+        "awayTeam": "C.D. APAGA Y VAMONOS",
+        "date": "2027-01-17",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j11",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 11",
+        "homeTeam": "C.D. APAGA Y VAMONOS",
+        "awayTeam": "C.D. ASOC. JUVENIL PALENCIANA",
+        "date": "2027-01-24",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j12",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 12",
+        "homeTeam": "C.D. MIRAGENIL F.S. NOLITO'S",
+        "awayTeam": "C.D. APAGA Y VAMONOS",
+        "date": "2027-01-31",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j13",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 13",
+        "homeTeam": "C.D. MONTILLA FUTSAL",
+        "awayTeam": "C.D. APAGA Y VAMONOS",
+        "date": "2027-02-07",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-filial-j14",
+        "competition": "2.ª Andaluza Sénior F.S. · Grupo A",
+        "round": "Jornada 14",
+        "homeTeam": "C.D. APAGA Y VAMONOS",
+        "awayTeam": "C.D. VILLA DE BENAMEJI",
+        "date": "2027-02-21",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      }
+    ]
+  },
+  "cadete": {
+    "verifiedAt": "2026-10-06T15:01:56.769Z",
+    "sourceUrl": "https://www.rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?cod_primaria=1000120&codtemporada=22&codcompeticion=49465203&codgrupo=49465413&CodJornada=",
+    "matches": [
+      {
+        "id": "2026-27-cadete-j1",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 1",
+        "homeTeam": "C.D. MIRAGENIL F.S. CODIMAR",
+        "awayTeam": "C.D. MENCIANA",
+        "date": "2026-09-27",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j2",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 2",
+        "homeTeam": "C.D. MENCIANA",
+        "awayTeam": "C.D. ARAS FUTSAL \"A\"",
+        "date": "2026-10-04",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j3",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 3",
+        "homeTeam": "C.D. CARCABUEY",
+        "awayTeam": "C.D. MENCIANA",
+        "date": "2026-10-18",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j5",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 5",
+        "homeTeam": "C.D. MENCIANA",
+        "awayTeam": "C.D. SANTAELLA 2010",
+        "date": "2026-11-08",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j6",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 6",
+        "homeTeam": "C.D. BOCA F.S. PRIEGO",
+        "awayTeam": "C.D. MENCIANA",
+        "date": "2026-11-15",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j7",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 7",
+        "homeTeam": "C.D. MENCIANA",
+        "awayTeam": "C.D. ENCINAS REALES C.F.",
+        "date": "2026-11-22",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j8",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 8",
+        "homeTeam": "C.D. MENCIANA",
+        "awayTeam": "C.D. MIRAGENIL F.S. CODIMAR",
+        "date": "2026-11-29",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j9",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 9",
+        "homeTeam": "C.D. ARAS FUTSAL \"A\"",
+        "awayTeam": "C.D. MENCIANA",
+        "date": "2026-12-20",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j10",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 10",
+        "homeTeam": "C.D. MENCIANA",
+        "awayTeam": "C.D. CARCABUEY",
+        "date": "2027-01-10",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j12",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 12",
+        "homeTeam": "C.D. SANTAELLA 2010",
+        "awayTeam": "C.D. MENCIANA",
+        "date": "2027-01-24",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j13",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 13",
+        "homeTeam": "C.D. MENCIANA",
+        "awayTeam": "C.D. BOCA F.S. PRIEGO",
+        "date": "2027-01-31",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-cadete-j14",
+        "competition": "2.ª Andaluza Cadete F.S. · Grupo A",
+        "round": "Jornada 14",
+        "homeTeam": "C.D. ENCINAS REALES C.F.",
+        "awayTeam": "C.D. MENCIANA",
+        "date": "2027-02-07",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      }
+    ]
+  },
+  "infantil": {
+    "verifiedAt": "2026-10-06T15:01:56.770Z",
+    "sourceUrl": "https://www.rfaf.es/pnfg/NPcd/NFG_VisCalendario_Vis?cod_primaria=1000120&codtemporada=22&codcompeticion=49520234&codgrupo=49520774&CodJornada=",
+    "matches": [
+      {
+        "id": "2026-27-infantil-j1",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 1",
+        "homeTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "awayTeam": "C.D. BOCA F.S. PRIEGO",
+        "date": "2026-09-27",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j2",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 2",
+        "homeTeam": "C.D. CABRA F.S.",
+        "awayTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "date": "2026-10-04",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j3",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 3",
+        "homeTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "awayTeam": "C.D. MIRAGENIL F.S. CODIMAR",
+        "date": "2026-10-18",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j4",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 4",
+        "homeTeam": "C.D. TOXAR",
+        "awayTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "date": "2026-10-25",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j5",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 5",
+        "homeTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "awayTeam": "C.D. ASOC. JUVENIL PALENCIANA",
+        "date": "2026-11-08",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j6",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 6",
+        "homeTeam": "C.D. ENCINAS REALES C.F.",
+        "awayTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "date": "2026-11-15",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j7",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 7",
+        "homeTeam": "C. D. FÚTBOL SALA LUQUE",
+        "awayTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "date": "2026-11-22",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j8",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 8",
+        "homeTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "awayTeam": "C. D. ALBENDÍN CAPRICHO DEL GUADAJOZ",
+        "date": "2026-11-29",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j9",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 9",
+        "homeTeam": "C.D. ARAS FUTSAL",
+        "awayTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "date": "2026-12-20",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j10",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 10",
+        "homeTeam": "C.D. BOCA F.S. PRIEGO",
+        "awayTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "date": "2027-01-10",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j11",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 11",
+        "homeTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "awayTeam": "C.D. CABRA F.S.",
+        "date": "2027-01-17",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j12",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 12",
+        "homeTeam": "C.D. MIRAGENIL F.S. CODIMAR",
+        "awayTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "date": "2027-01-24",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j13",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 13",
+        "homeTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "awayTeam": "C.D. TOXAR",
+        "date": "2027-01-31",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j14",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 14",
+        "homeTeam": "C.D. ASOC. JUVENIL PALENCIANA",
+        "awayTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "date": "2027-02-07",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j15",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 15",
+        "homeTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "awayTeam": "C.D. ENCINAS REALES C.F.",
+        "date": "2027-02-14",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j16",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 16",
+        "homeTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "awayTeam": "C. D. FÚTBOL SALA LUQUE",
+        "date": "2027-02-21",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j17",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 17",
+        "homeTeam": "C. D. ALBENDÍN CAPRICHO DEL GUADAJOZ",
+        "awayTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "date": "2027-03-07",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      },
+      {
+        "id": "2026-27-infantil-j18",
+        "competition": "2.ª Andaluza Infantil F.S. · Grupo B",
+        "round": "Jornada 18",
+        "homeTeam": "C.D. MENCIANA CENTRO CICLOTURISTA SUBBETICA",
+        "awayTeam": "C.D. ARAS FUTSAL",
+        "date": "2027-03-14",
+        "dateIsRound": true,
+        "status": "scheduled",
+        "publication": "provisional"
+      }
+    ]
+  }
+}

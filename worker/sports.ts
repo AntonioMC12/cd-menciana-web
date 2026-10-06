@@ -4,8 +4,11 @@ import { teamCrests } from '../src/data/team-crests';
 import { rfafWidgetUrl, teamCompetitions, type CompetitiveTeamId, type TeamCompetition } from '../src/data/team-competitions';
 import type { Match } from '../src/data/types';
 import { competitionMatch } from '../src/lib/sports-teams';
+import seasonCalendars from '../src/data/season-calendars.json';
+import { parseSeasonCalendar, mergeSeasonMatches } from '../src/lib/season-calendar';
+import { rfafCalendarUrl } from '../src/data/team-competitions';
 
-export type SportsSnapshot = { updatedAt: string; matches: Match[]; standings: StandingRow[]; roundsChecked?: number; source?: 'initial' };
+export type SportsSnapshot = { updatedAt: string; matches: Match[]; standings: StandingRow[]; roundsChecked?: number; calendarSource?: string; calendarCheckedAt?: string; standingsUpdatedAt?: string; source?: 'initial' };
 const plain = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&nbsp;|&#160;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'").replace(/\s+/g, ' ').trim();
 const normalized = (name: string) => name.replace(/&#0?39;|&apos;/g, "'").normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').toLowerCase();
 const knownTeams = new Map(firstTeamStandings.map(row => [normalized(row.team), row.team]));
@@ -88,7 +91,7 @@ async function fetchRfaf(url: string): Promise<string> {
   return html;
 }
 
-export async function syncSports(teamId: CompetitiveTeamId = 'primer-equipo'): Promise<SportsSnapshot> {
+export async function readWidgetSports(teamId: CompetitiveTeamId = 'primer-equipo'): Promise<SportsSnapshot> {
   const team = teamCompetitions[teamId];
   const standings = parseStandings(await fetchRfaf(rfafWidgetUrl(team, 'classification')), teamId);
   // Check the whole season, including future rounds with no published matches yet.
@@ -105,6 +108,38 @@ export async function syncSports(teamId: CompetitiveTeamId = 'primer-equipo'): P
   const clubPlayed = standings.find(row => row.isClub)?.played ?? 0;
   if (matches.length < (teamId === 'primer-equipo' ? 3 : 1) || matches.filter(match => match.status === 'finished').length < clubPlayed) throw new Error('Calendario RFAF incompleto.');
   const snapshot = withTeamCrests({ updatedAt: new Date().toISOString(), matches, standings, roundsChecked: finalRound }, teamId);
+  return snapshot;
+}
+
+export async function syncSports(teamId: CompetitiveTeamId = 'primer-equipo'): Promise<SportsSnapshot> {
+  const team = teamCompetitions[teamId];
+  const previous = await getSportsSnapshot(teamId);
+  const verified = seasonCalendars[teamId];
+  const hasSavedCalendar = previous?.calendarSource && previous.roundsChecked === team.rounds && (previous.calendarCheckedAt || '') >= verified.verifiedAt;
+  let calendar = hasSavedCalendar ? previous.matches : verified.matches as Match[];
+  let calendarCheckedAt = hasSavedCalendar ? previous.calendarCheckedAt! : verified.verifiedAt;
+  try {
+    const response = await fetch(rfafCalendarUrl(team), { headers: { accept: 'text/html' }, signal: AbortSignal.timeout(12000) });
+    if (!response.ok) throw new Error(`Calendario RFAF: ${response.status}`);
+    const bytes = await response.arrayBuffer();
+    if (bytes.byteLength > 2_000_000) throw new Error('Calendario RFAF demasiado grande.');
+    // The classic RFAF site declares ISO-8859-1; DOM exports use UTF-8.
+    const charset = response.headers.get('content-type')?.includes('utf-8') ? 'utf-8' : 'windows-1252';
+    calendar = parseSeasonCalendar(new TextDecoder(charset).decode(bytes), teamId);
+    calendarCheckedAt = new Date().toISOString();
+  } catch { console.warn(`Se conserva el calendario completo verificado de ${teamId}.`); }
+  let details = previous?.matches || (teamId === 'primer-equipo' ? firstTeamMatches : []);
+  let standings = previous?.standings || (teamId === 'primer-equipo' ? firstTeamStandings : []);
+  let standingsUpdatedAt = previous?.standingsUpdatedAt || previous?.updatedAt;
+  let detailsUpdatedAt = previous?.updatedAt || calendarCheckedAt;
+  try {
+    const widget = await readWidgetSports(teamId);
+    details = widget.matches;
+    standings = widget.standings;
+    standingsUpdatedAt = widget.updatedAt;
+    detailsUpdatedAt = widget.updatedAt;
+  } catch { console.warn(`Se conservan los horarios y resultados verificados de ${teamId}.`); }
+  const snapshot = withTeamCrests({ updatedAt: [calendarCheckedAt, detailsUpdatedAt].sort().at(-1)!, matches: mergeSeasonMatches(calendar, details), standings, roundsChecked: team.rounds, calendarSource: rfafCalendarUrl(team), calendarCheckedAt, standingsUpdatedAt }, teamId);
   await bindings().DB.prepare('INSERT INTO sports_snapshots (key, payload_json, updated_at) VALUES (?, ?, ?) ON CONFLICT(key) DO UPDATE SET payload_json=excluded.payload_json, updated_at=excluded.updated_at').bind(snapshotKey(teamId), JSON.stringify(snapshot), snapshot.updatedAt).run();
   return snapshot;
 }
