@@ -6,7 +6,8 @@
   "compatibility_flags": ["nodejs_compat"],
   "rules": [{ "type": "Text", "globs": ["**/*.txt"], "fallthrough": false }],
   "vars": { "PUBLIC_WEB_ORIGIN": "https://cdmenciana.es", "PUBLIC_WEB_BASE": "/" },
-  "routes": [{ "pattern": "cms.cdmenciana.es", "custom_domain": true }],
+  "routes": [{ "pattern": "cms.cdmenciana.es", "custom_domain": true },
+    { "pattern": "cdmenciana.es/tienda/stock*", "zone_name": "cdmenciana.es" }],
   "workers_dev": false,
   "triggers": { "crons": ["0 * * * *"] },
   "d1_databases": [{

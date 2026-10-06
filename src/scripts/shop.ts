@@ -17,6 +17,34 @@ document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(button => 
 });
 const dialog = document.querySelector<HTMLDialogElement>('#shop-preview');
 const data = document.querySelector('#shop-product-data');
+// Availability is read fresh from D1, independently of the static catalogue build.
+// This endpoint never exposes quantities, movement notes or session information.
+const availabilityApi = (import.meta.env.PUBLIC_CMS_API_URL || '').replace(/\/$/, '');
+type PublicAvailability = { items: { id: string; status: string; variants: { options: Record<string,string>; status: string }[] }[] };
+let availabilityLoading = false;
+const availabilityFallback = new Map(cards.map(card => [card, card.querySelector('[data-availability]')?.textContent || 'Consultar disponibilidad con el club.']));
+async function updateShopAvailability() {
+  if (!availabilityApi || availabilityLoading) return;
+  availabilityLoading = true;
+  try {
+    const response = await fetch(`${availabilityApi}/api/shop/availability`, { cache: 'no-store', credentials: 'omit', signal: AbortSignal.timeout(8000) });
+    if (!response.ok) throw new Error();
+    const result = await response.json() as PublicAvailability;
+    for (const card of cards) {
+      const product = result.items.find(item => item.id === card.dataset.productId);
+      const target = card.querySelector('[data-availability]');
+      if (!target) continue;
+      if (!product) { target.textContent = availabilityFallback.get(card)!; continue; }
+      target.textContent = product.variants.length ? product.variants.map(variant => `${Object.entries(variant.options).map(([key,value])=>`${key}: ${value}`).join(' · ')}: ${variant.status}`).join(' / ') : product.status;
+    }
+  } catch {
+    for (const card of cards) { const target = card.querySelector('[data-availability]'); if (target) target.textContent = availabilityFallback.get(card)!; }
+  } finally { availabilityLoading = false; }
+}
+void updateShopAvailability();
+window.addEventListener('pageshow', event => { if (event.persisted) void updateShopAvailability(); });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) void updateShopAvailability(); });
+window.setInterval(() => { if (!document.hidden) void updateShopAvailability(); }, 30000);
 if (dialog && data) {
   const products: PreviewProduct[] = JSON.parse(data.textContent || '[]');
   const image = dialog.querySelector<HTMLImageElement>('#shop-dialog-image')!;

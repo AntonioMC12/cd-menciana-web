@@ -6,7 +6,7 @@ interface Props { product: ShopProduct }
 const { product } = Astro.props;
 const cover = product.images[0];
 ---
-<article class="shop-product" data-category={product.category}>
+<article class="shop-product" data-category={product.category} data-product-id={product.id}>
   <a class="shop-product__image" href={cover ? sitePath(cover.src) : productContactUrl(product)} data-preview={cover ? product.id : undefined} aria-label={`Ver imágenes de ${product.name}`}>
     {cover ? <img src={sitePath(cover.src)} width={cover.width} height={cover.height} alt={cover.alt} loading="lazy" decoding="async" /> : <span>Imagen pendiente</span>}
     {cover && <span class="shop-product__zoom">Ver detalle <span aria-hidden="true">↗</span></span>}
@@ -18,7 +18,7 @@ const cover = product.images[0];
     <div class="shop-product__price"><strong>{formatShopPrice(product.price)}</strong>{shop.preview && !product.priceConfirmed && product.price !== undefined && <span>Precio de prueba</span>}</div>
     {product.sizes?.length && <p class="shop-product__options">Tallas: {product.sizes.join(' · ')}</p>}
     {product.variants?.length && <p class="shop-product__options">Variantes: {product.variants.join(' · ')}</p>}
-    <p class="shop-product__availability">{product.availability || (shop.contact.whatsappConfirmed ? 'Consulta artículos y tallas por WhatsApp.' : 'Consulta artículos y tallas con el club.')}</p>
+    <p class="shop-product__availability" data-availability>{product.availability || 'Consultar disponibilidad con el club.'}</p>
     <a class="button button--blue" href={productContactUrl(product)}>Consultar este producto <ArrowIcon /></a>
   </div>
 </article>

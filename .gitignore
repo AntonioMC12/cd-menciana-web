@@ -6,5 +6,6 @@ dist/
 .wrangler/
 tmp/
 worker/admin-client.txt
+worker/stock/client.txt
 .wrangler-config/
 assets/

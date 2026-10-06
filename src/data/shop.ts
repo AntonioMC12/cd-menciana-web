@@ -12,6 +12,7 @@ export interface ShopProduct {
   sizes?: string[];
   variants?: string[];
   availability?: string;
+  archived?: boolean;
 }
 
 // Catálogo provisional. Sustituir los precios y confirmar tallas antes del lanzamiento.
@@ -43,9 +44,8 @@ export const products: ShopProduct[] = [
   { id: 'ropa-paseo-superior', name: 'Polo de paseo', category: 'Paseo', description: 'Polo de paseo del club. Se vende por separado del pantalón.', price: 20, priceConfirmed: true, images: image('ropa-paseo-superior', 'Polo de paseo', 599, 389) },
   { id: 'ropa-paseo-inferior', name: 'Pantalón corto de paseo', category: 'Paseo', description: 'Pantalón corto de paseo del club. Se vende por separado de la prenda superior.', price: 15, priceConfirmed: true, images: image('ropa-paseo-inferior', 'Pantalón corto de paseo', 493, 300) },
   { id: 'chandal-primer-equipo-superior', name: 'Chaqueta de chándal · Primer equipo', category: 'Paseo', description: 'Chaqueta de chándal del club. Se vende por separado del pantalón.', price: 25, priceConfirmed: true, images: image('chandal-primer-equipo-superior', 'Chaqueta de chándal · Primer equipo', 466, 283) },
-  { id: 'chandal-primer-equipo-inferior', name: 'Pantalón largo de chándal · Primer equipo', category: 'Paseo', description: 'Pantalón largo de chándal del club. Se vende por separado de la prenda superior.', price: 20, priceConfirmed: true, images: image('chandal-primer-equipo-inferior', 'Pantalón largo de chándal · Primer equipo', 457, 360) },
+  { id: 'chandal-primer-equipo-inferior', name: 'Pantalón largo de chándal', category: 'Paseo', description: 'Pantalón largo de chándal común a todas las categorías del club. Se vende por separado de la prenda superior.', price: 20, priceConfirmed: true, images: image('chandal-primer-equipo-inferior', 'Pantalón largo de chándal', 457, 360) },
   { id: 'chandal-base-superior', name: 'Chaqueta de chándal · Categorías de base', category: 'Paseo', description: 'Chaqueta de chándal del club. Se vende por separado del pantalón.', price: 25, priceConfirmed: true, images: image('chandal-base-superior', 'Chaqueta de chándal · Categorías de base', 466, 283) },
-  { id: 'chandal-base-inferior', name: 'Pantalón largo de chándal · Categorías de base', category: 'Paseo', description: 'Pantalón largo de chándal del club. Se vende por separado de la prenda superior.', price: 20, priceConfirmed: true, images: image('chandal-base-inferior', 'Pantalón largo de chándal · Categorías de base', 457, 360) },
 ];
 
 export const formatShopPrice = (price?: number) => price === undefined

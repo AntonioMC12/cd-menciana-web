@@ -13,6 +13,7 @@ export interface Bindings {
   CSRF_SECRET?: string;
   PUBLIC_WEB_ORIGIN?: string;
   GITHUB_DEPLOY_TOKEN?: string;
+  STOCK_PASSWORD_HASH?: string;
 }
 export const bindings = () => env as unknown as Bindings;
 export type Content = { title: string; excerpt: string; body: string; category: string; coverPhotoId: string | null; description?: string };

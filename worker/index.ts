@@ -14,6 +14,8 @@ import adminCss from './admin.css.txt';
 import adminJs from './admin-client.txt';
 import { getSportsSnapshot, syncSports } from './sports';
 import { competitiveTeamIds, teamCompetitions, type CompetitiveTeamId } from '../src/data/team-competitions';
+import { stockRoutes } from './stock/routes';
+import { syncInventory } from './stock/inventory';
 
 const html = (value: string, status = 200) => new Response(value, { status, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'content-security-policy': "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'" } });
 const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
@@ -56,6 +58,8 @@ export default {
     const method = request.method;
     const parts = path.split('/').filter(Boolean);
     try {
+      const stock = await stockRoutes(request);
+      if (stock) return path === '/api/shop/availability' ? cors(stock, request) : stock;
       if (path === '/') return Response.redirect(publicSite(), 302);
       if (path === '/admin' && method === 'GET') {
         const email = await identity(request);
@@ -121,7 +125,7 @@ export default {
         const snapshot = await getSportsSnapshot(teamId as CompetitiveTeamId) || await syncSports(teamId as CompetitiveTeamId);
         return cors(json(snapshot), request);
       }
-      if (parts[0] === 'api' && method === 'OPTIONS' && (parts[1] === 'posts' || parts[1] === 'albums' || parts[1] === 'sports')) return cors(new Response(null, { status: 204 }), request);
+      if (parts[0] === 'api' && method === 'OPTIONS' && (parts[1] === 'posts' || parts[1] === 'albums' || parts[1] === 'sports' || path === '/api/shop/availability')) return cors(new Response(null, { status: 204 }), request);
       return error('No encontrado.', 404);
     } catch (cause) {
       console.error(cause);
@@ -129,6 +133,8 @@ export default {
     }
   },
   async scheduled(): Promise<void> {
+    try { await syncInventory(); }
+    catch { console.error('No se pudo sincronizar el inventario; se conservan las existencias.'); }
     for (const teamId of competitiveTeamIds) {
       try { await syncSports(teamId); }
       catch (cause) { console.error(`No se pudo actualizar la competición RFAF de ${teamId}; se conserva la última copia.`, cause); }

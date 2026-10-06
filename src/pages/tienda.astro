@@ -2,9 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import ShopProductCard from '../components/ShopProductCard.astro';
-import { products, shop, productContactUrl, formatShopPrice } from '../data/shop';
+import { products as catalogue, shop, productContactUrl, formatShopPrice } from '../data/shop';
 import { sitePath } from '../lib/paths';
 import '../styles/shop.css';
+const products = catalogue.filter(product => !product.archived);
 const categories = [...new Set(products.map(product => product.category))];
 const previewData = products.map(product => ({ ...product, images: product.images.map(image => ({ ...image, src: sitePath(image.src) })), priceLabel: formatShopPrice(product.price), contactUrl: productContactUrl(product) }));
 ---
