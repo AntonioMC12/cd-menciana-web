@@ -1,12 +1,13 @@
 ---
 import type { Match } from '../data/types';
+import { isClubTeam } from '../lib/sports-teams';
 import Crest from './Crest.astro';
 import { sitePath } from '../lib/paths';
 interface Props { match: Match }
 const { match } = Astro.props;
 const date = match.date ? new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium', timeZone: 'Europe/Madrid' }).format(new Date(match.date)) : undefined;
-const homeIsClub = match.homeTeam === 'CD Menciana';
-const awayIsClub = match.awayTeam === 'CD Menciana';
+const homeIsClub = isClubTeam(match.homeTeam);
+const awayIsClub = isClubTeam(match.awayTeam);
 ---
 <article class="result-card">
   <div class="result-card__detail"><span class="result-card__label">{match.round || match.competition}{date ? ` · ${date}` : ''}</span><div class="result-card__teams"><h3>{homeIsClub ? <Crest class="result-card__crest" /> : match.homeLogo ? <img class="result-card__crest" src={sitePath(match.homeLogo)} alt="" width="38" height="38" loading="lazy" decoding="async" /> : null}<span>{match.homeTeam}</span></h3><span class="result-card__separator" aria-hidden="true">—</span><h3>{awayIsClub ? <Crest class="result-card__crest" /> : match.awayLogo ? <img class="result-card__crest" src={sitePath(match.awayLogo)} alt="" width="38" height="38" loading="lazy" decoding="async" /> : null}<span>{match.awayTeam}</span></h3></div></div>

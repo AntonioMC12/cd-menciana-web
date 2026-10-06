@@ -4,6 +4,7 @@ import { firstTeamMatches } from '../data/first-team';
 import { competitiveTeamIds, teamCompetitions, rfafWidgetUrl, type CompetitiveTeamId } from '../data/team-competitions';
 import { renderStandings } from './public-sports';
 import type { StandingRow } from '../data/first-team';
+import { competitionMatch, isClubTeam } from '../lib/sports-teams';
 
 type Selection = CompetitiveTeamId | 'all';
 type Entry = { teamId: CompetitiveTeamId; match: Match };
@@ -45,17 +46,17 @@ if (root) {
   const fullDate = (value?: string) => value ? madridDate(value, { weekday: 'long', day: 'numeric', month: 'long' }) : 'Fecha por confirmar';
   const time = (value?: string) => value?.includes('T') ? `${value.slice(11, 16)} h` : 'Hora pendiente';
   const stateLabel = (match: Match) => match.status === 'finished' ? 'Finalizado' : match.status === 'postponed' ? 'Aplazado' : match.date?.includes('T') ? 'Próximo' : 'Horario pendiente';
-  const isHome = (match: Match) => match.homeTeam === 'CD Menciana';
-  const clubSide = (match: Match) => isHome(match) ? 'En casa' : match.awayTeam === 'CD Menciana' ? 'Fuera de casa' : 'Sede por confirmar';
+  const isHome = (match: Match) => isClubTeam(match.homeTeam);
+  const clubSide = (match: Match) => isHome(match) ? 'En casa' : isClubTeam(match.awayTeam) ? 'Fuera de casa' : 'Sede por confirmar';
   const labelFor = (id: Selection) => id === 'all' ? 'Todas las categorías' : teamCompetitions[id].label;
   const entryKey = ({ teamId, match }: Entry) => `${teamId}:${match.id}`;
   const entries = () => (category === 'all' ? competitiveTeamIds : [category]).flatMap(teamId => (store.get(teamId) || []).map(match => ({ teamId, match })));
   const sortedEntries = (items: Entry[]) => [...items].sort((a, b) => (a.match.date || '9999').localeCompare(b.match.date || '9999') || a.teamId.localeCompare(b.teamId));
   const link = (source: string) => source.startsWith('https://stars.rfaf.es/storage/novanet/') ? source : `${base}${source}`;
   const crest = (name: string, logo?: string) => {
-    if (name === 'CD Menciana' || logo) {
+    if (isClubTeam(name) || logo) {
       const img = node('img', 'calendar-crest') as HTMLImageElement;
-      img.src = link(name === 'CD Menciana' ? '/images/escudo-oficial.svg' : logo!);
+      img.src = link(isClubTeam(name) ? '/images/escudo-oficial.svg' : logo!);
       img.alt = '';
       img.width = 48; img.height = 48; img.loading = 'lazy';
       return img;
@@ -80,7 +81,7 @@ if (root) {
     const button = node('button', `calendar-match ${compact ? 'calendar-match--compact' : ''} calendar-match--${match.status}`) as HTMLButtonElement;
     button.type = 'button'; button.dataset.matchKey = entryKey(entry);
     button.dataset.team = teamId;
-    button.dataset.location = isHome(match) ? 'home' : match.awayTeam === 'CD Menciana' ? 'away' : 'unknown';
+    button.dataset.location = isHome(match) ? 'home' : isClubTeam(match.awayTeam) ? 'away' : 'unknown';
     button.setAttribute('aria-label', `${labelFor(teamId)}. ${clubSide(match)}: ${match.homeTeam} contra ${match.awayTeam}. ${fullDate(match.date)}. ${stateLabel(match)}. ${scoreText(match)}. Ver detalles`);
     const top = node('span', 'calendar-match__top');
     const categoryBadge = node('span', 'calendar-match__category', teamId === 'infantil' ? 'Infantil' : labelFor(teamId));
@@ -277,7 +278,7 @@ if (root) {
     results.forEach((result, index) => {
       const id = missing[index];
       if (result.status === 'fulfilled') {
-        store.set(id, result.value.snapshot.matches);
+        store.set(id, result.value.snapshot.matches.map(match => competitionMatch(match, id)));
         updated.set(id, result.value.snapshot.updatedAt);
         unavailable.delete(id);
         if (id === 'primer-equipo' && Array.isArray(result.value.snapshot.standings)) renderStandings(document.querySelector('[data-sports-standings]'), result.value.snapshot.standings);

@@ -1,5 +1,7 @@
 import type { Match } from '../data/types';
 import type { StandingRow } from '../data/first-team';
+import { teamCompetitions } from '../data/team-competitions';
+import { competitionMatch, isClubTeam } from '../lib/sports-teams';
 
 type Snapshot = { updatedAt: string; matches: Match[]; standings: StandingRow[]; source?: 'initial' };
 const api = (import.meta.env.PUBLIC_CMS_API_URL || '').replace(/\/$/, '');
@@ -12,9 +14,9 @@ const element = (tag: string, className = '', content?: string) => {
 };
 const date = (value: string, style: 'full' | 'medium') => new Intl.DateTimeFormat('es-ES', { dateStyle: style, timeZone: 'Europe/Madrid' }).format(new Date(`${value.slice(0, 10)}T12:00:00Z`));
 const crest = (team: string, logo?: string, result = false) => {
-  if (team === 'CD Menciana' || logo) {
+  if (isClubTeam(team) || logo) {
     const image = element('img', result ? 'result-card__crest' : 'team-crest') as HTMLImageElement;
-    const source = team === 'CD Menciana' ? '/images/escudo-oficial.svg' : logo || '';
+    const source = isClubTeam(team) ? '/images/escudo-oficial.svg' : logo || '';
     image.src = source.startsWith('https://stars.rfaf.es/storage/novanet/') ? source : `${base}${source}`;
     image.alt = '';
     image.width = result ? 38 : 65;
@@ -30,7 +32,7 @@ export const matchCard = (match?: Match, first = false) => {
   const top = element('div', 'match-card__top');
   top.append(element('span', 'pill pill--blue', first ? 'Próximo partido' : 'Próxima jornada'), element('span', '', match?.round || 'Por confirmar'));
   const teams = element('div', 'match-card__teams');
-  for (const [index, name, logo] of [[0, match?.homeTeam || 'CD Menciana', match?.homeLogo], [1, match?.awayTeam || 'Rival por confirmar', match?.awayLogo]] as const) {
+  for (const [index, name, logo] of [[0, match?.homeTeam || teamCompetitions['primer-equipo'].officialName, match?.homeLogo], [1, match?.awayTeam || 'Rival por confirmar', match?.awayLogo]] as const) {
     if (index === 1) teams.append(element('span', 'versus', 'VS'));
     const side = element('div');
     const image = crest(name, logo);
@@ -95,7 +97,7 @@ async function refresh() {
     if (!response.ok) throw new Error(`Sports API: ${response.status}`);
     const snapshot = await response.json() as Snapshot;
     if (!Array.isArray(snapshot.matches) || !Array.isArray(snapshot.standings) || !snapshot.updatedAt) throw new Error('Respuesta deportiva incompleta.');
-    const { upcoming, results } = sorted(snapshot.matches);
+    const { upcoming, results } = sorted(snapshot.matches.map(match => competitionMatch(match, 'primer-equipo')));
     const homeNext = document.querySelector('[data-sports-home-next]');
     if (homeNext) homeNext.replaceChildren(matchCard(upcoming[0], true));
     renderResults(document.querySelector('[data-sports-home-results]'), results.slice(0, 3));

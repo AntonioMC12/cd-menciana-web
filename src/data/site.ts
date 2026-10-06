@@ -52,7 +52,7 @@ export const players: Player[] = [
   { id: 'borrallo', teamId: 'primer-equipo', name: 'Borrallo', number: 22, photo: '/images/jugadores/borrallo.webp', status: 'confirmed' },
   { id: 'isaac', teamId: 'primer-equipo', name: 'Isaac', number: 23, photo: '/images/jugadores/isaac.webp', status: 'confirmed' },
   { id: 'tetur', teamId: 'primer-equipo', name: 'Tetur', number: 27, photo: '/images/jugadores/tetur.webp', status: 'confirmed' },
-  { id: 'adri-luna', teamId: 'primer-equipo', name: 'Adri Luna', photo: '/images/jugadores/adri-luna.webp?v=2', status: 'confirmed' },
+  { id: 'adri-luna', teamId: 'primer-equipo', name: 'Adri Luna', number: 21, photo: '/images/jugadores/adri-luna.webp?v=2', status: 'confirmed' },
 ];
 export const matches: Match[] = firstTeamMatches;
 export const sponsors: Sponsor[] = [

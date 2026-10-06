@@ -1,6 +1,8 @@
 import type { Match } from '../data/types';
 import type { StandingRow } from '../data/first-team';
 import { matchCard, renderResults, renderStandings, sorted } from './public-sports';
+import { getTeamCompetition } from '../data/team-competitions';
+import { competitionMatch } from '../lib/sports-teams';
 
 type Snapshot = { updatedAt: string; matches: Match[]; standings: StandingRow[]; source?: 'initial' };
 const api = (import.meta.env.PUBLIC_CMS_API_URL || '').replace(/\/$/, '');
@@ -8,12 +10,14 @@ const api = (import.meta.env.PUBLIC_CMS_API_URL || '').replace(/\/$/, '');
 async function refreshTeam(panel: HTMLElement) {
   if (!api) return;
   const teamId = panel.dataset.teamSports;
+  const competition = getTeamCompetition(teamId || '');
+  if (!competition) return;
   try {
     const response = await fetch(`${api}/api/sports?team=${encodeURIComponent(teamId || '')}`, { mode: 'cors', credentials: 'omit', cache: 'no-store' });
     if (!response.ok) throw new Error(`Sports API: ${response.status}`);
     const snapshot = await response.json() as Snapshot;
     if (!Array.isArray(snapshot.matches) || !Array.isArray(snapshot.standings) || !snapshot.updatedAt) throw new Error('Respuesta deportiva incompleta.');
-    const { upcoming, results } = sorted(snapshot.matches);
+    const { upcoming, results } = sorted(snapshot.matches.map(match => competitionMatch(match, competition.id)));
     const upcomingTarget = panel.querySelector('[data-team-upcoming]');
     if (upcomingTarget) upcomingTarget.replaceChildren(...(upcoming.length ? upcoming.map(match => matchCard(match)) : [empty('Aún no hay próximos partidos publicados.')]));
     renderResults(panel.querySelector('[data-team-results]'), results);

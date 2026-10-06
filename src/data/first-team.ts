@@ -1,4 +1,5 @@
 import type { Match } from './types';
+import { teamCompetitions } from './team-competitions';
 
 // Build-time fallback checked against the RFAF Novanet widget on 2026-10-04.
 // The Worker refreshes the published results and standings automatically.
@@ -9,7 +10,7 @@ export const firstTeamSource = {
   standingsUrl: 'https://stars.rfaf.es/?delegacion=9&competicion=48466108&grupo=48466109&widget_view=classification',
 };
 
-const club = 'CD Menciana';
+const club = teamCompetitions['primer-equipo'].officialName;
 const competition = '3.ª División F.S. · Grupo 17';
 
 export const firstTeamMatches: Match[] = [
@@ -44,7 +45,7 @@ export const firstTeamStandings: StandingRow[] = [
   { position: 4, team: 'CD Cádiz Futsal You Asesoría', points: 7, played: 4, won: 2, drawn: 1, lost: 1, goalsFor: 18, goalsAgainst: 14 },
   { position: 5, team: 'Hamar CD GSport Ciudad Inmobiliaria', points: 7, played: 4, won: 2, drawn: 1, lost: 1, goalsFor: 14, goalsAgainst: 11 },
   { position: 6, team: 'CD Isleño San Fernando F.S.', points: 7, played: 4, won: 2, drawn: 1, lost: 1, goalsFor: 11, goalsAgainst: 12 },
-  { position: 7, team: 'RAVI Obras & Servicios Apaga y Vámonos', points: 7, played: 4, won: 2, drawn: 1, lost: 1, goalsFor: 13, goalsAgainst: 16, isFirstTeam: true },
+  { position: 7, team: club, points: 7, played: 4, won: 2, drawn: 1, lost: 1, goalsFor: 13, goalsAgainst: 16, isFirstTeam: true },
   { position: 8, team: 'CD Alcalá de Guadaíra F.S.', points: 5, played: 3, won: 1, drawn: 2, lost: 0, goalsFor: 13, goalsAgainst: 11 },
   { position: 9, team: 'CD Deporte y Ocio (ADYO)', points: 6, played: 4, won: 2, drawn: 0, lost: 2, goalsFor: 16, goalsAgainst: 12 },
   { position: 10, team: 'CD Benalup', points: 4, played: 3, won: 1, drawn: 1, lost: 1, goalsFor: 11, goalsAgainst: 11 },

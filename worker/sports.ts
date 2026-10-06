@@ -3,18 +3,16 @@ import { firstTeamMatches, firstTeamStandings, type StandingRow } from '../src/d
 import { teamCrests } from '../src/data/team-crests';
 import { rfafWidgetUrl, teamCompetitions, type CompetitiveTeamId, type TeamCompetition } from '../src/data/team-competitions';
 import type { Match } from '../src/data/types';
+import { competitionMatch } from '../src/lib/sports-teams';
 
 export type SportsSnapshot = { updatedAt: string; matches: Match[]; standings: StandingRow[]; source?: 'initial' };
 const plain = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&nbsp;|&#160;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'").replace(/\s+/g, ' ').trim();
 const normalized = (name: string) => name.replace(/&#0?39;|&apos;/g, "'").normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').toLowerCase();
 const knownTeams = new Map(firstTeamStandings.map(row => [normalized(row.team), row.team]));
 const isClub = (name: string, team: TeamCompetition) => normalized(name).includes(normalized(team.teamNeedle));
-const displayName = (name: string, team: TeamCompetition, forMatch = false) => {
+const displayName = (name: string, team: TeamCompetition) => {
   if (isClub(name, team)) {
-    if (forMatch || team.id === 'cadete') return 'CD Menciana';
-    if (team.id === 'filial') return 'CD Apaga y Vámonos';
-    if (team.id === 'infantil') return 'CD Menciana Centro Cicloturista Subbética';
-    return 'RAVI Obras & Servicios Apaga y Vámonos';
+    return team.officialName;
   }
   return knownTeams.get(normalized(name)) || name;
 };
@@ -23,7 +21,7 @@ const crestFor = (teamId: CompetitiveTeamId, name: string) => teamCrests[teamId]
 const withTeamCrests = (snapshot: SportsSnapshot, teamId: CompetitiveTeamId): SportsSnapshot => ({
   ...snapshot,
   matches: snapshot.matches.filter(match => normalized(match.homeTeam) !== 'descansa' && normalized(match.awayTeam) !== 'descansa').map(match => ({
-    ...match,
+    ...competitionMatch(match, teamId),
     homeLogo: match.homeLogo || crestFor(teamId, match.homeTeam),
     awayLogo: match.awayLogo || crestFor(teamId, match.awayTeam),
   })),
@@ -56,7 +54,7 @@ export function parseTeamMatch(html: string, round: number, teamId: CompetitiveT
   const articles = [...html.matchAll(/<article class="novanet-match-row[^>]*>([\s\S]*?)<\/article>/g)];
   const card = articles.find(([, content]) => isClub(plain(content), team));
   if (!card) return null;
-  const teams = [...card[1].matchAll(/<span class="min-w-0 truncate[^>]*>([\s\S]*?)<\/span>/g)].map(match => displayName(plain(match[1]), team, true));
+  const teams = [...card[1].matchAll(/<span class="min-w-0 truncate[^>]*>([\s\S]*?)<\/span>/g)].map(match => displayName(plain(match[1]), team));
   if (teams.some(name => normalized(name) === 'descansa')) return null;
   const score = plain(card[1].match(/<div class="novanet-score-value[^>]*>([\s\S]*?)<\/div>/)?.[1] || '');
   const info = (label: string) => plain(card[1].match(new RegExp(`<span class="font-semibold text-slate-900">${label}:<\\/span>\\s*([^<]*)`))?.[1] || '');
@@ -64,7 +62,7 @@ export function parseTeamMatch(html: string, round: number, teamId: CompetitiveT
   const dateMatch = dateText.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
   const time = info('Hora');
   const result = score.match(/^(\d+)\s*-\s*(\d+)$/);
-  if (teams.length !== 2 || teams.filter(team => team === 'CD Menciana').length !== 1 || !dateMatch || !info('Estado')) throw new Error(`Jornada ${round}: ficha RFAF incompleta.`);
+  if (teams.length !== 2 || teams.filter(name => isClub(name, team)).length !== 1 || !dateMatch || !info('Estado')) throw new Error(`Jornada ${round}: ficha RFAF incompleta.`);
   const [, day, month, year] = dateMatch;
   const date = `${year}-${month}-${day}${/^\d{2}:\d{2}$/.test(time) ? `T${time}:00` : ''}`;
   const status = result ? 'finished' : 'scheduled';
