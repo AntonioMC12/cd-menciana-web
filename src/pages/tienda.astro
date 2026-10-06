@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import ShopProductCard from '../components/ShopProductCard.astro';
+import { products, shop, productContactUrl, formatShopPrice } from '../data/shop';
+import { sitePath } from '../lib/paths';
+import '../styles/shop.css';
+const categories = [...new Set(products.map(product => product.category))];
+const previewData = products.map(product => ({ ...product, images: product.images.map(image => ({ ...image, src: sitePath(image.src) })), priceLabel: formatShopPrice(product.price), contactUrl: productContactUrl(product) }));
+---
+<BaseLayout title="Tienda oficial" description="Equipaciones, entrenamiento y ropa de paseo del CD Menciana. Consulta los productos y contacta con el club." noindex>
+  <div class="shop-page">
+    <header class="shop-hero"><div class="container shop-hero__inner">
+      <div><p class="eyebrow eyebrow--gold">CD MENCIANA · TEMPORADA 2026/27</p><h1>Tienda oficial.<br /><em>Viste tus colores.</em></h1><p>En la pista, en la grada y fuera de ella. Descubre las prendas del club y consulta con nosotros cómo conseguirlas.</p><div class="shop-hero__actions"><a class="button button--gold" href="#catalogo">Ver catálogo <ArrowIcon /></a><a class="shop-hero__link" href="#como-comprar">Cómo comprar <ArrowIcon /></a></div></div>
+      <div class="shop-hero__crest"><img src={sitePath('/images/escudo-oficial.svg')} alt="Escudo del CD Menciana" width="400" height="400" /><span>Más que fútbol sala.</span></div>
+    </div></header>
+    {shop.preview && <div class="container shop-preview-note"><strong>Catálogo en prueba</strong><span>Los precios son ejemplos para revisar el diseño. El club confirmará los importes, artículos y tallas antes de cualquier compra.</span></div>}
+    <section class="container shop-catalog" id="catalogo" aria-labelledby="catalog-title">
+      <div class="shop-section-heading"><div><p class="eyebrow">LOS COLORES QUE NOS UNEN</p><h2 id="catalog-title">Elige tu prenda.</h2></div><p>Equipaciones, entrenamiento y paseo.<br />La compra se gestiona con el club.</p></div>
+      {products.length ? <>
+        <div class="shop-toolbar"><div class="shop-filters" role="group" aria-label="Filtrar productos por categoría" hidden><button type="button" data-filter="all" aria-pressed="true">Todo</button>{categories.map(category => <button type="button" data-filter={category} aria-pressed="false">{category}</button>)}</div><p id="shop-count" aria-live="polite">{products.length} productos</p></div>
+        <div class="shop-grid">{products.map(product => <ShopProductCard product={product} />)}</div>
+      </> : <div class="shop-empty"><h3>Estamos preparando el catálogo.</h3><p>Puedes consultar las prendas directamente con el club.</p><a class="button button--blue" href={productContactUrl()}>Contactar con el club <ArrowIcon /></a></div>}
+    </section>
+    <section class="shop-purchase" id="como-comprar" aria-labelledby="purchase-title"><div class="container">
+      <div class="shop-section-heading"><div><p class="eyebrow">DE PERSONA A PERSONA</p><h2 id="purchase-title">Así puedes comprar.</h2></div><p>¿Te interesa algún producto? Contacta con el club y te informaremos sobre disponibilidad, pago y opciones de entrega.</p></div>
+      <ol class="shop-steps"><li><span>01</span><h3>Elige la prenda</h3><p>Explora el catálogo y abre las imágenes para ver los detalles.</p></li><li><span>02</span><h3>Consulta con el club</h3><p>Indica el producto, la talla y la variante que te interesan.</p></li><li><span>03</span><h3>Confirmamos contigo</h3><p>El personal del club te informa sobre disponibilidad, precio definitivo, pago y entrega.</p></li></ol>
+      <div class="shop-contact"><div><p class="eyebrow eyebrow--gold">HABLEMOS DE TU PRENDA</p><h3>Contacta con el club.</h3><p>{shop.contact.whatsappConfirmed ? 'El botón de cada producto abre WhatsApp con su nombre incluido. Revisa el mensaje, indica tu talla y pulsa Enviar.' : 'Usa el botón de cada producto para escribirnos con su nombre ya incluido.'}</p><a class="shop-contact__email" href={`mailto:${shop.contact.email}`}>{shop.contact.email}</a></div><div class="shop-contact__actions">
+        {shop.contact.phone && <div class="shop-contact__phone"><span>{shop.contact.phoneIsExample ? 'Teléfono de prueba · sin llamadas' : 'Teléfono de contacto'}</span>{shop.contact.phoneIsExample ? <strong>{shop.contact.phone}</strong> : <a href={`tel:${shop.contact.phone.replace(/[^+\d]/g, '')}`}>{shop.contact.phone}</a>}</div>}
+        <a class="button button--gold" href={productContactUrl()}>{shop.contact.whatsappConfirmed ? 'Consultar por WhatsApp' : 'Consultar disponibilidad'} <ArrowIcon /></a>
+      </div></div>
+      <aside class="shop-pavilion"><span aria-hidden="true">↗</span><div><h3>También en el pabellón.</h3><p>Puedes comprar los productos durante los partidos de casa. Consulta con el personal del club la disponibilidad de artículos y tallas.</p></div></aside>
+    </div></section>
+  </div>
+  <dialog class="shop-dialog" id="shop-preview" aria-labelledby="shop-dialog-title"><div class="shop-dialog__heading"><div><span id="shop-dialog-category"></span><h2 id="shop-dialog-title"></h2></div><button type="button" class="shop-dialog__close" aria-label="Cerrar detalle del producto">Cerrar <span aria-hidden="true">×</span></button></div><img id="shop-dialog-image" alt="" /><div class="shop-dialog__gallery" hidden><button type="button" data-gallery="previous" aria-label="Imagen anterior">←</button><span id="shop-gallery-count"></span><button type="button" data-gallery="next" aria-label="Imagen siguiente">→</button></div><p id="shop-dialog-description"></p><div class="shop-dialog__bottom"><div><strong id="shop-dialog-price"></strong>{shop.preview && <span>Catálogo de prueba</span>}</div><a class="button button--blue" id="shop-dialog-contact" href={productContactUrl()}>Consultar este producto <ArrowIcon /></a></div></dialog>
+  <script type="application/json" id="shop-product-data" set:html={JSON.stringify(previewData).replaceAll('<', '\\u003c')} />
+  <script>
+    import '../scripts/shop';
+  </script>
+</BaseLayout>
