@@ -10,13 +10,17 @@ El CMS actual gestiona noticias y galerías. El catálogo permanece en este arch
 
 El precio ausente se muestra como «Precio a consultar». Las tallas y variantes solo se muestran si se rellenan; no se presuponen existencias. Un catálogo vacío conserva el bloque de contacto y muestra «Estamos preparando el catálogo». Si falta una imagen, la tarjeta muestra «Imagen pendiente».
 
+El catálogo contiene 24 artículos: la tarjeta de socio de la temporada 26/27, la bufanda y 22 prendas independientes. En las prendas, las partes superiores y los pantalones de las 11 imágenes originales se presentan por separado, conservando las vistas delantera y trasera. Cada prenda tiene su propio precio de prueba y consulta de WhatsApp.
+
 ## Contacto y precios de prueba
 
 `shop.contact` define el correo y el teléfono en un único lugar. El contacto facilitado es `+34 628 112 604`, con `phoneIsExample: false` y `whatsappConfirmed: true`. El número visible permite llamar mediante `tel:`.
 
+La tarjeta de socio y la bufanda tienen precios provisionales de 30 € y 12 €, respectivamente. Sus mensajes de consulta no solicitan talla; la tarjeta pregunta por las condiciones de socio, sin presuponer beneficios.
+
 Los botones de consulta, tanto en las tarjetas como en el visor, abren `https://wa.me/34628112604` con el producto indicado y espacio para especificar talla. El usuario revisa el texto y pulsa Enviar en WhatsApp; la web no envía mensajes automáticamente. El club confirma disponibilidad, precio final, pago y entrega. Si se desactiva `whatsappConfirmed`, los botones vuelven a usar el correo del club.
 
-`shop.preview: true` identifica los precios como pruebas. Antes de desactivar el aviso, completar los precios reales y confirmar tallas, variantes y disponibilidad. La imagen aportada para la primera equipación de portero ya contiene recortes en sus bordes; la web conserva el archivo sin recortarlo más.
+`shop.preview: true` identifica los precios como pruebas. Antes de desactivar el aviso, completar los precios reales y confirmar tallas, variantes y disponibilidad. La imagen aportada para la primera equipación de portero ya contiene recortes en sus bordes; los recortes por prenda conservan esa limitación del original.
 
 ## Archivos
 

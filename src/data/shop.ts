@@ -1,6 +1,6 @@
 import { site } from './site';
 
-export type ShopCategory = 'Equipaciones' | 'Porteros' | 'Entrenamiento' | 'Paseo';
+export type ShopCategory = 'Equipaciones' | 'Porteros' | 'Entrenamiento' | 'Paseo' | 'Complementos' | 'Socios';
 export interface ShopProduct {
   id: string;
   name: string;
@@ -24,17 +24,30 @@ const image = (id: string, name: string, width: number, height: number) => [{
 }];
 
 export const products: ShopProduct[] = [
-  { id: 'primera-equipacion', name: 'Primera equipación', category: 'Equipaciones', description: 'Conjunto de camiseta blanca y pantalón negro del club.', price: 35, images: image('primera-equipacion', 'Primera equipación', 568, 570) },
-  { id: 'segunda-equipacion', name: 'Segunda equipación', category: 'Equipaciones', description: 'Conjunto de camiseta y pantalón en tonos azules.', price: 35, images: image('segunda-equipacion', 'Segunda equipación', 552, 588) },
-  { id: 'portero-primera', name: 'Primera equipación de portero', category: 'Porteros', description: 'Conjunto de portero en rojo, con los detalles del club.', price: 35, images: image('portero-primera', 'Primera equipación de portero', 551, 402) },
-  { id: 'portero-segunda', name: 'Segunda equipación de portero', category: 'Porteros', description: 'Conjunto de portero en negro con detalles blancos.', price: 35, images: image('portero-segunda', 'Segunda equipación de portero', 580, 407) },
-  { id: 'entrenamiento-primer-equipo', name: 'Entrenamiento · Primer equipo', category: 'Entrenamiento', description: 'Camiseta de entrenamiento blanca y azul con pantalón azul marino.', price: 30, images: image('entrenamiento-primer-equipo', 'Entrenamiento del primer equipo', 673, 631) },
-  { id: 'entrenamiento-filial', name: 'Entrenamiento · Filial', category: 'Entrenamiento', description: 'Conjunto de entrenamiento con la gráfica y los colaboradores del filial.', price: 30, images: image('entrenamiento-filial', 'Entrenamiento del filial', 680, 616) },
-  { id: 'entrenamiento-cadete', name: 'Entrenamiento · Cadete', category: 'Entrenamiento', description: 'Conjunto de camiseta y pantalón para el equipo cadete.', price: 30, images: image('entrenamiento-cadete', 'Entrenamiento del cadete', 709, 641) },
-  { id: 'entrenamiento-infantil', name: 'Entrenamiento · Infantil', category: 'Entrenamiento', description: 'Conjunto de camiseta y pantalón para el equipo infantil.', price: 30, images: image('entrenamiento-infantil', 'Entrenamiento del infantil', 715, 643) },
-  { id: 'ropa-paseo', name: 'Ropa de paseo', category: 'Paseo', description: 'Polo y pantalón corto azul marino con el escudo del club.', price: 32, images: image('ropa-paseo', 'Ropa de paseo', 582, 667) },
-  { id: 'chandal-primer-equipo', name: 'Chándal · Primer equipo', category: 'Paseo', description: 'Conjunto de manga larga y pantalón largo azul marino.', price: 45, images: image('chandal-primer-equipo', 'Chándal del primer equipo', 462, 610) },
-  { id: 'chandal-base', name: 'Chándal · Categorías de base', category: 'Paseo', description: 'Chándal azul marino con los detalles de las categorías de base.', price: 40, images: image('chandal-base', 'Chándal de las categorías de base', 478, 629) },
+  { id: 'tarjeta-socio', name: 'Tarjeta de socio · Temporada 26/27', category: 'Socios', description: 'Tarjeta de socio del CD Menciana para la temporada 26/27. Consulta con el club las condiciones y cómo solicitarla.', price: 30, availability: 'Consulta las condiciones de socio por WhatsApp.', images: [{ src: '/images/tienda/tarjeta-socio.webp', alt: 'Tarjeta de socio del CD Menciana, temporada 26/27, sostenida en una mano', width: 1254, height: 1254 }] },
+  { id: 'bufanda', name: 'Bufanda del CD Menciana', category: 'Complementos', description: 'Bufanda azul y blanca con el nombre y los escudos del club.', price: 12, availability: 'Consulta disponibilidad por WhatsApp.', images: [{ src: '/images/tienda/bufanda.webp', alt: 'Bufanda azul y blanca del CD Menciana con flecos y escudos en ambos extremos', width: 1400, height: 468 }] },
+  { id: 'primera-equipacion-superior', name: 'Camiseta · Primera equipación', category: 'Equipaciones', description: 'Camiseta del club. Se vende por separado del pantalón.', price: 22, images: image('primera-equipacion-superior', 'Camiseta · Primera equipación', 586, 351) },
+  { id: 'primera-equipacion-inferior', name: 'Pantalón corto · Primera equipación', category: 'Equipaciones', description: 'Pantalón corto del club. Se vende por separado de la prenda superior.', price: 13, images: image('primera-equipacion-inferior', 'Pantalón corto · Primera equipación', 491, 243) },
+  { id: 'segunda-equipacion-superior', name: 'Camiseta · Segunda equipación', category: 'Equipaciones', description: 'Camiseta del club. Se vende por separado del pantalón.', price: 22, images: image('segunda-equipacion-superior', 'Camiseta · Segunda equipación', 572, 353) },
+  { id: 'segunda-equipacion-inferior', name: 'Pantalón corto · Segunda equipación', category: 'Equipaciones', description: 'Pantalón corto del club. Se vende por separado de la prenda superior.', price: 13, images: image('segunda-equipacion-inferior', 'Pantalón corto · Segunda equipación', 514, 242) },
+  { id: 'portero-primera-superior', name: 'Camiseta · Primera equipación de portero', category: 'Porteros', description: 'Camiseta del club. Se vende por separado del pantalón.', price: 22, images: image('portero-primera-superior', 'Camiseta · Primera equipación de portero', 575, 302) },
+  { id: 'portero-primera-inferior', name: 'Pantalón corto · Primera equipación de portero', category: 'Porteros', description: 'Pantalón corto del club. Se vende por separado de la prenda superior.', price: 13, images: image('portero-primera-inferior', 'Pantalón corto · Primera equipación de portero', 517, 177) },
+  { id: 'portero-segunda-superior', name: 'Camiseta · Segunda equipación de portero', category: 'Porteros', description: 'Camiseta del club. Se vende por separado del pantalón.', price: 22, images: image('portero-segunda-superior', 'Camiseta · Segunda equipación de portero', 584, 286) },
+  { id: 'portero-segunda-inferior', name: 'Pantalón corto · Segunda equipación de portero', category: 'Porteros', description: 'Pantalón corto del club. Se vende por separado de la prenda superior.', price: 13, images: image('portero-segunda-inferior', 'Pantalón corto · Segunda equipación de portero', 485, 160) },
+  { id: 'entrenamiento-primer-equipo-superior', name: 'Camiseta de entrenamiento · Primer equipo', category: 'Entrenamiento', description: 'Camiseta de entrenamiento del club. Se vende por separado del pantalón.', price: 20, images: image('entrenamiento-primer-equipo-superior', 'Camiseta de entrenamiento · Primer equipo', 681, 427) },
+  { id: 'entrenamiento-primer-equipo-inferior', name: 'Pantalón corto de entrenamiento · Primer equipo', category: 'Entrenamiento', description: 'Pantalón corto de entrenamiento del club. Se vende por separado de la prenda superior.', price: 10, images: image('entrenamiento-primer-equipo-inferior', 'Pantalón corto de entrenamiento · Primer equipo', 571, 229) },
+  { id: 'entrenamiento-filial-superior', name: 'Camiseta de entrenamiento · Filial', category: 'Entrenamiento', description: 'Camiseta de entrenamiento del club. Se vende por separado del pantalón.', price: 20, images: image('entrenamiento-filial-superior', 'Camiseta de entrenamiento · Filial', 681, 419) },
+  { id: 'entrenamiento-filial-inferior', name: 'Pantalón corto de entrenamiento · Filial', category: 'Entrenamiento', description: 'Pantalón corto de entrenamiento del club. Se vende por separado de la prenda superior.', price: 10, images: image('entrenamiento-filial-inferior', 'Pantalón corto de entrenamiento · Filial', 571, 230) },
+  { id: 'entrenamiento-cadete-superior', name: 'Camiseta de entrenamiento · Cadete', category: 'Entrenamiento', description: 'Camiseta de entrenamiento del club. Se vende por separado del pantalón.', price: 20, images: image('entrenamiento-cadete-superior', 'Camiseta de entrenamiento · Cadete', 723, 462) },
+  { id: 'entrenamiento-cadete-inferior', name: 'Pantalón corto de entrenamiento · Cadete', category: 'Entrenamiento', description: 'Pantalón corto de entrenamiento del club. Se vende por separado de la prenda superior.', price: 10, images: image('entrenamiento-cadete-inferior', 'Pantalón corto de entrenamiento · Cadete', 545, 236) },
+  { id: 'entrenamiento-infantil-superior', name: 'Camiseta de entrenamiento · Infantil', category: 'Entrenamiento', description: 'Camiseta de entrenamiento del club. Se vende por separado del pantalón.', price: 20, images: image('entrenamiento-infantil-superior', 'Camiseta de entrenamiento · Infantil', 723, 460) },
+  { id: 'entrenamiento-infantil-inferior', name: 'Pantalón corto de entrenamiento · Infantil', category: 'Entrenamiento', description: 'Pantalón corto de entrenamiento del club. Se vende por separado de la prenda superior.', price: 10, images: image('entrenamiento-infantil-inferior', 'Pantalón corto de entrenamiento · Infantil', 546, 237) },
+  { id: 'ropa-paseo-superior', name: 'Polo de paseo', category: 'Paseo', description: 'Polo de paseo del club. Se vende por separado del pantalón.', price: 22, images: image('ropa-paseo-superior', 'Polo de paseo', 599, 389) },
+  { id: 'ropa-paseo-inferior', name: 'Pantalón corto de paseo', category: 'Paseo', description: 'Pantalón corto de paseo del club. Se vende por separado de la prenda superior.', price: 10, images: image('ropa-paseo-inferior', 'Pantalón corto de paseo', 493, 300) },
+  { id: 'chandal-primer-equipo-superior', name: 'Chaqueta de chándal · Primer equipo', category: 'Paseo', description: 'Chaqueta de chándal del club. Se vende por separado del pantalón.', price: 28, images: image('chandal-primer-equipo-superior', 'Chaqueta de chándal · Primer equipo', 466, 283) },
+  { id: 'chandal-primer-equipo-inferior', name: 'Pantalón largo de chándal · Primer equipo', category: 'Paseo', description: 'Pantalón largo de chándal del club. Se vende por separado de la prenda superior.', price: 17, images: image('chandal-primer-equipo-inferior', 'Pantalón largo de chándal · Primer equipo', 457, 360) },
+  { id: 'chandal-base-superior', name: 'Chaqueta de chándal · Categorías de base', category: 'Paseo', description: 'Chaqueta de chándal del club. Se vende por separado del pantalón.', price: 25, images: image('chandal-base-superior', 'Chaqueta de chándal · Categorías de base', 466, 283) },
+  { id: 'chandal-base-inferior', name: 'Pantalón largo de chándal · Categorías de base', category: 'Paseo', description: 'Pantalón largo de chándal del club. Se vende por separado de la prenda superior.', price: 15, images: image('chandal-base-inferior', 'Pantalón largo de chándal · Categorías de base', 457, 360) },
 ];
 
 export const formatShopPrice = (price?: number) => price === undefined
@@ -43,7 +56,11 @@ export const formatShopPrice = (price?: number) => price === undefined
 
 export function productContactUrl(product?: ShopProduct, variant?: string) {
   const subject = product ? `Consulta de tienda: ${product.name}` : 'Consulta de la tienda del CD Menciana';
-  const body = product
+  const body = product?.category === 'Socios'
+    ? `Hola, me interesa ${product.name}.\n\n¿Podéis informarme sobre las condiciones, el precio definitivo y cómo solicitarla?\n\nGracias.`
+    : product?.category === 'Complementos'
+    ? `Hola, me interesa ${product.name}.\n\n¿Podéis confirmarme disponibilidad, precio definitivo, pago y entrega?\n\nGracias.`
+    : product
     ? `Hola, me interesa ${product.name}${variant ? ` (${variant})` : ''}.\n\nTalla que me interesa: \n\n¿Podéis confirmarme disponibilidad, precio definitivo, pago y entrega?\n\nGracias.`
     : 'Hola, me gustaría consultar los productos de la tienda del club. ¿Podéis informarme sobre disponibilidad, precios, pago y entrega?\n\nGracias.';
   if (shop.contact.whatsappConfirmed && !shop.contact.phoneIsExample && shop.contact.phone) {
