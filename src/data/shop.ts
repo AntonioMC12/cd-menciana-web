@@ -27,7 +27,7 @@ const image = (id: string, name: string, width: number, height: number) => [{
 }];
 
 export const products: ShopProduct[] = [
-  { id: 'tarjeta-socio', name: 'Tarjeta de socio · Temporada 26/27', category: 'Socios', description: 'Tarjeta de socio del CD Menciana para la temporada 26/27. Consulta con el club las condiciones y cómo solicitarla.', price: 20, priceConfirmed: true, availability: 'Consulta las condiciones de socio por WhatsApp.', images: [{ src: '/images/tienda/tarjeta-socio.webp', alt: 'Tarjeta de socio del CD Menciana, temporada 26/27, sostenida en una mano', width: 1254, height: 1254 }] },
+  { id: 'tarjeta-socio', name: 'Carnet de socio · Temporada 26/27', category: 'Socios', description: 'Carnet de socio del CD Menciana para la temporada 26/27. Consulta con el club las condiciones y cómo solicitarlo.', price: 20, priceConfirmed: true, availability: 'Consulta las condiciones de socio por WhatsApp.', images: [{ src: '/images/tienda/tarjeta-socio.webp', alt: 'Carnet de socio del CD Menciana, temporada 26/27, sostenido en una mano', width: 1254, height: 1254 }] },
   { id: 'bufanda', name: 'Bufanda del CD Menciana', category: 'Complementos', description: 'Bufanda azul y blanca con el nombre y los escudos del club.', price: 10, priceConfirmed: true, availability: 'Consulta disponibilidad por WhatsApp.', images: [{ src: '/images/tienda/bufanda.webp', alt: 'Bufanda azul y blanca del CD Menciana con flecos y escudos en ambos extremos', width: 1400, height: 468 }] },
   { id: 'primera-equipacion-superior', name: 'Camiseta · Primera equipación', category: 'Equipaciones', description: 'Camiseta del club. Se vende por separado del pantalón.', price: 25, priceConfirmed: true, images: image('primera-equipacion-superior', 'Camiseta · Primera equipación', 586, 351) },
   { id: 'primera-equipacion-inferior', name: 'Pantalón corto · Primera equipación', category: 'Equipaciones', description: 'Pantalón corto del club. Se vende por separado de la prenda superior.', price: 20, priceConfirmed: true, images: image('primera-equipacion-inferior', 'Pantalón corto · Primera equipación', 491, 243) },
@@ -55,7 +55,7 @@ export const formatShopPrice = (price?: number) => price === undefined
 
 export function productContactUrl(product?: ShopProduct, variant?: string, contact = shop.contacts[0]) {
   const body = product?.category === 'Socios'
-    ? `Hola, me interesa ${product.name}.\n\n¿Podéis informarme sobre las condiciones, el precio definitivo y cómo solicitarla?\n\nGracias.`
+    ? `Hola, me interesa ${product.name}.\n\n¿Podéis informarme sobre las condiciones, el precio definitivo y cómo solicitarlo?\n\nGracias.`
     : product?.category === 'Complementos'
     ? `Hola, me interesa ${product.name}.\n\n¿Podéis confirmarme disponibilidad, precio definitivo, pago y entrega?\n\nGracias.`
     : product

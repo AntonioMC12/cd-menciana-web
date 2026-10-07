@@ -16,7 +16,7 @@ const previewData = products.map(product => ({ ...product, images: product.image
       <div class="shop-hero__crest"><img src={sitePath('/images/escudo-oficial.svg')} alt="Escudo del CD Menciana" width="400" height="400" /><span>Más que fútbol sala.</span></div>
     </div></header>
     <section class="container shop-catalog" id="catalogo" aria-labelledby="catalog-title">
-      <div class="shop-section-heading"><div><p class="eyebrow">LOS COLORES QUE NOS UNEN</p><h2 id="catalog-title">Elige tu artículo.</h2></div><p>Ropa, bufanda y tarjeta de socio.<br />Cada artículo se consulta por separado.</p></div>
+      <div class="shop-section-heading"><div><p class="eyebrow">LOS COLORES QUE NOS UNEN</p><h2 id="catalog-title">Elige tu artículo.</h2></div><p>Ropa, bufanda y carnet de socio.<br />Cada artículo se consulta por separado.</p></div>
       {products.length ? <>
         <div class="shop-toolbar"><div class="shop-filters" role="group" aria-label="Filtrar productos por categoría" hidden><button type="button" data-filter="all" aria-pressed="true">Todo</button>{categories.map(category => <button type="button" data-filter={category} aria-pressed="false">{category}</button>)}</div><p id="shop-count" aria-live="polite">{products.length} productos</p></div>
         <div class="shop-grid">{products.map(product => <ShopProductCard product={product} />)}</div>

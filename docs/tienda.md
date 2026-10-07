@@ -10,13 +10,13 @@ El CMS actual gestiona noticias y galerías. El catálogo permanece en este arch
 
 El precio ausente se muestra como «Precio a consultar». Las tallas y variantes solo se muestran si se rellenan; no se presuponen existencias. Un catálogo vacío conserva el bloque de contacto y muestra «Estamos preparando el catálogo». Si falta una imagen, la tarjeta muestra «Imagen pendiente».
 
-El catálogo contiene 21 artículos: la tarjeta de socio de la temporada 26/27, la bufanda y 19 prendas independientes. En las prendas, las partes superiores y los pantalones de las 11 imágenes originales se presentan por separado, conservando las vistas delantera y trasera. Cada prenda tiene su propio precio de prueba y consulta de WhatsApp.
+El catálogo contiene 21 artículos: el carnet de socio de la temporada 26/27, la bufanda y 19 prendas independientes. En las prendas, las partes superiores y los pantalones de las 11 imágenes originales se presentan por separado, conservando las vistas delantera y trasera. Cada prenda tiene su propio precio de prueba y consulta de WhatsApp.
 
 ## Contacto y precios de prueba
 
 `shop.contact` define el correo y el teléfono en un único lugar. El contacto facilitado es `+34 628 112 604`, con `phoneIsExample: false` y `whatsappConfirmed: true`. El número visible permite llamar mediante `tel:`.
 
-La tarjeta de socio y la bufanda tienen precios provisionales de 30 € y 12 €, respectivamente. Sus mensajes de consulta no solicitan talla; la tarjeta pregunta por las condiciones de socio, sin presuponer beneficios.
+El carnet de socio y la bufanda tienen precios provisionales de 30 € y 12 €, respectivamente. Sus mensajes de consulta no solicitan talla; el carnet pregunta por las condiciones de socio, sin presuponer beneficios.
 
 Los botones de consulta, tanto en las tarjetas como en el visor, abren `https://wa.me/34628112604` con el producto indicado y espacio para especificar talla. El usuario revisa el texto y pulsa Enviar en WhatsApp; la web no envía mensajes automáticamente. El club confirma disponibilidad, precio final, pago y entrega. Si se desactiva `whatsappConfirmed`, los botones vuelven a usar el correo del club.
 
@@ -32,6 +32,6 @@ Los botones de consulta, tanto en las tarjetas como en el visor, abren `https://
 
 La navegación y los archivos de la campaña no se modifican. El catálogo funciona sin JavaScript: todos los productos se muestran, las imágenes enlazan al archivo y las consultas siguen abriendo WhatsApp.
 
-Precios confirmados: camiseta de juego (incluidos porteros) 25 €, pantalón de juego 20 €, sudadera/chaqueta de chándal 25 €, pantalón de chándal 20 €, polo 20 € y bermuda de paseo 15 €. Estos artículos tienen `priceConfirmed: true` y no llevan el aviso de precio de prueba. Entrenamiento, bufanda y tarjeta de socio conservan sus precios provisionales.
+Precios confirmados: camiseta de juego (incluidos porteros) 25 €, pantalón de juego 20 €, sudadera/chaqueta de chándal 25 €, pantalón de chándal 20 €, polo 20 € y bermuda de paseo 15 €. Estos artículos tienen `priceConfirmed: true` y no llevan el aviso de precio de prueba. Entrenamiento, bufanda y carnet de socio conservan sus precios provisionales.
 
 El pantalón corto de entrenamiento es un único artículo común a todas las categorías, con la imagen `pantalon-entrenamiento.webp` facilitada por el club. Sustituye a los cuatro pantalones anteriores por equipo y conserva el precio provisional de 10 €.
