@@ -4,7 +4,13 @@ La página Astro `/cdm-tv/` usa el menú y layout comunes, los tokens azul/oro y
 
 ## Configuración y prueba local
 
-El canal todavía no se ha proporcionado. La página no inventa contenidos. En `.dev.vars` configura `YOUTUBE_CHANNEL_ID` (ID canónico `UC` y 22 caracteres, obtenido del canal) y `YOUTUBE_API_KEY` (YouTube Data API v3 habilitada). La clave solo la lee el Worker; nunca uses una variable `PUBLIC_` para ella. Usa el ID aunque tengas una URL `/channel/UC…`; las URL con handle no se resuelven automáticamente.
+El canal del club es `UCWH7Lmp-0n6Wjk3Ffl0cM_A`. En `.dev.vars` configura `YOUTUBE_CHANNEL_ID` (ID canónico `UC` y 22 caracteres, obtenido del canal) y `YOUTUBE_API_KEY` (YouTube Data API v3 habilitada). La clave solo la lee el Worker; nunca uses una variable `PUBLIC_` para ella. Usa el ID aunque tengas una URL `/channel/UC…`; las URL con handle no se resuelven automáticamente.
+
+## Producción
+
+`wrangler.jsonc` conserva el canal, el vídeo destacado y la detección de emisiones para que no se pierdan en futuros despliegues. `YOUTUBE_API_KEY` se guarda como secreto del Worker `cd-menciana-cms`; `.dev.vars` solo se usa en local y no se publica. Configura el secreto con `wrangler secret put YOUTUBE_API_KEY --config wrangler.jsonc` y despliega con `npm run deploy:worker`.
+
+Cloudflare Access debe mantener una excepción pública exacta para `/api/cdm-tv`, sin abrir las rutas administrativas. La web de GitHub Pages ya se compila con `PUBLIC_CMS_API_URL=https://cms.cdmenciana.es`. Tras publicar, comprueba que `https://cms.cdmenciana.es/api/cdm-tv` devuelve JSON con `status: "ready"`, sin pedir inicio de sesión, y permite el origen `https://cdmenciana.es`.
 
 Para la integración completa, ejecuta `npm run build:worker` y después `node node_modules/wrangler/bin/wrangler.js dev --config wrangler.jsonc --port 8788` en una terminal. En otra, ejecuta en PowerShell:
 

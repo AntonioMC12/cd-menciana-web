@@ -5,7 +5,13 @@
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat"],
   "rules": [{ "type": "Text", "globs": ["**/*.txt"], "fallthrough": false }],
-  "vars": { "PUBLIC_WEB_ORIGIN": "https://cdmenciana.es", "PUBLIC_WEB_BASE": "/" },
+  "vars": {
+    "PUBLIC_WEB_ORIGIN": "https://cdmenciana.es",
+    "PUBLIC_WEB_BASE": "/",
+    "YOUTUBE_CHANNEL_ID": "UCWH7Lmp-0n6Wjk3Ffl0cM_A",
+    "YOUTUBE_FEATURED_VIDEO_ID": "Zmft7Ny8RQ0",
+    "YOUTUBE_LIVE_DISCOVERY": "1"
+  },
   "routes": [{ "pattern": "cms.cdmenciana.es", "custom_domain": true },
     { "pattern": "cdmenciana.es/tienda/stock*", "zone_name": "cdmenciana.es" }],
   "workers_dev": false,
