@@ -14,6 +14,13 @@ const school: TeamRoster = {
 };
 
 export const teamRosters: Record<string, TeamRoster> = {
+  'primer-equipo': {
+    staff: [
+      { name: 'José Antonio Jiménez', role: 'Entrenador' },
+      { name: 'Juan Luna', role: 'Delegado' },
+      { name: 'Antonio Muñoz', role: 'Delegado' },
+    ],
+  },
   infantil: {
     goalkeepers: ['Luis Jiménez', 'Antonio Cantero'],
     players: ['Adrián Jiménez', 'Javier Navarro', 'Natalia Ruiz', 'Alberto Lama', 'Álvaro Camacho', 'Ángela Jiménez', 'Yago Bravo', 'Álvaro Bonilla', 'Alejandro Almansa'],

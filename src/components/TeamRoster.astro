@@ -4,7 +4,7 @@ interface Props { roster: TeamRoster }
 const { roster } = Astro.props;
 ---
 <div class="team-roster team-roster--text">
-  <div class="roster-heading"><p class="eyebrow">{roster.school ? 'ESCUELA DEPORTIVA' : 'LAS PERSONAS DEL EQUIPO'}</p><h3>{roster.school ? 'Coordinación y monitores' : 'Plantilla y cuerpo técnico'}</h3></div>
+  <div class="roster-heading"><p class="eyebrow">{roster.school ? 'ESCUELA DEPORTIVA' : 'LAS PERSONAS DEL EQUIPO'}</p><h3>{roster.school ? 'Coordinación y monitores' : roster.goalkeepers?.length || roster.players?.length ? 'Plantilla y cuerpo técnico' : 'Cuerpo técnico'}</h3></div>
   {(roster.goalkeepers?.length || roster.players?.length) && <div class:list={['roster-groups', { 'roster-groups--single': !roster.goalkeepers?.length }]}>
     {roster.goalkeepers?.length && <section class="roster-group"><h4>Porteros <span>{roster.goalkeepers.length}</span></h4><ul>{roster.goalkeepers.map(name => <li>{name}</li>)}</ul></section>}
     {roster.players?.length && <section class="roster-group"><h4>Jugadores <span>{roster.players.length}</span></h4><ul>{roster.players.map(name => <li>{name}</li>)}</ul></section>}

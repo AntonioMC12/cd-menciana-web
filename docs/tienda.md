@@ -32,6 +32,6 @@ Los botones de consulta, tanto en las tarjetas como en el visor, abren `https://
 
 La navegación y los archivos de la campaña no se modifican. El catálogo funciona sin JavaScript: todos los productos se muestran, las imágenes enlazan al archivo y las consultas siguen abriendo WhatsApp.
 
-Precios confirmados: camiseta de juego (incluidos porteros) 25 €, pantalón de juego 20 €, sudadera/chaqueta de chándal 25 €, pantalón de chándal 20 €, polo 20 € y bermuda de paseo 15 €. Estos artículos tienen `priceConfirmed: true` y no llevan el aviso de precio de prueba. Entrenamiento, bufanda y carnet de socio conservan sus precios provisionales.
+Precios confirmados: camiseta de juego (incluidos porteros) 25 €, camiseta de entrenamiento (todas las categorías) 25 €, pantalón de juego 20 €, sudadera/chaqueta de chándal 25 €, pantalón de chándal 20 €, polo 20 € y bermuda de paseo 15 €. Estos artículos tienen `priceConfirmed: true` y no llevan el aviso de precio de prueba.
 
 El pantalón corto de entrenamiento es un único artículo común a todas las categorías, con la imagen `pantalon-entrenamiento.webp` facilitada por el club. Sustituye a los cuatro pantalones anteriores por equipo y conserva el precio provisional de 10 €.
