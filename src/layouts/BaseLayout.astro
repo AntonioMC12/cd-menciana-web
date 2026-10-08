@@ -9,15 +9,25 @@ import '@fontsource/montserrat/600.css';
 import '@fontsource/montserrat/700.css';
 import '@fontsource/montserrat/800.css';
 import { site } from '../data/site';
-import { defaultSeoDescription } from '../lib/seo';
+import { breadcrumbData, defaultSeoDescription, organizationData, sectionSeo, webpageData, websiteData } from '../lib/seo';
 interface Props { title?: string; description?: string; noindex?: boolean; image?: string; ogType?: 'website' | 'article'; publishedAt?: string; structuredData?: Record<string, unknown> | Record<string, unknown>[] }
 const { title, description = defaultSeoDescription, noindex = false, image, ogType = 'website', publishedAt, structuredData } = Astro.props;
 const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const section = Object.entries(sectionSeo).find(([path]) => Astro.url.pathname.replace(/\/$/, '') === sitePath(path))?.[1];
+const seoDescription = section?.description || description;
 const ogImage = new URL(image || sitePath('/og.svg?v=escudo-vector-20261005'), Astro.site);
 const rasterImage = new URL(image || sitePath('/og.png?v=escudo-central-20261005'), Astro.site);
 const imageAlt = image ? pageTitle : 'Club Deportivo Menciana · Apaga y Vámonos F.S. · Escudo del club y lema Más que fútbol sala.';
-const jsonLd = structuredData ? JSON.stringify(structuredData).replaceAll('<', '\\u003c') : undefined;
+const suppliedData = structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : [];
+const pageData = noindex ? suppliedData : [
+  organizationData,
+  websiteData,
+  webpageData(canonical.href, pageTitle, seoDescription, section?.type),
+  ...(section ? [breadcrumbData([{ name: 'Inicio', path: sitePath('/') }, { name: section.name, path: Astro.url.pathname }])] : []),
+  ...suppliedData.filter(item => item['@id'] !== organizationData['@id'] && item['@id'] !== websiteData['@id']),
+];
+const jsonLd = pageData.length ? JSON.stringify(pageData).replaceAll('<', String.raw`\u003c`) : undefined;
 ---
 <!doctype html>
 <html lang="es">
@@ -25,7 +35,7 @@ const jsonLd = structuredData ? JSON.stringify(structuredData).replaceAll('<', '
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0D2E5B" />
-    <meta name="description" content={description} />
+    <meta name="description" content={seoDescription} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href={sitePath('/images/escudo-oficial.svg')} type="image/svg+xml" />
     <link rel="icon" href={sitePath('/icons/favicon-32.png')} type="image/png" sizes="32x32" />
@@ -39,7 +49,7 @@ const jsonLd = structuredData ? JSON.stringify(structuredData).replaceAll('<', '
     <meta property="og:site_name" content={site.name} />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={seoDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     {!image && <><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:type" content="image/svg+xml" /></>}
@@ -54,7 +64,7 @@ const jsonLd = structuredData ? JSON.stringify(structuredData).replaceAll('<', '
     {publishedAt && <meta property="article:published_time" content={publishedAt} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={seoDescription} />
     <meta name="twitter:image" content={rasterImage} />
     <meta name="twitter:image:alt" content={imageAlt} />
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
