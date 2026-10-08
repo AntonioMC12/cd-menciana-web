@@ -9,7 +9,7 @@ import ResultCard from '../components/ResultCard.astro';
 import SponsorCard from '../components/SponsorCard.astro';
 import NewsCard from '../components/NewsCard.astro';
 import { getPublicPosts, getPublicAlbums, getPublicAlbum, publicPhoto } from '../lib/build-content';
-import { organizationData } from '../lib/seo';
+import { organizationData, websiteData } from '../lib/seo';
 import { firstTeamSource } from '../data/first-team';
 import { institutionalPartners, principalSponsors, recentResults, upcomingMatches, site, teams, players } from '../data/site';
 import '../styles/home.css';
@@ -22,7 +22,7 @@ const publishedAlbums = await Promise.all(albums.slice(0, 3).map(async album => 
 const featuredPlayers = ['mara', 'david', 'jesus'].map(id => players.find(player => player.id === id)!);
 const heroPhotos = ['equipo', 'capitan', 'disparo', 'jugada'];
 ---
-<BaseLayout title="Club de fútbol sala en Doña Mencía" description="CD Menciana Apaga y Vámonos F.S.: equipos, calendario, resultados y noticias del club de fútbol sala de Doña Mencía, Córdoba." structuredData={organizationData}>
+<BaseLayout title="Club de fútbol sala en Doña Mencía" description="CD Menciana Apaga y Vámonos F.S.: equipos, calendario, resultados y noticias del club de fútbol sala de Doña Mencía, Córdoba." structuredData={[organizationData, websiteData]}>
   <div class="home-page">
     <section class="home-hero" aria-labelledby="home-title" data-home-film>
       <div class="home-hero__photo" aria-hidden="true">
