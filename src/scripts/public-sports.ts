@@ -1,6 +1,7 @@
 import type { Match } from '../data/types';
 import type { StandingRow } from '../data/first-team';
 import { teamCompetitions } from '../data/team-competitions';
+import { getTeamCrest } from '../data/team-crests';
 import { competitionMatch, isClubTeam } from '../lib/sports-teams';
 
 type Snapshot = { updatedAt: string; matches: Match[]; standings: StandingRow[]; source?: 'initial' };
@@ -14,6 +15,7 @@ const element = (tag: string, className = '', content?: string) => {
 };
 const date = (value: string, style: 'full' | 'medium') => new Intl.DateTimeFormat('es-ES', { dateStyle: style, timeZone: 'Europe/Madrid' }).format(new Date(`${value.slice(0, 10)}T12:00:00Z`));
 const crest = (team: string, logo?: string, result = false) => {
+  logo = getTeamCrest(team) || logo;
   if (isClubTeam(team) || logo) {
     const image = element('img', result ? 'result-card__crest' : 'team-crest') as HTMLImageElement;
     const source = isClubTeam(team) ? '/images/escudo-oficial.svg' : logo || '';

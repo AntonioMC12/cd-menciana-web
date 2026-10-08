@@ -1,4 +1,5 @@
 import type { Match } from '../data/types';
+import { getTeamCrest } from '../data/team-crests';
 import { createSvgIcon } from '../lib/icons';
 import { firstTeamMatches, firstTeamSource } from '../data/first-team';
 import { competitiveTeamIds, teamCompetitions, rfafCalendarUrl, type CompetitiveTeamId } from '../data/team-competitions';
@@ -56,6 +57,7 @@ if (root) {
   const sortedEntries = (items: Entry[]) => [...items].sort((a, b) => (a.match.date || '9999').localeCompare(b.match.date || '9999') || a.teamId.localeCompare(b.teamId));
   const link = (source: string) => source.startsWith('https://stars.rfaf.es/storage/novanet/') ? source : `${base}${source}`;
   const crest = (name: string, logo?: string) => {
+    logo = getTeamCrest(name) || logo;
     if (isClubTeam(name) || logo) {
       const img = node('img', 'calendar-crest') as HTMLImageElement;
       img.src = link(isClubTeam(name) ? '/images/escudo-oficial.svg' : logo!);

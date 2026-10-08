@@ -1,5 +1,24 @@
 // RFAF team crests verified on 2026-10-04. New opponents use their official image URL.
 export const teamCrests: Record<string, Record<string, string>> = {
+  // Official RFAF match cards for group 17, round 1; checked 2026-10-08.
+  "primer-equipo": {
+    "cdapagayvamonosraviobrasservicios": "/images/escudo-oficial.svg",
+    "cdlapalmafs": "/images/equipos/la-palma.jpg",
+    "hamarcdgsportciudadinmobiliaria": "/images/equipos/hamar-bormujos.jpg",
+    "cdsantaella2010": "/images/equipos/santaella.jpg",
+    "cdcordobafutsalpatrimonio": "/images/equipos/cordoba-futsal.jpg",
+    "circulomercantileindustrial": "/images/equipos/circulo-mercantil.jpg",
+    "cdbenalup": "/images/equipos/benalup.jpg",
+    "cduniondeportivalosamigos": "/images/equipos/union-los-amigos.jpg",
+    "udalchoyano": "/images/equipos/alchoyano.jpg",
+    "cdcadizfutsalyouasesoria": "/images/equipos/cadiz-futsal.jpg",
+    "cdislenosanfernandofs": "/images/equipos/isleno-san-fernando.png",
+    "cdvillalbafs": "/images/equipos/villalba.jpg",
+    "cdalcaladeguadairafs": "/images/equipos/alcala-guadaira.png",
+    "cddecorseneca": "/images/equipos/decorseneca.jpg",
+    "cdolimpicdetriana": "/images/equipos/olimpic-triana.jpg",
+    "cddeporteyocioadyo": "/images/equipos/adyo.jpg"
+  },
   "filial": {
     "cdegafutsal": "/images/equipos/rfaf-f2d6e05f6799581b8d1b54977a32040b80b7d1c6.png",
     "cdcarcabuey": "/images/equipos/rfaf-0b67499ef8c095ebead45638487df510cb3b16dc.jpg",
@@ -32,3 +51,15 @@ export const teamCrests: Record<string, Record<string, string>> = {
     "cdcabrafs": "/images/equipos/rfaf-55ee77d17a4f190ab7be641821fd4137ee7630db.jpg"
   }
 };
+
+const normalizeTeamName = (name: string) => name.normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/gi, '').toLowerCase()
+  .replace(/clubdeportivo/g, 'cd');
+const aliases: Record<string, string> = { cdarasfutsalaa: 'cdarasfutsala', cdarasfutsal: 'cdarasfutsala' };
+const crestCatalog = Object.assign({}, ...Object.values(teamCrests).reverse()) as Record<string, string>;
+
+/** Shared by static cards, browser rendering and API snapshots. */
+export function getTeamCrest(name: string): string | undefined {
+  const key = normalizeTeamName(name);
+  return crestCatalog[aliases[key] || key];
+}

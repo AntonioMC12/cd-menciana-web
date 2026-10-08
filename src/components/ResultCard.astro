@@ -3,8 +3,10 @@ import type { Match } from '../data/types';
 import { isClubTeam } from '../lib/sports-teams';
 import Crest from './Crest.astro';
 import { sitePath } from '../lib/paths';
+import { getTeamCrest } from '../data/team-crests';
 interface Props { match: Match }
-const { match } = Astro.props;
+const { match: suppliedMatch } = Astro.props;
+const match = { ...suppliedMatch, homeLogo: getTeamCrest(suppliedMatch.homeTeam) || suppliedMatch.homeLogo, awayLogo: getTeamCrest(suppliedMatch.awayTeam) || suppliedMatch.awayLogo };
 const date = match.date ? new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium', timeZone: 'Europe/Madrid' }).format(new Date(match.date)) : undefined;
 const homeIsClub = isClubTeam(match.homeTeam);
 const awayIsClub = isClubTeam(match.awayTeam);

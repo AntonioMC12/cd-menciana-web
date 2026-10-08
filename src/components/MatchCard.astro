@@ -4,8 +4,10 @@ import { sitePath } from '../lib/paths';
 import type { Match } from '../data/types';
 import { isClubTeam } from '../lib/sports-teams';
 import { teamCompetitions } from '../data/team-competitions';
+import { getTeamCrest } from '../data/team-crests';
 interface Props { match?: Match; prominent?: boolean; id?: string }
-const { match, prominent = false, id } = Astro.props;
+const { match: suppliedMatch, prominent = false, id } = Astro.props;
+const match = suppliedMatch && { ...suppliedMatch, homeLogo: getTeamCrest(suppliedMatch.homeTeam) || suppliedMatch.homeLogo, awayLogo: getTeamCrest(suppliedMatch.awayTeam) || suppliedMatch.awayLogo };
 const hasTime = Boolean(match?.date?.includes('T'));
 const date = match?.date ? new Intl.DateTimeFormat('es-ES', { dateStyle: 'full', ...(hasTime ? { timeStyle: 'short' as const } : {}), timeZone: 'Europe/Madrid' }).format(new Date(hasTime ? match.date : `${match.date}T12:00:00+02:00`)) : undefined;
 const homeIsClub = !match || isClubTeam(match.homeTeam);

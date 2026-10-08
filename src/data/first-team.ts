@@ -2,6 +2,7 @@ import type { Match } from './types';
 import seasonCalendars from './season-calendars.json';
 import { mergeSeasonMatches } from '../lib/season-calendar';
 import { teamCompetitions } from './team-competitions';
+import { getTeamCrest } from './team-crests';
 
 // Match details checked against the RFAF Novanet widget on 2026-10-04.
 // Complete round calendar checked against the classic RFAF site on 2026-10-06.
@@ -26,7 +27,11 @@ const verifiedMatchDetails: Match[] = [
   { id: '2026-27-j7', competition, round: 'Jornada 7', homeTeam: club, awayTeam: 'CD Unión Deportiva Los Amigos', awayLogo: '/images/equipos/union-los-amigos.jpg', date: '2026-10-25', venue: 'PMD Alcalde Julio Priego · Doña Mencía', status: 'scheduled', publication: 'confirmed' },
 ];
 
-export const firstTeamMatches: Match[] = mergeSeasonMatches(seasonCalendars['primer-equipo'].matches as Match[], verifiedMatchDetails);
+export const firstTeamMatches: Match[] = mergeSeasonMatches(seasonCalendars['primer-equipo'].matches as Match[], verifiedMatchDetails).map(match => ({
+  ...match,
+  homeLogo: getTeamCrest(match.homeTeam) || match.homeLogo,
+  awayLogo: getTeamCrest(match.awayTeam) || match.awayLogo,
+}));
 
 export interface StandingRow {
   position: number;
