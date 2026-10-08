@@ -31,7 +31,9 @@ La lista de subidas no garantiza descubrir directos activos o programados. `YOUT
 
 Cloudflare Cache API es local al centro de datos, puede desalojar entradas y no garantiza límites globales ni deduplicación de solicitudes simultáneas. En desarrollo la persistencia depende del runtime. Dos búsquedas cada hora supondrían 48 llamadas diarias por centro de datos con tráfico continuo, antes de desalojos o fallos. Consulta la cuota efectiva del proyecto en Google Cloud antes de activar detección; viene desactivada para no gastar búsquedas sin necesidad. Para tráfico distribuido que requiera una cuota global garantizada habría que centralizar la sincronización, fuera de esta integración mínima. Nunca se promete detección instantánea. Sin búsqueda, el ID destacado permite incluir una emisión que no esté en las subidas.
 
-El navegador consulta al entrar o al reintentar; no hay sondeo permanente. La hora mostrada es la de consulta, no una garantía de actualización de YouTube. Un fallo general muestra error, sin una falsa etiqueta de emisión. Los estados confirmados pueden quedar desfasados durante el intervalo de caché.
+El navegador consulta al entrar o al reintentar; no hay sondeo permanente. Un fallo general muestra error, sin una falsa etiqueta de emisión. Los estados confirmados pueden quedar desfasados durante el intervalo de caché.
+
+El destacado aparece una sola vez. Los demás vídeos y retransmisiones finalizadas comparten una biblioteca con filtros Todos, Vídeos y Retransmisiones. Las emisiones activas o próximas restantes aparecen antes de la biblioteca únicamente cuando existen; no se presentan columnas vacías ni un segundo archivo de vídeos repetidos. El enlace al canal se concentra junto al destacado.
 
 ## Reproducción
 
