@@ -1,11 +1,13 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { publicSitemapOptions, sitemapValidation } from './scripts/sitemap-options.mjs';
+
+const site = process.env.PUBLIC_SITE_URL || 'https://cdmenciana.es';
+const base = process.env.PUBLIC_SITE_BASE || '/';
 
 export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL || 'https://cdmenciana.es',
-  base: process.env.PUBLIC_SITE_BASE || '/',
+  site,
+  base,
   devToolbar: { enabled: false },
-  integrations: [sitemap({
-    filter: (page) => !new URL(page).pathname.includes('/tienda/stock') && !['/404.html', '/noticias/detalle/', '/galerias/detalle/', '/release-campaign', '/release-campaign/'].some(path => new URL(page).pathname.endsWith(path)),
-  })],
+  integrations: [sitemap(publicSitemapOptions(site, base)), sitemapValidation(site, base)],
 });
