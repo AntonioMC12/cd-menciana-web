@@ -1,5 +1,11 @@
 # Copy to .dev.vars for local development only. Never commit .dev.vars.
 LOCAL_ADMIN_BYPASS=1
+# CDM TV: server-only configuration. Use a canonical UC… channel ID.
+YOUTUBE_CHANNEL_ID=
+YOUTUBE_API_KEY=
+YOUTUBE_FEATURED_VIDEO_ID=
+# Optional discovery of live/upcoming videos (see docs/CDM-TV.md for quota/cache limits).
+YOUTUBE_LIVE_DISCOVERY=0
 ENVIRONMENT=local
 PUBLIC_WEB_ORIGIN=http://127.0.0.1:4321
 # Production: configure these as Worker secrets, with LOCAL_ADMIN_BYPASS absent.

@@ -1,6 +1,7 @@
 ---
 import { sitePath } from '../lib/paths';
 import BrandMark from './BrandMark.astro';
+import CdmTvMark from './CdmTvMark.astro';
 const path = Astro.url.pathname;
 const links = [
   { href: '/', label: 'Inicio' },
@@ -9,6 +10,7 @@ const links = [
   { href: '/calendario/', label: 'Calendario' },
   { href: '/noticias/', label: 'Noticias' },
   { href: '/galerias/', label: 'Galerías' },
+  { href: '/cdm-tv/', label: 'CDM TV' },
   { href: '/patrocinadores/', label: 'Colaboradores' },
   { href: '/tienda/', label: 'Tienda' },
   { href: '/contacto/', label: 'Contacto' },
@@ -19,13 +21,17 @@ const links = [
   <div class="site-header__main container">
     <BrandMark />
     <nav class="main-nav" aria-label="Navegación principal">
-      {links.map((link) => <a href={sitePath(link.href)} aria-current={path === sitePath(link.href) || (link.href !== '/' && path.startsWith(sitePath(link.href))) ? 'page' : undefined}>{link.label}</a>)}
+      {links.map((link) => <a class:list={{ 'nav-tv': link.href === '/cdm-tv/' }} href={sitePath(link.href)} aria-label={link.href === '/cdm-tv/' ? 'CDM TV' : undefined} aria-current={path === sitePath(link.href) || (link.href !== '/' && path.startsWith(sitePath(link.href))) ? 'page' : undefined}>{link.href === '/cdm-tv/' ? <CdmTvMark /> : link.label}</a>)}
     </nav>
     <details class="mobile-nav">
       <summary aria-label="Abrir menú de navegación"><span></span><span></span><span></span><b>Menú</b></summary>
       <nav aria-label="Navegación móvil">
-        {links.map((link) => <a href={sitePath(link.href)} aria-current={path === sitePath(link.href) || (link.href !== '/' && path.startsWith(sitePath(link.href))) ? 'page' : undefined}>{link.label}</a>)}
+        {links.map((link) => <a class:list={{ 'nav-tv': link.href === '/cdm-tv/' }} href={sitePath(link.href)} aria-label={link.href === '/cdm-tv/' ? 'CDM TV' : undefined} aria-current={path === sitePath(link.href) || (link.href !== '/' && path.startsWith(sitePath(link.href))) ? 'page' : undefined}>{link.href === '/cdm-tv/' ? <CdmTvMark /> : link.label}</a>)}
       </nav>
     </details>
   </div>
 </header>
+<script>import '../scripts/tv-live';</script>
+<style>
+  .main-nav a.nav-tv, .mobile-nav a.nav-tv { display: flex; align-items: center; white-space: nowrap; }
+</style>

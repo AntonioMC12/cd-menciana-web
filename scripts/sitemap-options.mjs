@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const sections = new Set(['/', '/club/', '/equipos/', '/calendario/', '/noticias/', '/galerias/', '/patrocinadores/', '/tienda/', '/contacto/']);
+const sections = new Set(['/', '/club/', '/equipos/', '/calendario/', '/noticias/', '/galerias/', '/cdm-tv/', '/patrocinadores/', '/tienda/', '/contacto/']);
 
 export function sitemapPolicy(site, base = '/') {
   const root = new URL(`${base.replace(/\/$/, '')}/`, site);

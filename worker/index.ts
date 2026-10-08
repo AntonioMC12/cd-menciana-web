@@ -17,6 +17,7 @@ import { competitiveTeamIds, teamCompetitions, type CompetitiveTeamId } from '..
 import { stockRoutes } from './stock/routes';
 import { syncInventory } from './stock/inventory';
 import type { ScheduledController } from '@cloudflare/workers-types';
+import { tvResponse } from './youtube';
 
 const html = (value: string, status = 200) => new Response(value, { status, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'content-security-policy': "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'" } });
 const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
@@ -59,6 +60,8 @@ export default {
     const method = request.method;
     const parts = path.split('/').filter(Boolean);
     try {
+      if (path === '/api/cdm-tv' && method === 'GET') return cors(await tvResponse(), request);
+      if (path === '/api/cdm-tv' && method === 'OPTIONS') return cors(new Response(null, { status: 204 }), request);
       const stock = await stockRoutes(request);
       if (stock) return path === '/api/shop/availability' ? cors(stock, request) : stock;
       if (path === '/') return Response.redirect(publicSite(), 302);
