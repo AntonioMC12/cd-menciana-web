@@ -5,6 +5,7 @@ export const absolutePage = (path: string) => new URL(path, origin).href;
 export const defaultSeoDescription = 'Web oficial del CD Menciana Apaga y Vámonos F.S., club de fútbol sala de Doña Mencía, Córdoba: equipos, calendario, resultados y noticias.';
 // Metadata only: these descriptions never replace the visible page content.
 export const sectionSeo: Record<string, { name: string; type: string; description: string }> = {
+  '/cdm-tv': { name: 'CDM TV', type: 'CollectionPage', description: 'Vídeos y retransmisiones del CD Menciana. Sigue el fútbol sala de Doña Mencía en el canal de YouTube del club.' },
   '/club': { name: 'El club', type: 'AboutPage', description: 'Historia, escudos y junta directiva del CD Menciana Apaga y Vámonos F.S., club de fútbol sala de Doña Mencía, Córdoba.' },
   '/equipos': { name: 'Equipos', type: 'CollectionPage', description: 'Equipos y plantillas del CD Menciana, club de fútbol sala de Doña Mencía: partidos, resultados y clasificaciones de la temporada 2026/27.' },
   '/calendario': { name: 'Calendario', type: 'CollectionPage', description: 'Calendario de fútbol sala del CD Menciana de Doña Mencía: fechas, rivales, pabellones, jornadas y resultados de sus equipos en 2026/27.' },

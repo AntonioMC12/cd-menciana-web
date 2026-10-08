@@ -22,7 +22,7 @@ async function fixture(contactHead = '', duplicate = false) {
 describe('public sitemap', () => {
   it('includes public sections, published detail URLs and archive pagination', () => {
     const { filter } = sitemapPolicy(origin);
-    for (const path of ['/', '/contacto/', '/noticias/cronica-del-partido/', '/galerias/partido-2/', '/noticias/pagina/2/', '/noticias/pagina/12/']) expect(filter(origin + path)).toBe(true);
+    for (const path of ['/', '/contacto/', '/cdm-tv/', '/noticias/cronica-del-partido/', '/galerias/partido-2/', '/noticias/pagina/2/', '/noticias/pagina/12/']) expect(filter(origin + path)).toBe(true);
   });
   it('excludes internal, legacy, duplicate and foreign URLs', () => {
     const { filter } = sitemapPolicy(origin);
