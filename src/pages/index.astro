@@ -24,6 +24,16 @@ const heroPhotos = ['equipo', 'capitan', 'disparo', 'jugada'];
 ---
 <BaseLayout title="Club de fútbol sala en Doña Mencía" description="CD Menciana Apaga y Vámonos F.S.: equipos, calendario, resultados y noticias del club de fútbol sala de Doña Mencía, Córdoba." structuredData={[organizationData, websiteData]}>
   <div class="home-page">
+    <section class="home-live" data-home-live hidden aria-labelledby="home-live-title">
+      <div class="container home-live__inner">
+        <div class="home-live__copy">
+          <p class="home-live__badge"><span aria-hidden="true"></span>En directo · CDM TV</p>
+          <p id="home-live-title" class="home-live__title" data-home-live-title aria-live="polite" aria-atomic="true"></p>
+          <span class="home-live__preview" data-home-live-preview hidden>Vista previa local · emisión simulada</span>
+        </div>
+        <a class="home-live__action" href={sitePath('/cdm-tv/')} aria-label="Ver la emisión en directo en CDM TV">Ver en directo <ArrowIcon /></a>
+      </div>
+    </section>
     <section class="home-hero" aria-labelledby="home-title" data-home-film>
       <div class="home-hero__photo" aria-hidden="true">
         {heroPhotos.map((photo, index) => <picture class:list={['home-hero__slide', { 'home-hero__slide--active': index === 0 }]} data-hero-slide>
