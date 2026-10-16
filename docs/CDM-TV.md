@@ -21,7 +21,7 @@ node node_modules/astro/bin/astro.mjs dev --host 127.0.0.1
 
 Configura `PUBLIC_WEB_ORIGIN=http://127.0.0.1:4321` en `.dev.vars` para CORS y visita `http://127.0.0.1:4321/cdm-tv/`. Sin `PUBLIC_CMS_API_URL`, `npm run dev` permite revisar el estado vacío sin backend. Un endpoint inaccesible muestra error y botón de reintento. No hacen falta migraciones para CDM TV.
 
-`YOUTUBE_FEATURED_VIDEO_ID` admite un ID de 11 caracteres. Sin clave, permite abrir un vídeo configurado, sin inventar fecha ni etiquetarlo como directo. Con API, se comprueba que el vídeo público pertenece al canal. La prioridad es directo confirmado, próxima emisión por fecha, ID preferido y vídeo reciente.
+`YOUTUBE_FEATURED_VIDEO_ID` admite un ID de 11 caracteres. Sin clave, permite abrir un vídeo configurado, sin inventar fecha ni etiquetarlo como directo. Con API, se comprueba que el vídeo es público. Los vídeos deben pertenecer al canal salvo el ID destacado explícito, que puede proceder del canal que retransmite un partido fuera de casa. La prioridad es directo confirmado, próxima emisión por fecha, ID preferido y vídeo reciente.
 
 ## Actualización y límites
 

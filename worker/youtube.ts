@@ -66,7 +66,9 @@ export async function getTvSnapshot(): Promise<TvSnapshot> {
     const details = uniqueIds.length ? await query('videos', { part: 'snippet,status,liveStreamingDetails', id: uniqueIds.join(',') }, config.key, 300) : { items: [] };
     const videos: TvVideo[] = [];
     for (const item of details.items || []) {
-      if (typeof item.id !== 'string' || !videoIdPattern.test(item.id) || item.snippet?.channelId !== config.channelId || item.status?.privacyStatus !== 'public') continue;
+      if (typeof item.id !== 'string' || !videoIdPattern.test(item.id) || !item.snippet || item.status?.privacyStatus !== 'public') continue;
+      // Away matches may be broadcast by another channel; only the configured featured ID is allowed.
+      if (item.snippet.channelId !== config.channelId && item.id !== config.featuredId) continue;
       const live = item.liveStreamingDetails;
       const state = live?.actualEndTime ? 'completed' : item.snippet.liveBroadcastContent === 'live' ? 'live' : item.snippet.liveBroadcastContent === 'upcoming' ? 'upcoming' : 'video';
       videos.push({ id: item.id, title: item.snippet.title || 'Vídeo del club', publishedAt: item.snippet.publishedAt || '', scheduledAt: live?.scheduledStartTime, state, embeddable: item.status.embeddable === true });

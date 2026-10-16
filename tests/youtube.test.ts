@@ -67,6 +67,24 @@ describe('CDM TV', () => {
     const response = await tvResponse(); expect(response.status).toBe(503); expect((await response.json()).status).toBe('error');
     await getTvSnapshot(); expect(fetcher).toHaveBeenCalledTimes(1);
   });
+  it('allows only the explicitly featured public video from another channel', async () => {
+    env.YOUTUBE_CHANNEL_ID = `UC${'z'.repeat(22)}`; env.YOUTUBE_API_KEY = 'key'; env.YOUTUBE_FEATURED_VIDEO_ID = ids[1];
+    mockApi();
+    const data = await getTvSnapshot();
+    expect(data.status).toBe('ready');
+    expect(data.videos.map(v => v.id)).toEqual([ids[1]]);
+    expect(data.featured?.id).toBe(ids[1]);
+    storage.clear();
+    const fetcher = mockApi();
+    vi.stubGlobal('fetch', async (input: URL) => {
+      const response = await fetcher(input);
+      if (!input.pathname.endsWith('/videos')) return response;
+      const details = await response.json();
+      details.items.find((item: { id: string }) => item.id === ids[1]).status.privacyStatus = 'private';
+      return Response.json(details);
+    });
+    expect((await getTvSnapshot()).featured).toBeNull();
+  });
   it('returns an empty channel and rejects videos from a different channel', async () => {
     env.YOUTUBE_CHANNEL_ID = channel; env.YOUTUBE_API_KEY = 'key';
     vi.stubGlobal('fetch', vi.fn(async (url: URL) => url.pathname.endsWith('/channels') ? Response.json({ items: [{ contentDetails: { relatedPlaylists: { uploads: 'uploads' } } }] }) : Response.json({ items: [] })));
