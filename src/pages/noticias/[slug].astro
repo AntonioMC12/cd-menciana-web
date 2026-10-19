@@ -9,6 +9,7 @@ import NewsCard from '../../components/NewsCard.astro';
 import ContentHeader from '../../components/ContentHeader.astro';
 import { newsDate, newsArticle, relatedNews } from '../../lib/news';
 import '../../styles/news.css';
+import { cleanNewsHtml } from '../../lib/news-body';
 
 export const getStaticPaths = (async () => {
   const posts = await getPublicPosts();
@@ -40,7 +41,7 @@ const articleData = {
   <article class="container news-story">
     {image && <div class="news-story__photo"><img src={image} alt="" width="1600" height="1100" fetchpriority="high" decoding="async" /></div>}
     <div class="news-story__reading">
-      <div class="news-story__body">{post.body.map(paragraph => <p>{paragraph}</p>)}</div>
+      <div class="news-story__body">{post.bodyHtml !== undefined ? <Fragment set:html={cleanNewsHtml(post.bodyHtml)} /> : post.body.map(paragraph => <p>{paragraph}</p>)}</div>
       <footer class="news-story__footer"><p>Comparte esta noticia</p><div class="news-share">
         <a href={`https://wa.me/?text=${encodeURIComponent(`${post.title} ${shareUrl}`)}`} target="_blank" rel="noopener noreferrer">WhatsApp <ArrowIcon /></a>
         <a href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(shareUrl)}`}>Correo</a>

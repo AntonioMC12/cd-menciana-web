@@ -8,6 +8,7 @@ export type PublicPost = {
   title: string;
   excerpt: string;
   body: string[];
+  bodyHtml?: string;
   category: string;
   coverPhotoId: string | null;
   publishedAt?: string;

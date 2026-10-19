@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import sharp from 'sharp';
 
 const origin = process.argv[2] || 'http://127.0.0.1:8787';
 const page = await (await fetch(`${origin}/admin/`)).text();
@@ -20,8 +21,9 @@ let result = await fetch(`${origin}/api/posts/smoke-${suffix}`); assert.equal(re
 const album = await call('/api/admin/albums/', 'POST', { slug: `album-${suffix}`, title: `Álbum ${suffix}`, description: 'Galería local', postId: post.id, coverPhotoId: null }, 201);
 const badForm = new FormData(); badForm.set('web', new Blob(['<svg/>'], { type: 'image/svg+xml' }), 'bad.svg'); badForm.set('thumb', new Blob(['<svg/>'], { type: 'image/svg+xml' }), 'bad.svg'); badForm.set('alt', 'Inválida');
 result = await fetch(`${origin}/api/admin/albums/${album.id}/photos`, { method: 'POST', headers: { origin, 'x-cdm-csrf': csrf }, body: badForm }); assert.equal(result.status, 413);
-const image = await readFile('public/images/patrocinadores/wedding.webp');
-const form = new FormData(); form.set('web', new Blob([image], { type: 'image/webp' }), 'web.webp'); form.set('thumb', new Blob([image], { type: 'image/webp' }), 'thumb.webp'); form.set('alt', 'Fotografía de prueba');
+const image = await readFile('public/images/patrocinadores/wedding-festival.webp');
+const thumbnail = await sharp(image).resize({ width: 480, height: 480, fit: 'inside', withoutEnlargement: true }).webp().toBuffer();
+const form = new FormData(); form.set('web', new Blob([image], { type: 'image/webp' }), 'web.webp'); form.set('thumb', new Blob([thumbnail], { type: 'image/webp' }), 'thumb.webp'); form.set('alt', 'Fotografía de prueba');
 result = await fetch(`${origin}/api/admin/albums/${album.id}/photos`, { method: 'POST', headers: { origin, 'x-cdm-csrf': csrf }, body: form });
 const uploadText = await result.text();
 assert.equal(result.status, 201, `Upload failed: ${uploadText}`);
@@ -31,9 +33,11 @@ result = await fetch(`${origin}/media/${photo.id}/download`); assert.equal(resul
 result = await fetch(`${origin}/admin/media/${photo.id}/web`); assert.equal(result.status, 200, 'Draft image must be available in local authorized preview');
 await call(`/api/admin/albums/${album.id}`, 'PUT', { slug: `album-${suffix}`, title: `Álbum ${suffix}`, description: 'Galería local', postId: post.id, coverPhotoId: photo.id, version: 2 });
 await call(`/api/admin/albums/${album.id}/publish`, 'POST');
-await call(`/api/admin/posts/${post.id}`, 'PUT', { slug: `smoke-${suffix}`, title, excerpt: 'Noticia de prueba local', body: 'Primer párrafo\n\nSegundo párrafo', category: 'Club', coverPhotoId: photo.id, version: 1 });
+const richBody = '<p><strong>Primer párrafo</strong> <em>cursiva</em> <u>subrayado</u> <a href="https://cdmenciana.es/">Club</a></p><p>Segundo párrafo</p>';
+await call(`/api/admin/posts/${post.id}`, 'PUT', { slug: `smoke-${suffix}`, title, excerpt: 'Noticia de prueba local', body: richBody, bodyFormat: 'html', category: 'Club', coverPhotoId: photo.id, version: 1 });
+result = await fetch(`${origin}/admin/preview/posts/${post.id}`); assert.match(await result.text(), /<strong>Primer párrafo<\/strong>/);
 await call(`/api/admin/posts/${post.id}/publish`, 'POST');
-result = await fetch(`${origin}/api/posts/smoke-${suffix}`); assert.equal(result.status, 200); assert.match(await result.text(), new RegExp(title));
+result = await fetch(`${origin}/api/posts/smoke-${suffix}`); assert.equal(result.status, 200); const publicPost = await result.json(); assert.equal(publicPost.title, title); assert.equal(publicPost.bodyHtml, richBody); assert.equal(publicPost.body[0], 'Primer párrafo cursiva subrayado Club');
 result = await fetch(`${origin}/media/${photo.id}/web`); assert.equal(result.status, 200);
 result = await fetch(`${origin}/media/${photo.id}/download`, { headers: { origin: 'http://127.0.0.1:4321' } });
 assert.equal(result.status, 200);

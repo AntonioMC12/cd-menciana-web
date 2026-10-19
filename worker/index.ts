@@ -1,4 +1,5 @@
 import { bindings, csrfToken, error, identity, json, parseBody, photosForAlbum, publishedBySlug, publishedList, type Content, type Row } from '../src/lib/cms';
+import { renderNewsBody, newsBodyText } from '../src/lib/news-body';
 import { GET as publicMedia } from './media/[id]/[size]';
 import { GET as privateMedia } from './private-media/[id]/[size]';
 import * as collection from './api/admin/[kind]/index';
@@ -21,10 +22,10 @@ import { tvResponse } from './youtube';
 
 const html = (value: string, status = 200) => new Response(value, { status, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'content-security-policy': "default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'" } });
 const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
-const page = (title: string, body: string) => html(`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${escape(title)} | CD Menciana</title><link rel="stylesheet" href="/admin/style.css"><main class="admin-shell">${body}</main></html>`);
+const page = (title: string, body: string) => html(`<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${escape(title)} | CD Menciana</title><link rel="stylesheet" href="/admin/style.css?v=20261019-editor"><main class="admin-shell">${body}</main></html>`);
 const article = (row: Row) => {
   const content = JSON.parse(row.published_json || '{}') as Content;
-  return { id: row.id, slug: row.published_slug, title: content.title, excerpt: content.excerpt, body: parseBody(content.body), category: content.category, coverPhotoId: content.coverPhotoId, publishedAt: row.published_at?.slice(0, 10) };
+  return { id: row.id, slug: row.published_slug, title: content.title, excerpt: content.excerpt, body: parseBody(content.bodyFormat === 'html' ? newsBodyText(content.body) : content.body), bodyHtml: renderNewsBody(content.body, content.bodyFormat), category: content.category, coverPhotoId: content.coverPhotoId, publishedAt: row.published_at?.slice(0, 10) };
 };
 const album = (row: Row) => {
   const content = JSON.parse(row.published_json || '{}') as Content;
@@ -82,7 +83,7 @@ export default {
         if (!row) return page('No disponible', '<h1>Previsualización no disponible</h1>');
         const content = JSON.parse(row.draft_json) as Content;
         const cover = content.coverPhotoId ? `<img src="/admin/media/${encodeURIComponent(content.coverPhotoId)}/web" alt="Portada" style="max-width:100%">` : '';
-        const detail = kind === 'posts' ? parseBody(content.body).map(p => `<p>${escape(p)}</p>`).join('') : (await photosForAlbum(row.id, false)).map(p => `<img src="/admin/media/${encodeURIComponent(p.id)}/thumb" alt="${escape(p.draft_alt)}" width="240">`).join('');
+        const detail = kind === 'posts' ? renderNewsBody(content.body, content.bodyFormat) : (await photosForAlbum(row.id, false)).map(p => `<img src="/admin/media/${encodeURIComponent(p.id)}/thumb" alt="${escape(p.draft_alt)}" width="240">`).join('');
         return page(content.title, `<p>BORRADOR / PREVISUALIZACIÓN</p><h1>${escape(content.title)}</h1><p>${escape(content.excerpt)}</p>${cover}${detail}`);
       }
       if (parts[0] === 'admin' && parts[1] === 'media' && parts.length === 4 && method === 'GET') return privateMedia({ request, params: { id: parts[2], size: parts[3] } } as never);

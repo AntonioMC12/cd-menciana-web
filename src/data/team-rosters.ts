@@ -17,6 +17,8 @@ export const teamRosters: Record<string, TeamRoster> = {
   'primer-equipo': {
     staff: [
       { name: 'José Antonio Jiménez', role: 'Entrenador' },
+      { name: 'Pablo Barba', role: 'Entrenador de porteros' },
+      { name: 'Francisco Córdoba', role: 'Utillero' },
       { name: 'Juan Luna', role: 'Delegado' },
       { name: 'Antonio Muñoz', role: 'Delegado' },
     ],

@@ -1,4 +1,5 @@
 import { env } from 'cloudflare:workers';
+import { cleanNewsHtml, newsBodyText } from './news-body';
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 
@@ -15,7 +16,7 @@ export interface Bindings {
   GITHUB_DEPLOY_TOKEN?: string;
 }
 export const bindings = () => env as unknown as Bindings;
-export type Content = { title: string; excerpt: string; body: string; category: string; coverPhotoId: string | null; description?: string };
+export type Content = { title: string; excerpt: string; body: string; bodyFormat?: 'html'; category: string; coverPhotoId: string | null; description?: string };
 export type Row = { id: string; slug: string; published_slug: string | null; draft_json: string; published_json: string | null; version: number; published_version: number | null; created_at: string; updated_at: string; published_at: string | null; post_id?: string | null };
 export type Photo = { id: string; album_id: string; image_key: string; thumb_key: string; width: number; height: number; bytes: number; mime: string; draft_alt: string; draft_position: number; draft_deleted: number; published_alt: string | null; published_position: number | null };
 export const json = (data: unknown, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
@@ -33,11 +34,13 @@ export function validateContent(value: unknown, kind: 'posts' | 'albums'): Conte
   };
   const title = field('title', 150);
   const excerpt = kind === 'posts' ? field('excerpt', 320) : field('description', 1000, false);
-  const body = kind === 'posts' ? field('body', 20000) : '';
+  const bodyFormat = kind === 'posts' && v.bodyFormat === 'html' ? 'html' as const : undefined;
+  const body = kind === 'posts' ? (bodyFormat ? cleanNewsHtml(field('body', 20000)) : field('body', 20000)) : '';
+  if (bodyFormat && (!newsBodyText(body) || body.length > 20000)) throw new Error('El cuerpo debe contener texto y no superar 20.000 caracteres.');
   const category = kind === 'posts' ? field('category', 50) : 'Galería';
   const coverPhotoId = v.coverPhotoId == null || v.coverPhotoId === '' ? null : String(v.coverPhotoId);
   if (coverPhotoId && !/^[0-9a-f-]{36}$/.test(coverPhotoId)) throw new Error('Portada no válida.');
-  return { title, excerpt, body, category, coverPhotoId, ...(kind === 'albums' ? { description: excerpt } : {}) };
+  return { title, excerpt, body, ...(bodyFormat ? { bodyFormat } : {}), category, coverPhotoId, ...(kind === 'albums' ? { description: excerpt } : {}) };
 }
 export function validateSlug(slug: unknown): string {
   if (typeof slug !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || slug.length > 100) throw new Error('El slug solo puede contener letras minúsculas, números y guiones.');

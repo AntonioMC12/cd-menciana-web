@@ -1,6 +1,7 @@
+import { cleanNewsHtml, renderNewsBody } from '../lib/news-body';
 type Kind = 'posts' | 'albums';
 type Tab = Kind | 'manual';
-type Content = { title: string; excerpt: string; body: string; category: string; coverPhotoId: string | null; description?: string };
+type Content = { title: string; excerpt: string; body: string; bodyFormat?: 'html'; category: string; coverPhotoId: string | null; description?: string };
 type Photo = { id: string; draft_alt: string; draft_position: number; draft_deleted: number; published_position: number | null };
 type Item = { id: string; slug: string; version: number; published_version: number | null; draft: Content; published: Content | null; post_id?: string | null; photos?: Photo[] };
 const root = document.querySelector<HTMLElement>('[data-admin]')!;
@@ -12,6 +13,72 @@ let kind: Kind = 'posts';
 let items: Item[] = [];
 let current: Item | null = null;
 const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+const newsEditor = document.querySelector<HTMLElement>('#news-body-editor')!;
+const linkPanel = document.querySelector<HTMLElement>('#news-link-panel')!;
+const linkInput = document.querySelector<HTMLInputElement>('#news-link-url')!;
+let linkRange: Range | null = null;
+let editorRange: Range | null = null;
+const formatButtons = document.querySelectorAll<HTMLButtonElement>('[data-format]');
+function restoreEditorRange(range = editorRange) {
+  newsEditor.focus();
+  if (!range || !newsEditor.contains(range.commonAncestorContainer)) return;
+  const selection = window.getSelection();
+  selection?.removeAllRanges(); selection?.addRange(range);
+}
+function closeLinkPanel() { linkPanel.hidden = true; linkInput.value = ''; restoreEditorRange(linkRange); linkRange = null; }
+function applyLink() {
+  try {
+    const url = new URL(linkInput.value.trim());
+    if (!['https:', 'http:', 'mailto:'].includes(url.protocol)) throw new Error();
+    restoreEditorRange(linkRange);
+    document.execCommand('createLink', false, url.href);
+    closeLinkPanel(); updateFormatButtons();
+  } catch { show('Introduce una dirección válida que empiece por https://, http:// o mailto:.', true); linkInput.focus(); }
+}
+document.querySelector('#news-link-apply')!.addEventListener('click', applyLink);
+document.querySelector('#news-link-cancel')!.addEventListener('click', closeLinkPanel);
+linkInput.addEventListener('keydown', event => {
+  if (event.key === 'Enter') { event.preventDefault(); applyLink(); }
+  if (event.key === 'Escape') { event.preventDefault(); closeLinkPanel(); }
+});
+function updateFormatButtons() {
+  formatButtons.forEach(button => {
+    const command = button.dataset.format!;
+    if (['bold', 'italic', 'underline'].includes(command)) button.setAttribute('aria-pressed', String(document.queryCommandState(command)));
+  });
+}
+formatButtons.forEach(button => {
+  button.addEventListener('mousedown', event => event.preventDefault());
+  button.addEventListener('click', () => {
+    const command = button.dataset.format!;
+    restoreEditorRange();
+    if (command === 'createLink') {
+      const selection = window.getSelection();
+      if (!selection?.toString() || !newsEditor.contains(selection.anchorNode) || !newsEditor.contains(selection.focusNode)) { show('Selecciona el texto que quieres enlazar.', true); return; }
+      linkRange = selection.getRangeAt(0).cloneRange();
+      const anchor = selection.anchorNode?.parentElement?.closest('a');
+      linkInput.value = anchor?.getAttribute('href') || 'https://';
+      linkPanel.hidden = false; linkInput.focus(); linkInput.select();
+    } else {
+      document.execCommand('styleWithCSS', false, 'false');
+      document.execCommand(command, false);
+    }
+    updateFormatButtons();
+  });
+});
+newsEditor.addEventListener('paste', event => {
+  event.preventDefault();
+  const html = event.clipboardData?.getData('text/html');
+  const text = event.clipboardData?.getData('text/plain') || '';
+  document.execCommand('insertHTML', false, html ? cleanNewsHtml(html) : renderNewsBody(text));
+});
+newsEditor.addEventListener('drop', event => event.preventDefault());
+document.addEventListener('selectionchange', () => {
+  const selection = window.getSelection();
+  if (selection?.rangeCount && newsEditor.contains(selection.anchorNode) && newsEditor.contains(selection.focusNode)) {
+    editorRange = selection.getRangeAt(0).cloneRange(); updateFormatButtons();
+  }
+});
 const show = (text: string, bad = false) => { message.textContent = text; message.classList.toggle('admin-message--bad', bad); };
 async function api(path: string, method = 'GET', body?: unknown): Promise<any> {
   const response = await fetch(path, { method, headers: { ...(method === 'GET' ? {} : { 'x-cdm-csrf': csrf }), ...(body ? { 'content-type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined, credentials: 'same-origin' });
@@ -41,7 +108,7 @@ function configForm() {
   document.querySelector<HTMLElement>('#category-label')!.hidden = kind === 'albums';
   document.querySelector<HTMLElement>('#body-label')!.hidden = kind === 'albums';
   document.querySelector<HTMLElement>('#post-link-label')!.hidden = kind === 'posts';
-  field('excerpt').required = field('category').required = field('body').required = kind === 'posts';
+  field('excerpt').required = field('category').required = kind === 'posts';
   document.querySelector<HTMLElement>('#photo-panel')!.hidden = kind === 'posts' || !current;
 }
 async function fillPostOptions() {
@@ -61,7 +128,7 @@ async function fillPhotoOptions() {
 }
 async function open(id?: string) {
   current = id ? await api(`/api/admin/${kind}/${id}`) : null;
-  form.reset(); configForm();
+  form.reset(); newsEditor.replaceChildren(); editorRange = linkRange = null; linkPanel.hidden = true; configForm();
   document.querySelector<HTMLElement>('#editor')!.hidden = false;
   document.querySelector<HTMLElement>('#editor-title')!.textContent = current ? `Editar ${kind === 'posts' ? 'noticia' : 'álbum'}` : `Nuevo ${kind === 'posts' ? 'borrador' : 'álbum'}`;
   if (kind === 'albums') await fillPostOptions();
@@ -71,6 +138,7 @@ async function open(id?: string) {
     field('excerpt').value = current.draft.excerpt || '';
     field('category').value = current.draft.category || '';
     field('body').value = current.draft.body || '';
+    newsEditor.innerHTML = renderNewsBody(current.draft.body || '', current.draft.bodyFormat);
     field('postId').value = current.post_id || '';
   }
   await fillPhotoOptions(); renderPhotos();
@@ -81,10 +149,13 @@ async function open(id?: string) {
   document.querySelector<HTMLButtonElement>('#delete-item')!.disabled = !current;
 }
 function payload(): Record<string, unknown> {
-  return { title: field('title').value, slug: field('slug').value, excerpt: field('excerpt').value, description: kind === 'albums' ? field('excerpt').value : undefined, category: field('category').value, body: field('body').value, postId: field('postId').value, coverPhotoId: field('coverPhotoId').value || null, version: current?.version };
+  return { title: field('title').value, slug: field('slug').value, excerpt: field('excerpt').value, description: kind === 'albums' ? field('excerpt').value : undefined, category: field('category').value, body: kind === 'posts' ? cleanNewsHtml(newsEditor.innerHTML) : '', bodyFormat: kind === 'posts' ? 'html' : undefined, postId: field('postId').value, coverPhotoId: field('coverPhotoId').value || null, version: current?.version };
 }
 form.addEventListener('submit', async event => {
-  event.preventDefault(); show('Guardando borrador…');
+  event.preventDefault();
+  if (kind === 'posts' && !newsEditor.innerText.trim()) { show('Escribe el cuerpo de la noticia.', true); newsEditor.focus(); return; }
+  if (kind === 'posts' && newsEditor.innerHTML.length > 20000) { show('El cuerpo no puede superar 20.000 caracteres, incluido el formato.', true); newsEditor.focus(); return; }
+  show('Guardando borrador…');
   try {
     const result = await api(current ? `/api/admin/${kind}/${current.id}` : `/api/admin/${kind}/`, current ? 'PUT' : 'POST', payload());
     const id = current?.id || result.id; await load(); await open(id); show('Borrador guardado. La web pública no ha cambiado.');

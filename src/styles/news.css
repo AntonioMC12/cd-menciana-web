@@ -77,3 +77,5 @@
 }
 @media (max-width: 540px) { .news-grid--editorial { grid-template-columns: 1fr; gap: 30px; } .news-pagination { gap: 12px; font-size: .7rem; } .news-masthead__rule span:last-child { display: none; } }
 @media (prefers-reduced-motion: reduce) { .news-edition *, .news-story *, .news-related * { scroll-behavior: auto; transition: none; } }
+
+.news-story__body a{color:var(--ui-blue-ink);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}.news-story__body u{text-underline-offset:3px}
