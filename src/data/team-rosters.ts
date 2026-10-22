@@ -10,6 +10,7 @@ const school: TeamRoster = {
     { name: 'Iván Priego', role: 'Monitor' },
     { name: 'Jesús Cubero', role: 'Monitor' },
     { name: 'Sergio Montes', role: 'Monitor' },
+    { name: 'Ángela Jiménez', role: 'Monitora' },
   ],
 };
 
@@ -31,7 +32,7 @@ export const teamRosters: Record<string, TeamRoster> = {
   cadete: {
     goalkeepers: ['Pablo Gómez', 'Ismael Montilla', 'Daniel Toro'],
     players: ['Daniel Moreno', 'Sergio Montes', 'Sofía Cortés', 'Adam Aboulalam', 'Rodrigo de la Torre', 'Sergio Écija', 'Juanjo Gordillo', 'José A. Jiménez', 'Marcos Jurado', 'Adrián Marín', 'Álvaro Montes', 'Luis Priego', 'Rafa Vera'],
-    staff: [{ name: 'Francisco Javier Rueda' }, { name: 'Julio Lozano' }],
+    staff: [{ name: 'Francisco Javier Rueda' }, { name: 'Julio Lozano' }, { name: 'Jesús Becerra', role: 'Delegado' }],
   },
   filial: {
     players: ['Rosales', 'David C.', 'Ruz', 'Raúl C.', 'Iván P.', 'Rubio', 'Víctor', 'Félix', 'Carlos', 'D. Gómez', 'Diego', 'Pedrito', 'Manu Lama', 'R. Bonilla', 'Gosé M.'],
