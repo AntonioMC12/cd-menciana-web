@@ -105,7 +105,7 @@ export const sponsors: Sponsor[] = [
   { id: 'la-cantina', name: 'Mesón Restaurante La Cantina', logo: '/images/patrocinadores/la-cantina.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'la-ronda', name: 'La Ronda · Cervecería y cafetería', logo: '/images/patrocinadores/la-ronda.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'munoz', name: 'Muñoz', logo: '/images/patrocinadores/munoz.webp', logoBackground: 'dark', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
-  { id: 'pasteleria-cubero', name: 'Pastelería Cubero', logo: '/images/patrocinadores/pasteleria-cubero.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
+  { id: 'jesus-garcia-asesoria-energetica', name: 'Jesús García Asesoría Energética', logo: '/images/patrocinadores/jesus-garcia-asesoria-energetica.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'taberna-las-penuelas', name: 'Taberna de las Peñuelas', logo: '/images/patrocinadores/taberna-las-penuelas.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'pilar-jimenez', name: 'Pilar Jiménez · Imagen y belleza', logo: '/images/patrocinadores/pilar-jimenez.webp', kind: 'sponsor', tier: 'colaborador', status: 'confirmed' },
   { id: 'junta-de-andalucia', name: 'Junta de Andalucía', logo: '/images/patrocinadores/junta-de-andalucia.png', kind: 'institutional', tier: 'colaborador', status: 'confirmed' },
